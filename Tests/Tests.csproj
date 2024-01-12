@@ -22,4 +22,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CleanDomainValidation\CleanDomainValidation.csproj" />
+  </ItemGroup>
+
 </Project>
