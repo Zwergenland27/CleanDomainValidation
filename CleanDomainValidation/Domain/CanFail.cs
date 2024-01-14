@@ -23,16 +23,18 @@ public sealed class CanFail : AbstractCanFail
 		return canFail;
 	}
 
-	/// <summary>
-	/// Create <see cref="CanFail"/> instance containing the <paramref name="errors"/>
+ 	/// <summary>
+	/// Create <see cref="CanFail"/> instance from a class of <see cref="AbstractCanFail"/> that has failed
 	/// </summary>
-	public static CanFail FromErrors(IEnumerable<Error> errors)
+	public static CanFail FromFailure(AbstractCanFail result)
 	{
-		var canFail = new CanFail();
-		foreach (var error in errors)
+		if(!result.HasFailed)
 		{
-			canFail.Failed(error);
+			throw new InvalidOperationException("Cannot use CanFail.FromFailure on a result that has not failed");
 		}
+
+		var canFail = new CanFail();
+		canFail.InheritFailure(result);
 		return canFail;
 	}
 
