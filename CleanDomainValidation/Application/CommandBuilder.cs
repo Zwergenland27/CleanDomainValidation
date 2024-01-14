@@ -5,56 +5,57 @@ namespace CleanDomainValidation.Application;
 public sealed class CommandBuilder<TCommand>
 	where TCommand : ICommand
 {
-	public static CommandBuilder<TParameters, TCommand> AddParameters<TParameters>(TParameters parameters)
-		where TParameters : IParameter
+	public static CommandBuilder<TParameter, TCommand> AddParameter<TParameter>(TParameter parameter)
+		where TParameter : IParameter
 	{
-		return new CommandBuilder<TParameters, TCommand>(parameters);
+		return new CommandBuilder<TParameter, TCommand>(parameter);
 	}
 }
 
-public sealed class CommandBuilder<TParameters, TCommand>
-	where TParameters : IParameter
+public sealed class CommandBuilder<TParameter, TCommand>
+	where TParameter : IParameter
 	where TCommand : ICommand
 {
-	private readonly TParameters _parameters;
+	private readonly TParameter _parameter;
 
-	internal CommandBuilder(TParameters parameters)
+	internal CommandBuilder(TParameter parameter)
 	{
-		_parameters = parameters;
+		_parameter = parameter;
 	}
 
-	public CanFail<TCommand> ValidateByUsing<TValidator>() where TValidator : CommandValidator<TParameters, TCommand>, new()
+	public CanFail<TCommand> ValidateByUsing<TValidator>() where TValidator : CommandValidator<TParameter, TCommand>, new()
 	{
 		TValidator validator = new();
-		validator.Configure(_parameters);
+		validator.Configure(_parameter);
 		return validator.Validate();
 	}
 
-	public CommandBuilder<TParameters, TUrlParameters, TCommand> AddUrlParameters<TUrlParameters>(TUrlParameters urlParameters) where TUrlParameters : IUrlParameter
+	public CommandBuilder<TParameter, TUrlParameter, TCommand> AddUrlParameter<TUrlParameter>(TUrlParameter urlParameter)
+		where TUrlParameter : IUrlParameter
 	{
-		return new CommandBuilder<TParameters, TUrlParameters, TCommand>(_parameters, urlParameters);
+		return new CommandBuilder<TParameter, TUrlParameter, TCommand>(_parameter, urlParameter);
 	}
 
 }
 
-public sealed class CommandBuilder<TParameters, TUrlParameters, TCommand>
-	where TParameters : IParameter
-	where TUrlParameters : IUrlParameter
+public sealed class CommandBuilder<TParameter, TUrlParameter, TCommand>
+	where TParameter : IParameter
+	where TUrlParameter : IUrlParameter
 	where TCommand : ICommand
 {
-	private readonly TParameters _parameters;
-	private readonly TUrlParameters _urlParameters;
+	private readonly TParameter _parameter;
+	private readonly TUrlParameter _urlParameter;
 
-	internal CommandBuilder(TParameters parameters, TUrlParameters urlParameters)
+	internal CommandBuilder(TParameter parameter, TUrlParameter urlParameter)
 	{
-		_parameters = parameters;
-		_urlParameters = urlParameters;
+		_parameter = parameter;
+		_urlParameter = urlParameter;
 	}
 
-	public CanFail<TCommand> ValidateByUsing<TValidator>() where TValidator : CommandValidator<TParameters, TUrlParameters, TCommand>, new()
+	public CanFail<TCommand> ValidateByUsing<TValidator>() where TValidator : CommandValidator<TParameter, TUrlParameter, TCommand>, new()
 	{
 		TValidator validator = new();
-		validator.Configure(_parameters, _urlParameters);
+		validator.Configure(_parameter, _urlParameter);
 		return validator.Validate();
 	}
 }

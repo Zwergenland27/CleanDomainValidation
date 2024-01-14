@@ -2,7 +2,7 @@
 
 namespace CleanDomainValidation.Application;
 
-public partial class Validator<TCommand>
+public partial class Validator<TResult>
 {
 	protected TValueObject RequiredAttribute<T1, TValueObject>(
 		T1? param1, Error param1MissingError,
@@ -11,7 +11,7 @@ public partial class Validator<TCommand>
 	{
 		if (param1 is null)
 		{
-			_validationErrors.Add(param1MissingError);
+			_validationResult.Failed(param1MissingError);
 			return default!;
 		}
 
@@ -25,7 +25,7 @@ public partial class Validator<TCommand>
 	{
 		if (param1 is null)
 		{
-			_validationErrors.Add(param1MissingError);
+			_validationResult.Failed(param1MissingError);
 			return default!;
 		}
 
@@ -39,14 +39,14 @@ public partial class Validator<TCommand>
 	{
 		if (param1 is null)
 		{
-			_validationErrors.Add(param1MissingError);
+			_validationResult.Failed(param1MissingError);
 			return default!;
 		}
 
 		CanFail<TValueObject> result = createMethod.Invoke(param1);
 		if (result.HasFailed)
 		{
-			_validationErrors.AddRange(result.Errors);
+			_validationResult.InheritFailure(result);
 			return default!;
 		}
 
@@ -60,14 +60,14 @@ public partial class Validator<TCommand>
 	{
 		if (param1 is null)
 		{
-			_validationErrors.Add(param1MissingError);
+			_validationResult.Failed(param1MissingError);
 			return default!;
 		}
 
 		CanFail<TValueObject> result = createMethod.Invoke(param1.Value);
 		if (result.HasFailed)
 		{
-			_validationErrors.AddRange(result.Errors);
+			_validationResult.InheritFailure(result);
 			return default!;
 		}
 

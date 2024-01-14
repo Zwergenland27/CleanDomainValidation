@@ -7,7 +7,7 @@ public sealed class CanFail<TResult> : AbstractCanFail, ICanFail<TResult>
 
 	private bool _valueSet = false;
 
-	public static InvalidOperationException ValueNotSet => new InvalidOperationException("The value has not been set yet");
+	public static InvalidOperationException ValueNotSet => new ("The value has not been set yet");
 
 	public TResult Value
 	{

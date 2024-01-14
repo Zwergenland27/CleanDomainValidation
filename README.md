@@ -78,7 +78,7 @@ The bad information first: You will need all of this steps for this approach as 
 Lets think about a REST API where you can create a user. You have an endpoint that takes a user json of the following format:
 ```json
 {
-  "email": "meow"
+    "email": "meow"
 }
 ```
 
@@ -86,7 +86,7 @@ The json will be converted to
 ```cs
 public class UserParameter : IParameter
 {
-  public string? Email {get; set;}
+    public string? Email {get; set;}
 }
 ```
 ℹ️ All parameters will be defined as nullable as we want to handle null values manually as well.
@@ -98,17 +98,17 @@ With those two clases we can create the validator for the command:
 ```cs
 public class CreateCommandValidator : CommandValidator<UserParameter, CreateUserCommand>>
 {
-  protected override void Configure(UserParameter parameters)
-  {
-    //Configure the email as an required parameter
-    //so the given Error wil be returned when it is null. 
-    var validatedEmail = RequiredAttribute(
-      parameters.Email, Error.Validation("User.Email.Missing", "The email attribute is missing",
-      value => Email.Create(value));
+    protected override void Configure(UserParameter parameters)
+    {
+        //Configure the email as an required parameter
+        //so the given Error wil be returned when it is null. 
+        var validatedEmail = RequiredAttribute(
+            parameters.Email, Error.Validation("User.Email.Missing", "The email attribute is missing",
+            value => Email.Create(value));
 
-    //Configure the method that will be called to create the command
-    CreateInstance(() => new CreateUserCommand(validatedEmail));
-  }
+        //Configure the method that will be called to create the command
+        CreateInstance(() => new CreateUserCommand(validatedEmail));
+    }
 }
 ```
 
@@ -116,19 +116,18 @@ In the API Controller, the command can be created the following way:
 ```cs
 public void ControllerMethod(UserParameter parameters)
 {
-  var createUserCommand = CommandBuilder<CreateUserCommand>
-    .AddParameters(parameters)
-    .ValiateByUsing<CreateCommandValidator>();
+    var createUserCommand = CommandBuilder<CreateUserCommand>
+        .AddParameter(parameters)
+        .ValiateByUsing<CreateCommandValidator>();
 
-  //Handle command creation failure
-  if(createUserCommand.HasFailed)
-  {
-    ...
-    return;
-  }
-
-  //You can access the valid command here using createUserCommand.Value
-  
+    //Handle command creation failure
+    if(createUserCommand.HasFailed)
+    {
+        ...
+        return;
+    }
+    
+    //You can access the valid command here using createUserCommand.Value
 }
 ```
 

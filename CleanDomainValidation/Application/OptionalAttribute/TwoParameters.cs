@@ -2,7 +2,7 @@
 
 namespace CleanDomainValidation.Application;
 
-public partial class Validator<TCommand>
+public partial class Validator<TResult>
 {
 	protected TValueObject? OptionalAttribute<T1, T2, TValueObject>(
 		T1? param1,
@@ -79,7 +79,7 @@ public partial class Validator<TCommand>
 		CanFail<TValueObject> result = createMethod.Invoke(param1, param2);
 		if (result.HasFailed)
 		{
-			_validationErrors.AddRange(result.Errors);
+			_validationResult.InheritFailure(result);
 			return default!;
 		}
 
@@ -101,7 +101,7 @@ public partial class Validator<TCommand>
 		CanFail<TValueObject> result = createMethod.Invoke(param1.Value, param2);
 		if (result.HasFailed)
 		{
-			_validationErrors.AddRange(result.Errors);
+			_validationResult.InheritFailure(result);
 			return default!;
 		}
 
@@ -123,7 +123,7 @@ public partial class Validator<TCommand>
 		CanFail<TValueObject> result = createMethod.Invoke(param1, param2.Value);
 		if (result.HasFailed)
 		{
-			_validationErrors.AddRange(result.Errors);
+			_validationResult.InheritFailure(result);
 			return default!;
 		}
 
@@ -145,7 +145,7 @@ public partial class Validator<TCommand>
 		CanFail<TValueObject> result = createMethod.Invoke(param1.Value, param2.Value);
 		if (result.HasFailed)
 		{
-			_validationErrors.AddRange(result.Errors);
+			_validationResult.InheritFailure(result);
 			return default!;
 		}
 

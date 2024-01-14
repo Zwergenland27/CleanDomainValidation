@@ -4,6 +4,24 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <PackageId>Zwergenland.CleanDomainValidation</PackageId>
+    <Title>CleanDomainValidation</Title>
+    <Company />
+    <Version>1.0.0-beta</Version>
+    <Authors>Zwergenland  </Authors>
+    <Product>CleanDomainValidation</Product>
+    <Description>Consistent domain error handling and validation, which can be used in the other layers easy</Description>
+    <Copyright>MIT</Copyright>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/Zwergenland27/CleanDomainValidation</RepositoryUrl>
+    <PackageTags>DDD; Clean Architecture; Domain; Validation; Error Handling; Command; Query; Request;</PackageTags>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>

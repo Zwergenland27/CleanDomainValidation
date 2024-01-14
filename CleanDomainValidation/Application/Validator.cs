@@ -2,30 +2,27 @@
 
 namespace CleanDomainValidation.Application;
 
-public abstract partial class Validator<TCommand>
-	where TCommand : ICommand
+public abstract partial class Validator<TResult>
 {
-	private protected readonly List<Error> _validationErrors = new();
+	protected readonly CanFail _validationResult = new();
 
-	private Func<TCommand>? _creationMethod;
+	private Func<TResult>? _creationMethod;
 
-	protected IReadOnlyList<Error> ValidationErrors => _validationErrors.AsReadOnly();
-
-	protected void CreateInstance(Func<TCommand> creationMethod)
+	protected void CreateInstance(Func<TResult> creationMethod)
 	{
 		_creationMethod = creationMethod;
 	}
 
-	public CanFail<TCommand> Validate()
+	public CanFail<TResult> Validate()
 	{
 		if (_creationMethod is null)
 		{
 			throw new InvalidOperationException("You have to specify the command creation method using the CreateInstance method.");
 		}
 
-		if (_validationErrors.Any())
+		if (_validationResult.HasFailed)
 		{
-			return CanFail<TCommand>.FromErrors(_validationErrors);
+			return CanFail<TResult>.FromFailure(_validationResult);
 		}
 
 		return _creationMethod.Invoke();
