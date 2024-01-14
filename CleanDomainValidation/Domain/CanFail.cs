@@ -30,7 +30,7 @@ public sealed class CanFail : AbstractCanFail
 	{
 		if(!result.HasFailed)
 		{
-			throw new InvalidOperationException("Cannot use CanFail.FromFailure on a result that has not failed");
+			throw new NoErrorsOccuredException("Cannot use CanFail.FromFailure on a result that has not failed");
 		}
 
 		var canFail = new CanFail();

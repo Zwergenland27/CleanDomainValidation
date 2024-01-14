@@ -2,19 +2,19 @@
 
 namespace CleanDomainValidation.Application;
 
-public partial class Validator<TCommand>
+public partial class Validator<TResult>
 {
 	protected TEnum RequiredEnum<TEnum>(int? value, Error missingEnumError, Error undefinedEnumError) where TEnum : Enum
 	{
 		if (value is null)
 		{
-			_validationErrors.Add(missingEnumError);
+			_validationResult.Failed(missingEnumError);
 			return default!;
 		}
 
 		if (!Enum.IsDefined(typeof(TEnum), value))
 		{
-			_validationErrors.Add(undefinedEnumError);
+			_validationResult.Failed(undefinedEnumError);
 			return default!;
 		}
 
@@ -30,7 +30,7 @@ public partial class Validator<TCommand>
 
 		if (!Enum.IsDefined(typeof(TEnum), value))
 		{
-			_validationErrors.Add(undefinedEnumError);
+			_validationResult.Failed(undefinedEnumError);
 			return default!;
 		}
 

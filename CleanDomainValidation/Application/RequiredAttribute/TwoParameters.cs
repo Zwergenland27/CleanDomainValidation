@@ -2,7 +2,7 @@
 
 namespace CleanDomainValidation.Application;
 
-public partial class Validator<TCommand>
+public partial class Validator<TResult>
 {
 	protected TValueObject RequiredAttribute<T1, T2, TValueObject>(
 		T1? param1, Error param1MissingError,
@@ -11,20 +11,20 @@ public partial class Validator<TCommand>
 		where T1 : notnull
 		where T2 : notnull
 	{
-		List<Error> missingErrors = new();
+		CanFail notNullCheck = new();
 		if (param1 is null)
 		{
-			missingErrors.Add(param1MissingError);
+			notNullCheck.Failed(param1MissingError);
 		}
 
 		if (param2 is null)
 		{
-			missingErrors.Add(param2MissingError);
+			notNullCheck.Failed(param2MissingError);
 		}
 
-		if (missingErrors.Any())
+		if (notNullCheck.HasFailed)
 		{
-			_validationErrors.AddRange(missingErrors);
+			_validationResult.InheritFailure(notNullCheck);
 			return default!;
 		}
 
@@ -38,20 +38,20 @@ public partial class Validator<TCommand>
 		where T1 : struct
 		where T2 : notnull
 	{
-		List<Error> missingErrors = new();
+		CanFail notNullCheck = new();
 		if (param1 is null)
 		{
-			missingErrors.Add(param1MissingError);
+			notNullCheck.Failed(param1MissingError);
 		}
 
 		if (param2 is null)
 		{
-			missingErrors.Add(param2MissingError);
+			notNullCheck.Failed(param2MissingError);
 		}
 
-		if (missingErrors.Any())
+		if (notNullCheck.HasFailed)
 		{
-			_validationErrors.AddRange(missingErrors);
+			_validationResult.InheritFailure(notNullCheck);
 			return default!;
 		}
 
@@ -65,20 +65,20 @@ public partial class Validator<TCommand>
 		where T1 : notnull
 		where T2 : struct
 	{
-		List<Error> missingErrors = new();
+		CanFail notNullCheck = new();
 		if (param1 is null)
 		{
-			missingErrors.Add(param1MissingError);
+			notNullCheck.Failed(param1MissingError);
 		}
 
 		if (param2 is null)
 		{
-			missingErrors.Add(param2MissingError);
+			notNullCheck.Failed(param2MissingError);
 		}
 
-		if (missingErrors.Any())
+		if (notNullCheck.HasFailed)
 		{
-			_validationErrors.AddRange(missingErrors);
+			_validationResult.InheritFailure(notNullCheck);
 			return default!;
 		}
 
@@ -92,20 +92,20 @@ public partial class Validator<TCommand>
 		where T1 : struct
 		where T2 : struct
 	{
-		List<Error> missingErrors = new();
+		CanFail notNullCheck = new();
 		if (param1 is null)
 		{
-			missingErrors.Add(param1MissingError);
+			notNullCheck.Failed(param1MissingError);
 		}
 
 		if (param2 is null)
 		{
-			missingErrors.Add(param2MissingError);
+			notNullCheck.Failed(param2MissingError);
 		}
 
-		if (missingErrors.Any())
+		if (notNullCheck.HasFailed)
 		{
-			_validationErrors.AddRange(missingErrors);
+			_validationResult.InheritFailure(notNullCheck);
 			return default!;
 		}
 
@@ -119,27 +119,27 @@ public partial class Validator<TCommand>
 		where T1 : notnull
 		where T2 : notnull
 	{
-		List<Error> missingErrors = new();
+		CanFail notNullCheck = new();
 		if (param1 is null)
 		{
-			missingErrors.Add(param1MissingError);
+			notNullCheck.Failed(param1MissingError);
 		}
 
 		if (param2 is null)
 		{
-			missingErrors.Add(param2MissingError);
+			notNullCheck.Failed(param2MissingError);
 		}
 
-		if (missingErrors.Any())
+		if (notNullCheck.HasFailed)
 		{
-			_validationErrors.AddRange(missingErrors);
+			_validationResult.InheritFailure(notNullCheck);
 			return default!;
 		}
 
 		CanFail<TValueObject> result = createMethod.Invoke(param1!, param2!);
 		if (result.HasFailed)
 		{
-			_validationErrors.AddRange(result.Errors);
+			_validationResult.InheritFailure(result);
 			return default!;
 		}
 
@@ -153,27 +153,27 @@ public partial class Validator<TCommand>
 		where T1 : struct
 		where T2 : notnull
 	{
-		List<Error> missingErrors = new();
+		CanFail notNullCheck = new();
 		if (param1 is null)
 		{
-			missingErrors.Add(param1MissingError);
+			notNullCheck.Failed(param1MissingError);
 		}
 
 		if (param2 is null)
 		{
-			missingErrors.Add(param2MissingError);
+			notNullCheck.Failed(param2MissingError);
 		}
 
-		if (missingErrors.Any())
+		if (notNullCheck.HasFailed)
 		{
-			_validationErrors.AddRange(missingErrors);
+			_validationResult.InheritFailure(notNullCheck);
 			return default!;
 		}
 
 		CanFail<TValueObject> result = createMethod.Invoke(param1!.Value, param2!);
 		if (result.HasFailed)
 		{
-			_validationErrors.AddRange(result.Errors);
+			_validationResult.InheritFailure(result);
 			return default!;
 		}
 
@@ -187,27 +187,27 @@ public partial class Validator<TCommand>
 		where T1 : notnull
 		where T2 : struct
 	{
-		List<Error> missingErrors = new();
+		CanFail notNullCheck = new();
 		if (param1 is null)
 		{
-			missingErrors.Add(param1MissingError);
+			notNullCheck.Failed(param1MissingError);
 		}
 
 		if (param2 is null)
 		{
-			missingErrors.Add(param2MissingError);
+			notNullCheck.Failed(param2MissingError);
 		}
 
-		if (missingErrors.Any())
+		if (notNullCheck.HasFailed)
 		{
-			_validationErrors.AddRange(missingErrors);
+			_validationResult.InheritFailure(notNullCheck);
 			return default!;
 		}
 
 		CanFail<TValueObject> result = createMethod.Invoke(param1!, param2!.Value);
 		if (result.HasFailed)
 		{
-			_validationErrors.AddRange(result.Errors);
+			_validationResult.InheritFailure(result);
 			return default!;
 		}
 
@@ -221,27 +221,27 @@ public partial class Validator<TCommand>
 		where T1 : struct
 		where T2 : struct
 	{
-		List<Error> missingErrors = new();
+		CanFail notNullCheck = new();
 		if (param1 is null)
 		{
-			missingErrors.Add(param1MissingError);
+			notNullCheck.Failed(param1MissingError);
 		}
 
 		if (param2 is null)
 		{
-			missingErrors.Add(param2MissingError);
+			notNullCheck.Failed(param2MissingError);
 		}
 
-		if (missingErrors.Any())
+		if (notNullCheck.HasFailed)
 		{
-			_validationErrors.AddRange(missingErrors);
+			_validationResult.InheritFailure(notNullCheck);
 			return default!;
 		}
 
 		CanFail<TValueObject> result = createMethod.Invoke(param1!.Value, param2!.Value);
 		if (result.HasFailed)
 		{
-			_validationErrors.AddRange(result.Errors);
+			_validationResult.InheritFailure(result);
 			return default!;
 		}
 

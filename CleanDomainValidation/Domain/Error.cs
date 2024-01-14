@@ -3,7 +3,7 @@
 /// <summary>
 /// Used to indicate an error instead of using exceptions
 /// </summary>
-public readonly record struct Error
+public sealed class Error
 {
 	private Error(ErrorType type, string code, string message)
 	{

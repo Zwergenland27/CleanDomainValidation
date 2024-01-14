@@ -7,14 +7,14 @@ public sealed class CanFail<TResult> : AbstractCanFail, ICanFail<TResult>
 
 	private bool _valueSet = false;
 
-	public static InvalidOperationException ValueNotSet => new InvalidOperationException("The value has not been set yet");
+	public static InvalidOperationException ValueNotSet => new ("The value has not been set yet");
 
 	public TResult Value
 	{
 		get
 		{
-			if(!_valueSet) throw new ValueNotSetException();
 			if (_errors.Count != 0) throw new ValueInvalidException();
+			if (!_valueSet) throw new ValueNotSetException();
 			return _value;
 		}
 	}
@@ -59,7 +59,7 @@ public sealed class CanFail<TResult> : AbstractCanFail, ICanFail<TResult>
 	{
 		if (!result.HasFailed)
 		{
-			throw new InvalidOperationException($"Cannot use CanFail<{typeof(TResult)}>.FromFailure on a result that has not failed");
+			throw new NoErrorsOccuredException($"Cannot use CanFail<{typeof(TResult)}>.FromFailure on a result that has not failed");
 		}
 
 		var canFail = new CanFail<TResult>();

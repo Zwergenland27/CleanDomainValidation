@@ -1,12 +1,12 @@
 ﻿namespace CleanDomainValidation.Application;
 
 /// <summary>
-/// Marker interface for parameters
+/// Marker interface for parameter
 /// </summary>
 public interface IParameter { }
 
 /// <summary>
-/// Marker interface for url parameters
+/// Marker interface for url parameter
 /// </summary>
 public interface IUrlParameter { }
 
