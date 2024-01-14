@@ -13,8 +13,8 @@ public sealed class CanFail<TResult> : AbstractCanFail, ICanFail<TResult>
 	{
 		get
 		{
-			if(!_valueSet) throw new ValueNotSetException();
 			if (_errors.Count != 0) throw new ValueInvalidException();
+			if (!_valueSet) throw new ValueNotSetException();
 			return _value;
 		}
 	}
@@ -59,7 +59,7 @@ public sealed class CanFail<TResult> : AbstractCanFail, ICanFail<TResult>
 	{
 		if (!result.HasFailed)
 		{
-			throw new InvalidOperationException($"Cannot use CanFail<{typeof(TResult)}>.FromFailure on a result that has not failed");
+			throw new NoErrorsOccuredException($"Cannot use CanFail<{typeof(TResult)}>.FromFailure on a result that has not failed");
 		}
 
 		var canFail = new CanFail<TResult>();

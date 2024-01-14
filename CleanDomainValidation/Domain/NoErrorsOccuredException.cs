@@ -1,5 +1,5 @@
 ﻿namespace CleanDomainValidation.Domain;
 
-public class NoErrorsOccuredException : InvalidOperationException
+public class NoErrorsOccuredException(string? message = null) : InvalidOperationException(message)
 {
 }
