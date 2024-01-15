@@ -6,15 +6,20 @@
     <Nullable>enable</Nullable>
     <PackageId>Zwergenland.CleanDomainValidation</PackageId>
     <Title>CleanDomainValidation</Title>
-    <Company />
-    <Version>1.0.0-beta</Version>
-    <Authors>Zwergenland  </Authors>
+    <Company>Zwergenland</Company>
+    <Version>0.0.0-beta</Version>
+    <Authors>Florian Königsmann</Authors>
     <Product>CleanDomainValidation</Product>
     <Description>Consistent domain error handling and validation, which can be used in the other layers easy</Description>
-    <Copyright>MIT</Copyright>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/Zwergenland27/CleanDomainValidation</RepositoryUrl>
-    <PackageTags>DDD; Clean Architecture; Domain; Validation; Error Handling; Command; Query; Request;</PackageTags>
+    <PackageTags>DDD; Clean Architecture; Domain; Validation; Errorhandling; Command; Query; Request;</PackageTags>
+    <PackageProjectUrl>https://github.com/Zwergenland27/CleanDomainValidation/</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
