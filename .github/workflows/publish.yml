@@ -27,14 +27,16 @@ jobs:
     - name: Build
       run: dotnet build ${{ vars.PROJECT_NAME }} --no-restore --configuration Release
 
-    - name: Versioning
-      id: version
-      uses: battila7/get-version-action@v2
+    - name: Get Version from tag
+      run: |
+        VERSION=${GITHUB_REF_NAME#v}
+        echo Version: $VERSION
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
 
     - name: Pack
-      run: dotnet pack ${{ vars.PROJECT_NAME }} --no-restore --no-build --configuration Release -p:PackageVersion=${{ steps.version.outputs.version-without-v }} --output ${{ env.PACKAGE_OUTPUT_DIR }}
+      run: dotnet pack ${{ vars.PROJECT_NAME }} --no-restore --no-build --configuration Release -p:PackageVersion=${VERSION} --output ${{ env.PACKAGE_OUTPUT_DIR }}
 
     - name: Publish
-      run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIR }}\*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s ${{ vars.NUGET_SOURCE_URL }}
+      run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIR }}/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s ${{ vars.NUGET_SOURCE_URL }}
     
     
