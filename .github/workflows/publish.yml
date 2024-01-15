@@ -1,0 +1,37 @@
+name: Deploy to NuGet
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - v*
+
+jobs: 
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-lates
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+        
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build ${{ env.PROJECT_NAME }} --no-restore --configuration Release
+
+    - name: Versioning
+      id: version
+      uses: battila7/get-version-action@v2
+
+    - name: Pack
+      run: dotnet pack ${{ env.PROJECT_NAME }} --no-restore --no-build --configuration Release -p:PackageVersion=${{ steps.version.outputs.version-without-v }} --output ${{ env.PACKAGE_OUTPUT_DIR }}
+
+    - name: Publish
+      run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIR }}\*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s ${{ env.NUGET_SOURCE_URL }}
+    
+    
