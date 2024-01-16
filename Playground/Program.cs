@@ -2,7 +2,7 @@
 using CleanDomainValidation.Application;
 using CleanDomainValidation.Domain;
 
-Params request = new("TIME");
+Params request = new(null);
 
 var command = CommandBuilder<Rekord>
 	.AddParameter(request)
@@ -20,20 +20,24 @@ internal class Tests : CommandValidator<Params, Rekord>
 {
 	public override void Configure(Params parameter)
 	{
-		Type t = RequiredEnum<Type>(parameter.Type, Error.Validation("1", "2"), Error.Validation("3", "4"));
+		IEnumerable<ValueObject>? t = OptionalList(
+			parameter.List,
+			parameter => ValueObject.Create(parameter));
 
-		CreateInstance(() => new Rekord(t));
+		CreateInstance(() => new Rekord(t?.ToList()));
 	}
 }
 
-public record Params(string? Type) : IParameter;
+public record Params(List<string>? List) : IParameter;
 
-public record Rekord(Type t) : ICommand;
+public record Rekord(List<ValueObject>? list) : ICommand;
 
 
-public enum Type
+public record ValueObject(string Value)
 {
-	SMS,
-	TIME,
-	Wildschwein
+	public static CanFail<ValueObject> Create(string Value)
+	{
+		if (Value == "Störung") return Error.Conflict("Fehöler", "");
+		return new ValueObject(Value);
+	}
 }
