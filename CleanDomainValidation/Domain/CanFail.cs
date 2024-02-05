@@ -1,7 +1,18 @@
 ﻿namespace CleanDomainValidation.Domain;
 
+/// <summary>
+/// Can be used instead of returning void if an error can occur in the method execution
+/// </summary>
 public sealed class CanFail : AbstractCanFail
 {
+	/// <summary>
+	/// Converts failure result to <see cref="CanFail{TResult}"/> with <typeparamref name="TOther"/> being the result type
+	/// </summary>
+	public CanFail<TOther> GetFailureAs<TOther>()
+	{
+		return CanFail<TOther>.FromFailure(this);
+	}
+
 	/// <summary>
 	/// Creates successfull <see cref="CanFail"/> instance
 	/// </summary>
