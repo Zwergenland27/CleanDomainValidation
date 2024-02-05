@@ -1,14 +1,23 @@
 ﻿
 namespace CleanDomainValidation.Domain;
 
+/// <summary>
+/// Base implementation of <see cref="ICanFail"/>
+/// </summary>
 public abstract class AbstractCanFail : ICanFail
 {
+	/// <summary>
+	/// List of errros that occured
+	/// </summary>
 	protected readonly List<Error> _errors = [];
-
+	
+	/// <inheritdoc/>
 	public IReadOnlyList<Error> Errors => _errors.Count == 0 ? throw new NoErrorsOccuredException() : _errors ;
-
+	
+	/// <inheritdoc/>
 	public bool HasFailed => _errors.Count != 0;
 
+	/// <inheritdoc/>
 	public FailureType Type
 	{
 		get

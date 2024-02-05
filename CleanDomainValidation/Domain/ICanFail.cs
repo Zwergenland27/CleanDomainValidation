@@ -1,7 +1,7 @@
 ﻿namespace CleanDomainValidation.Domain;
 
 /// <summary>
-/// Can be used instead of returning void if an error can occur in the method execution
+/// Can be used for returning an error that occured in the method execution
 /// </summary>
 public interface ICanFail
 {
