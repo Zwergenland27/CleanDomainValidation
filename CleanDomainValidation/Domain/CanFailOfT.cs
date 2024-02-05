@@ -58,11 +58,13 @@ public sealed class CanFail<TResult> : AbstractCanFail, ICanFail<TResult>
 	}
 
 	/// <summary>
-	/// Converts failure result to <see cref="CanFail"/>
+	/// Converts result to <see cref="CanFail"/>
 	/// </summary>
-	public CanFail GetFailure()
+	public CanFail Inherit()
 	{
-		return CanFail.FromFailure(this);
+		CanFail result = new();
+		result.InheritFailure(this);
+		return result;
 	}
 
 	/// <summary>
