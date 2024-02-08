@@ -1,4 +1,5 @@
 ﻿using CleanDomainValidation.Application.Class;
+using CleanDomainValidation.Application.Enums;
 using CleanDomainValidation.Application.Struct;
 
 namespace CleanDomainValidation.Application;
@@ -35,5 +36,21 @@ public class Builder<TParameters, TResult>
 		var structProperty = new StructProperty<TParameters, TProperty>(_parameters);
 		Properties.Add(structProperty);
 		return structProperty;
+	}
+
+	public EnumProperty<TParameters, TProperty> EnumProperty<TProperty>(Func<TResult, TProperty?> property)
+		where TProperty : struct
+	{
+		var enumProperty = new EnumProperty<TParameters, TProperty>(_parameters);
+		Properties.Add(enumProperty);
+		return enumProperty;
+	}
+
+	public EnumProperty<TParameters, TProperty> EnumProperty<TProperty>(Func<TResult, TProperty> property)
+		where TProperty : struct
+	{
+		var enumProperty = new EnumProperty<TParameters, TProperty>(_parameters);
+		Properties.Add(enumProperty);
+		return enumProperty;
 	}
 }
