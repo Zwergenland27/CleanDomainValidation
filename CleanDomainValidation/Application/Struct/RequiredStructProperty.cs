@@ -14,16 +14,4 @@ public sealed class RequiredStructProperty<TParameters, TProperty> : IValidatabl
 		Parameters = parameters;
 		MissingError = missingError;
 	}
-
-	public TProperty Map(Func<TParameters, TProperty?> value)
-	{
-		var res = value.Invoke(Parameters);
-		if (res is null)
-		{
-			ValidationResult.Failed(MissingError);
-			return default!;
-		}
-
-		return res.Value;
-	}
 }

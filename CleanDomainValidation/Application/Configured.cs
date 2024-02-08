@@ -3,6 +3,7 @@
 namespace CleanDomainValidation.Application;
 
 public sealed class Configured<TRequest>
+	where TRequest : IRequest
 {
 	private readonly Func<TRequest> _creationMethod;
 

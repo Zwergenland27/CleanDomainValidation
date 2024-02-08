@@ -12,9 +12,4 @@ public sealed class OptionalClassProperty<TParameters, TProperty> : IValidatable
 	{
 		Parameters = parameters;
 	}
-
-	public TProperty? Map(Func<TParameters, TProperty?> value)
-	{
-		return value.Invoke(Parameters);
-	}
 }

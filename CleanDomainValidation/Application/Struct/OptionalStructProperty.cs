@@ -13,9 +13,4 @@ public sealed class OptionalStructProperty<TParameters, TProperty> : IValidatabl
 	{
 		Parameters = parameters;
 	}
-
-	public TProperty? Map(Func<TParameters, TProperty?> value)
-	{
-		return value.Invoke(Parameters);
-	}
 }

@@ -1,5 +1,4 @@
 ﻿using CleanDomainValidation.Domain;
-using System.Linq.Expressions;
 
 namespace CleanDomainValidation.Application.Class;
 
@@ -14,17 +13,5 @@ public sealed class RequiredClassProperty<TParameters, TProperty> : IValidatable
 	{
 		Parameters = parameters;
 		MissingError = missingError;
-	}
-
-	public TProperty Map(Func<TParameters, TProperty?> value)
-	{
-		var res = value.Invoke(Parameters);
-		if (res is null)
-		{
-			ValidationResult.Failed(MissingError);
-			return default!;
-		}
-
-		return res;
 	}
 }

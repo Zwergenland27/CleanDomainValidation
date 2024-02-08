@@ -3,6 +3,8 @@
 namespace CleanDomainValidation.Application;
 
 public sealed class RequestBuilder<TParameter, TRequest> : Builder<TParameter, TRequest>
+	where TParameter : IParameters
+	where TRequest : IRequest
 {
 	internal RequestBuilder(TParameter parameters) : base(parameters) { }
 

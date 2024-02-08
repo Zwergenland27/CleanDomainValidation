@@ -3,16 +3,20 @@
 namespace CleanDomainValidation.Application;
 
 public class Build<TRequest>
+	where TRequest : IRequest
 {
 	private Build() { }
 
     public static Build<TParameters, TRequest> ByAdding<TParameters>(TParameters parameters)
+		where TParameters : IParameters
 	{
 		return new Build<TParameters, TRequest>(parameters);
 	}
 }
 
 public class Build<TParameters, TRequest>
+	where TParameters : IParameters
+	where TRequest : IRequest
 {
 	private TParameters _parameters;
 	internal Build(TParameters parameters)
