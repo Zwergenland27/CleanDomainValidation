@@ -8,7 +8,7 @@ public sealed class RequestBuilder<TParameter, TRequest> : Builder<TParameter, T
 {
 	internal RequestBuilder(TParameter parameters) : base(parameters) { }
 
-	public Configured<TRequest> Build(Func<TRequest> creationMethod)
+	public ValidatedRequest<TRequest> Build(Func<TRequest> creationMethod)
 	{
 		CanFail result = new();
 
@@ -17,6 +17,11 @@ public sealed class RequestBuilder<TParameter, TRequest> : Builder<TParameter, T
 			result.InheritFailure(property.ValidationResult);
 		});
 
-		return new Configured<TRequest>(creationMethod, result);
+		if (result.HasFailed)
+		{
+			return new ValidatedRequest<TRequest>(default!, result);
+		}
+
+		return new ValidatedRequest<TRequest>(creationMethod.Invoke(), result);
 	}
 }

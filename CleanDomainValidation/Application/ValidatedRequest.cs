@@ -2,23 +2,22 @@
 
 namespace CleanDomainValidation.Application;
 
-public sealed class Configured<TRequest>
+public sealed class ValidatedRequest<TRequest>
 	where TRequest : IRequest
 {
-	private readonly Func<TRequest> _creationMethod;
+	private readonly TRequest _request;
 
 	private readonly CanFail _result;
 
-	internal Configured(Func<TRequest> creationMethod, CanFail result)
+	internal ValidatedRequest(TRequest request, CanFail result)
 	{
-		_creationMethod = creationMethod;
+		_request = request;
 		_result = result;
 	}
 
 	public CanFail<TRequest> Build()
 	{
 		if(_result.HasFailed) return _result.GetFailureAs<TRequest>();
-
-		return _creationMethod.Invoke();
+		return _request;
 	}
 }

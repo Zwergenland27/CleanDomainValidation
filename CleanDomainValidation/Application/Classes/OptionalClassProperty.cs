@@ -1,6 +1,6 @@
 ﻿using CleanDomainValidation.Domain;
 
-namespace CleanDomainValidation.Application.Class;
+namespace CleanDomainValidation.Application.Classes;
 
 public sealed class OptionalClassProperty<TParameters, TProperty> : IValidatableProperty
 	where TProperty : notnull

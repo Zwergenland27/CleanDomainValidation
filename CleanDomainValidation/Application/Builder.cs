@@ -1,6 +1,7 @@
-﻿using CleanDomainValidation.Application.Class;
+﻿using CleanDomainValidation.Application.Classes;
 using CleanDomainValidation.Application.Enums;
-using CleanDomainValidation.Application.Struct;
+using CleanDomainValidation.Application.Lists;
+using CleanDomainValidation.Application.Structs;
 
 namespace CleanDomainValidation.Application;
 
@@ -15,7 +16,7 @@ public class Builder<TParameters, TResult>
 	}
 
 	public ClassProperty<TParameters, TProperty> ClassProperty<TProperty>(Func<TResult, TProperty?> property)
-	where TProperty : notnull
+		where TProperty : notnull
 	{
 		var classProperty = new ClassProperty<TParameters, TProperty>(_parameters);
 		Properties.Add(classProperty);
@@ -52,5 +53,13 @@ public class Builder<TParameters, TResult>
 		var enumProperty = new EnumProperty<TParameters, TProperty>(_parameters);
 		Properties.Add(enumProperty);
 		return enumProperty;
+	}
+
+	public ListProperty<TParameters, TProperty> ListProperty<TProperty>(Func<TResult, IEnumerable<TProperty>?> property)
+		where TProperty : notnull
+	{
+		var classListProperty = new ListProperty<TParameters, TProperty>(_parameters);
+		Properties.Add(classListProperty);
+		return classListProperty;
 	}
 }

@@ -1,6 +1,6 @@
 ﻿using CleanDomainValidation.Domain;
 
-namespace CleanDomainValidation.Application.Struct;
+namespace CleanDomainValidation.Application.Structs;
 
 public sealed class RequiredStructProperty<TParameters, TProperty> : IValidatableProperty
 	where TProperty : struct

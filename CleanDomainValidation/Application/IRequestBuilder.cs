@@ -5,5 +5,5 @@ public interface IRequestBuilder<TParameters, TRequest>
 	where TRequest : IRequest
 
 {
-	Configured<TRequest> Configure(RequestBuilder<TParameters, TRequest> builder);
+	ValidatedRequest<TRequest> Configure(RequestBuilder<TParameters, TRequest> builder);
 }

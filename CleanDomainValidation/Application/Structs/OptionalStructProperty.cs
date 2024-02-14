@@ -1,7 +1,7 @@
 ﻿using CleanDomainValidation.Domain;
 using System.Linq.Expressions;
 
-namespace CleanDomainValidation.Application.Struct;
+namespace CleanDomainValidation.Application.Structs;
 
 public sealed class OptionalStructProperty<TParameters, TProperty> : IValidatableProperty
 	where TProperty : struct
