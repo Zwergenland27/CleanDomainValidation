@@ -11,18 +11,20 @@ public static class EnumMapExtensions
 		this OptionalEnumProperty<TParameters, TProperty> property,
 		Func<TParameters, string?> value,
 		Error invalidEnumError)
+		where TParameters : notnull
 		where TProperty : struct
 	{
 		string? rawEnum = value.Invoke(property.Parameters);
 		if(rawEnum is null)
 		{
-			return default;
+			property.IsMissing = true;
+			return null;
 		}
 
 		if(!Enum.TryParse(rawEnum, out TProperty enumResult))
 		{
 			property.ValidationResult.Failed(invalidEnumError);
-			return default;
+			return null;
 		}
 
 		return enumResult;
@@ -32,19 +34,21 @@ public static class EnumMapExtensions
 		this RequiredEnumProperty<TParameters, TProperty> property,
 		Func<TParameters, string?> value,
 		Error invalidEnumError)
+		where TParameters : notnull
 		where TProperty : struct
 	{
 		string? rawEnum = value.Invoke(property.Parameters);
 		if (rawEnum is null)
 		{
+			property.IsMissing = true;
 			property.ValidationResult.Failed(property.MissingError);
-			return default!;
+			return default;
 		}
 
 		if (!Enum.TryParse(rawEnum, out TProperty enumResult))
 		{
 			property.ValidationResult.Failed(invalidEnumError);
-			return default!;
+			return default;
 		}
 
 		return enumResult;
@@ -54,18 +58,20 @@ public static class EnumMapExtensions
 		this OptionalEnumProperty<TParameters, TProperty> property,
 		Func<TParameters, int?> value,
 		Error invalidEnumError)
-	where TProperty : struct
+		where TParameters : notnull
+		where TProperty : struct
 	{
 		int? rawEnum = value.Invoke(property.Parameters);
 		if (rawEnum is null)
 		{
-			return default;
+			property.IsMissing = true;
+			return null;
 		}
 
 		if (!Enum.IsDefined(typeof(TProperty), rawEnum.Value))
 		{
 			property.ValidationResult.Failed(invalidEnumError);
-			return default;
+			return null;
 		}
 
 		return (TProperty) Enum.ToObject(typeof(TProperty), rawEnum.Value);
@@ -75,19 +81,21 @@ public static class EnumMapExtensions
 		this RequiredEnumProperty<TParameters, TProperty> property,
 		Func<TParameters, int?> value,
 		Error invalidEnumError)
+		where TParameters : notnull
 		where TProperty : struct
 	{
 		int? rawEnum = value.Invoke(property.Parameters);
 		if (rawEnum is null)
 		{
+			property.IsMissing = true;
 			property.ValidationResult.Failed(property.MissingError);
-			return default!;
+			return default;
 		}
 
 		if (!Enum.IsDefined(typeof(TProperty), rawEnum.Value))
 		{
 			property.ValidationResult.Failed(invalidEnumError);
-			return default!;
+			return default;
 		}
 
 		return (TProperty)Enum.ToObject(typeof(TProperty), rawEnum.Value);
@@ -101,12 +109,14 @@ public static class EnumMapExtensions
 		this OptionalListProperty<TParameters, TProperty> property,
 		Func<TParameters, IEnumerable<string>?> values,
 		Error invalidEnumError)
+		where TParameters : notnull
 		where TProperty : struct
 	{
 		IEnumerable<string>? rawEnums = values.Invoke(property.Parameters);
 		if (rawEnums is null)
 		{
-			return default;
+			property.IsMissing = true;
+			return null;
 		}
 
 		List<TProperty> resultEnums = [];
@@ -129,13 +139,15 @@ public static class EnumMapExtensions
 		this RequiredListProperty<TParameters, TProperty> property,
 		Func<TParameters, IEnumerable<string>?> values,
 		Error invalidEnumError)
+		where TParameters : notnull
 		where TProperty : struct
 	{
 		IEnumerable<string>? rawEnums = values.Invoke(property.Parameters);
 		if (rawEnums is null)
 		{
+			property.IsMissing = true;
 			property.ValidationResult.Failed(property.MissingError);
-			return default!;
+			return null!;
 		}
 
 		List<TProperty> resultEnums = [];
@@ -158,12 +170,14 @@ public static class EnumMapExtensions
 		this OptionalListProperty<TParameters, TProperty> property,
 		Func<TParameters, IEnumerable<int>?> values,
 		Error invalidEnumError)
+		where TParameters : notnull
 		where TProperty : struct
 	{
 		IEnumerable<int>? rawEnums = values.Invoke(property.Parameters);
 		if (rawEnums is null)
 		{
-			return default;
+			property.IsMissing = true;
+			return null;
 		}
 
 		List<TProperty> resultEnums = [];
@@ -186,13 +200,15 @@ public static class EnumMapExtensions
 		this RequiredListProperty<TParameters, TProperty> property,
 		Func<TParameters, IEnumerable<int>?> values,
 		Error invalidEnumError)
+		where TParameters : notnull
 		where TProperty : struct
 	{
 		IEnumerable<int>? rawEnums = values.Invoke(property.Parameters);
 		if (rawEnums is null)
 		{
+			property.IsMissing = true;
 			property.ValidationResult.Failed(property.MissingError);
-			return default!;
+			return null!;
 		}
 
 		List<TProperty> resultEnums = [];

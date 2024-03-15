@@ -27,6 +27,6 @@ public class Build<TParameters, TRequest>
 		where TRequestBuilder : IRequestBuilder<TParameters, TRequest>, new()
 	{
 		TRequestBuilder builder = new();
-		return builder.Configure(new RequestBuilder<TParameters, TRequest>(_parameters)).Build();
+		return builder.Configure(new RequiredPropertyBuilder<TParameters, TRequest>(_parameters)).Build();
 	}
 }

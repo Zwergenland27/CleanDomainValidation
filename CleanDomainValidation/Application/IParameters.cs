@@ -1,3 +1,3 @@
 ﻿namespace CleanDomainValidation.Application;
 
-public interface IParameters { }
+public interface IParameters;

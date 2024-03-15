@@ -10,21 +10,29 @@ public static class DirectMapExtensions
 	public static TProperty? Map<TParameters, TProperty>(
 		this OptionalClassProperty<TParameters, TProperty> property,
 		Func<TParameters, TProperty?> value)
-		where TProperty : notnull
+		where TParameters : notnull
+		where TProperty : class
 	{
-		return value.Invoke(property.Parameters);
+		TProperty? rawValue = value.Invoke(property.Parameters);
+		if(rawValue is null)
+		{
+			property.IsMissing = true;
+		}
+		return rawValue;
 	}
 
 	public static TProperty Map<TParameters, TProperty>(
 		this RequiredClassProperty<TParameters, TProperty> property,
 		Func<TParameters, TProperty?> value)
-		where TProperty : notnull
+		where TParameters : notnull
+		where TProperty : class
 	{
 		TProperty? rawValue = value.Invoke(property.Parameters);
 		if (rawValue is null)
 		{
+			property.IsMissing = true;
 			property.ValidationResult.Failed(property.MissingError);
-			return default!;
+			return null!;
 		}
 
 		return rawValue;
@@ -37,21 +45,29 @@ public static class DirectMapExtensions
 	public static TProperty? Map<TParameters, TProperty>(
 		this OptionalStructProperty<TParameters, TProperty> property,
 		Func<TParameters, TProperty?> value)
-		where TProperty : struct
-	{
-		return value.Invoke(property.Parameters);
-	}
-
-	public static TProperty Map<TParameters, TProperty>(
-		this RequiredStructProperty<TParameters, TProperty> property,
-		Func<TParameters, TProperty?> value)
+		where TParameters : notnull
 		where TProperty : struct
 	{
 		TProperty? rawValue = value.Invoke(property.Parameters);
 		if (rawValue is null)
 		{
+			property.IsMissing = true;
+		}
+		return rawValue;
+	}
+
+	public static TProperty Map<TParameters, TProperty>(
+		this RequiredStructProperty<TParameters, TProperty> property,
+		Func<TParameters, TProperty?> value)
+		where TParameters : notnull
+		where TProperty : struct
+	{
+		TProperty? rawValue = value.Invoke(property.Parameters);
+		if (rawValue is null)
+		{
+			property.IsMissing = true;
 			property.ValidationResult.Failed(property.MissingError);
-			return default!;
+			return default;
 		}
 
 		return rawValue.Value;
@@ -64,19 +80,30 @@ public static class DirectMapExtensions
 	public static IEnumerable<TProperty>? MapEach<TParameters, TProperty>(
 		this OptionalListProperty<TParameters, TProperty> property,
 		Func<TParameters, IEnumerable<TProperty>?> values)
-	{
-		return values.Invoke(property.Parameters);
-	}
-
-	public static IEnumerable<TProperty> MapEach<TParameters, TProperty>(
-	this RequiredListProperty<TParameters, TProperty> property,
-	Func<TParameters, IEnumerable<TProperty>?> values)
+		where TParameters : notnull
+		where TProperty : notnull
 	{
 		IEnumerable<TProperty>? rawValue = values.Invoke(property.Parameters);
 		if (rawValue is null)
 		{
+			property.IsMissing = true;
+		}
+
+		return rawValue;
+	}
+
+	public static IEnumerable<TProperty> MapEach<TParameters, TProperty>(
+		this RequiredListProperty<TParameters, TProperty> property,
+		Func<TParameters, IEnumerable<TProperty>?> values)
+		where TParameters : notnull
+		where TProperty : notnull
+	{
+		IEnumerable<TProperty>? rawValue = values.Invoke(property.Parameters);
+		if (rawValue is null)
+		{
+			property.IsMissing = true;
 			property.ValidationResult.Failed(property.MissingError);
-			return default!;
+			return null!;
 		}
 
 		return rawValue;

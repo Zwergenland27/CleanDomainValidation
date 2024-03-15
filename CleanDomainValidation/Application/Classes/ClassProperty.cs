@@ -3,10 +3,14 @@
 namespace CleanDomainValidation.Application.Classes;
 
 public sealed class ClassProperty<TParameters, TProperty> : IValidatableProperty
-	where TProperty : notnull
+	where TParameters : notnull
+	where TProperty : class
 {
 	private IValidatableProperty _property;
 	private TParameters _parameters;
+
+	public bool IsRequired => _property.IsRequired;
+	public bool IsMissing => _property.IsMissing;
 	public CanFail ValidationResult => _property.ValidationResult;
 
 	internal ClassProperty(TParameters parameters)
@@ -27,4 +31,6 @@ public sealed class ClassProperty<TParameters, TProperty> : IValidatableProperty
 		_property = optional;
 		return optional;
 	}
+
+	//TODO: Add all extension methods in the specific classes and make all properties internal -> not accessible for the user!
 }

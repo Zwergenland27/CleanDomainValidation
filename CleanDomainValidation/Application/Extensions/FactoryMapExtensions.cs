@@ -5,25 +5,30 @@ using CleanDomainValidation.Domain;
 
 namespace CleanDomainValidation.Application.Extensions;
 
-public static class CanFailMapExtensions
+public static class FactoryMapExtensions
 {
 	#region Class Property
 	public static TProperty? Map<TParameters, TProperty, TValue>(
 		this OptionalClassProperty<TParameters, TProperty> property,
 		Func<TParameters, TValue?> value,
 		Func<TValue, CanFail<TProperty>> factoryMethod)
-		where TProperty : notnull
-		where TValue : notnull
+		where TParameters : notnull
+		where TProperty : class
+		where TValue : class
 	{
 		TValue? rawValue = value.Invoke(property.Parameters);
 
-		if (rawValue is null) return default;
+		if (rawValue is null)
+		{
+			property.IsMissing = true;
+			return null;
+		}
 
 		CanFail<TProperty> factoryResult = factoryMethod.Invoke(rawValue);
 		if (factoryResult.HasFailed)
 		{
 			property.ValidationResult.InheritFailure(factoryResult);
-			return default;
+			return null;
 		}
 
 		return factoryResult.Value;
@@ -33,18 +38,23 @@ public static class CanFailMapExtensions
 		this OptionalClassProperty<TParameters, TProperty> property,
 		Func<TParameters, TValue?> value,
 		Func<TValue, CanFail<TProperty>> factoryMethod)
-		where TProperty : notnull
+		where TParameters : notnull
+		where TProperty : class
 		where TValue : struct
 	{
 		TValue? rawValue = value.Invoke(property.Parameters);
 
-		if (rawValue is null) return default;
+		if (rawValue is null)
+		{
+			property.IsMissing = true;
+			return null;
+		}
 
 		CanFail<TProperty> factoryResult = factoryMethod.Invoke(rawValue.Value);
 		if (factoryResult.HasFailed)
 		{
 			property.ValidationResult.InheritFailure(factoryResult);
-			return default;
+			return null;
 		}
 
 		return factoryResult.Value;
@@ -54,21 +64,23 @@ public static class CanFailMapExtensions
 		this RequiredClassProperty<TParameters, TProperty> property,
 		Func<TParameters, TValue?> value,
 		Func<TValue, CanFail<TProperty>> factoryMethod)
-		where TProperty : notnull
-		where TValue : notnull
+		where TParameters : notnull
+		where TProperty : class
+		where TValue : class
 	{
 		TValue? rawValue = value.Invoke(property.Parameters);
 		if (rawValue is null)
 		{
+			property.IsMissing = true;
 			property.ValidationResult.Failed(property.MissingError);
-			return default!;
+			return null!;
 		}
 
 		CanFail<TProperty> factoryResult = factoryMethod.Invoke(rawValue);
 		if (factoryResult.HasFailed)
 		{
 			property.ValidationResult.InheritFailure(factoryResult);
-			return default!;
+			return null!;
 		}
 
 		return factoryResult.Value;
@@ -78,21 +90,23 @@ public static class CanFailMapExtensions
 		this RequiredClassProperty<TParameters, TProperty> property,
 		Func<TParameters, TValue?> value,
 		Func<TValue, CanFail<TProperty>> factoryMethod)
-		where TProperty : notnull
+		where TParameters : notnull
+		where TProperty : class
 		where TValue : struct
 	{
 		TValue? rawValue = value.Invoke(property.Parameters);
 		if (rawValue is null)
 		{
+			property.IsMissing = true;
 			property.ValidationResult.Failed(property.MissingError);
-			return default!;
+			return null!;
 		}
 
 		CanFail<TProperty> factoryResult = factoryMethod.Invoke(rawValue.Value);
 		if (factoryResult.HasFailed)
 		{
 			property.ValidationResult.InheritFailure(factoryResult);
-			return default!;
+			return null!;
 		}
 
 		return factoryResult.Value;
@@ -106,18 +120,23 @@ public static class CanFailMapExtensions
 		this OptionalStructProperty<TParameters, TProperty> property,
 		Func<TParameters, TValue?> value,
 		Func<TValue, CanFail<TProperty>> factoryMethod)
+		where TParameters : notnull
 		where TProperty : struct
-		where TValue : notnull
+		where TValue : class
 	{
 		TValue? rawValue = value.Invoke(property.Parameters);
 
-		if (rawValue is null) return default;
+		if (rawValue is null)
+		{
+			property.IsMissing = true;
+			return null;
+		}
 
 		CanFail<TProperty> factoryResult = factoryMethod.Invoke(rawValue);
 		if (factoryResult.HasFailed)
 		{
 			property.ValidationResult.InheritFailure(factoryResult);
-			return default;
+			return null;
 		}
 
 		return factoryResult.Value;
@@ -127,18 +146,23 @@ public static class CanFailMapExtensions
 		this OptionalStructProperty<TParameters, TProperty> property,
 		Func<TParameters, TValue?> value,
 		Func<TValue, CanFail<TProperty>> factoryMethod)
+		where TParameters : notnull
 		where TProperty : struct
 		where TValue : struct
 	{
 		TValue? rawValue = value.Invoke(property.Parameters);
 
-		if (rawValue is null) return default;
+		if (rawValue is null)
+		{
+			property.IsMissing = true;
+			return null;
+		}
 
 		CanFail<TProperty> factoryResult = factoryMethod.Invoke(rawValue.Value);
 		if (factoryResult.HasFailed)
 		{
 			property.ValidationResult.InheritFailure(factoryResult);
-			return default;
+			return null;
 		}
 
 		return factoryResult.Value;
@@ -148,14 +172,16 @@ public static class CanFailMapExtensions
 		this RequiredStructProperty<TParameters, TProperty> property,
 		Func<TParameters, TValue?> value,
 		Func<TValue, CanFail<TProperty>> factoryMethod)
+		where TParameters : notnull
 		where TProperty : struct
-		where TValue : notnull
+		where TValue : class
 	{
 		TValue? rawValue = value.Invoke(property.Parameters);
 		if (rawValue is null)
 		{
+			property.IsMissing = true;
 			property.ValidationResult.Failed(property.MissingError);
-			return default!;
+			return default;
 		}
 
 		CanFail<TProperty> factoryResult = factoryMethod.Invoke(rawValue);
@@ -172,14 +198,16 @@ public static class CanFailMapExtensions
 		this RequiredStructProperty<TParameters, TProperty> property,
 		Func<TParameters, TValue?> value,
 		Func<TValue, CanFail<TProperty>> factoryMethod)
+		where TParameters : notnull
 		where TProperty : struct
 		where TValue : struct
 	{
 		TValue? rawValue = value.Invoke(property.Parameters);
 		if (rawValue is null)
 		{
+			property.IsMissing = true;
 			property.ValidationResult.Failed(property.MissingError);
-			return default!;
+			return default;
 		}
 
 		CanFail<TProperty> factoryResult = factoryMethod.Invoke(rawValue.Value);
@@ -200,9 +228,15 @@ public static class CanFailMapExtensions
 		this OptionalListProperty<TParameters, TProperty> property,
 		Func<TParameters, IEnumerable<TValue>?> values,
 		Func<TValue, CanFail<TProperty>> factoryMethod)
+		where TParameters : notnull
+		where TProperty : notnull
 	{
 		IEnumerable<TValue>? rawValues = values.Invoke(property.Parameters);
-		if (rawValues is null) return default;
+		if (rawValues is null)
+		{
+			property.IsMissing = true;
+			return null;
+		}
 
 		List<TProperty> resultProperties = [];
 		foreach (var rawProperty in rawValues)
@@ -224,12 +258,15 @@ public static class CanFailMapExtensions
 		this RequiredListProperty<TParameters, TProperty> property,
 		Func<TParameters, IEnumerable<TValue>?> values,
 		Func<TValue, CanFail<TProperty>> factoryMethod)
+		where TParameters : notnull
+		where TProperty : notnull
 	{
 		IEnumerable<TValue>? rawValues = values.Invoke(property.Parameters);
 		if (rawValues is null)
 		{
+			property.IsMissing = true;
 			property.ValidationResult.Failed(property.MissingError);
-			return default!;
+			return null!;
 		}
 
 		List<TProperty> resultProperties = [];

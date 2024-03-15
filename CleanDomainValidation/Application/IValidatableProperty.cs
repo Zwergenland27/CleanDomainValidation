@@ -4,5 +4,7 @@ namespace CleanDomainValidation.Application;
 
 public interface IValidatableProperty
 {
-	internal abstract CanFail ValidationResult { get; }
+	bool IsRequired { get; }
+	bool IsMissing { get; }
+	CanFail ValidationResult { get; }
 }

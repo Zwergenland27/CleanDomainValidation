@@ -1,51 +1,68 @@
-﻿using CleanDomainValidation.Domain;
+﻿using CleanDomainValidation.Application.Classes;
+using CleanDomainValidation.Application.Enums;
+using CleanDomainValidation.Application.Lists;
+using CleanDomainValidation.Application.Structs;
 
 namespace CleanDomainValidation.Application;
-
-public sealed class PropertyBuilder<TParameter, TProperty> : Builder<TParameter, TProperty>
+//TODO: TParameters muss auch notnull sein?
+public abstract class PropertyBuilder<TParameters, TResult>
+	where TParameters : notnull
+	where TResult : notnull
 {
-	internal PropertyBuilder(TParameter parameters) : base(parameters) { }
+	private readonly TParameters _parameters;
+	private readonly List<IValidatableProperty> _properties = [];
+	protected IReadOnlyList<IValidatableProperty> Properties => _properties.AsReadOnly();
 
-	public ValidatedProperty<TProperty> Build(Func<TProperty> creationMethod)
+	internal PropertyBuilder(TParameters parameters)
 	{
-		CanFail result = new();
-
-		Properties.ForEach(property =>
-		{
-			result.InheritFailure(property.ValidationResult);
-		});
-
-		if (result.HasFailed)
-		{
-			return new ValidatedProperty<TProperty>(default!, result);
-		}
-
-		return new ValidatedProperty<TProperty>(creationMethod.Invoke(), result);
+		_parameters = parameters;
 	}
 
-	public ValidatedProperty<TProperty> Build(Func<CanFail<TProperty>> factoryMethod)
+	public ClassProperty<TParameters, TProperty> ClassProperty<TProperty>(Func<TResult, TProperty?> property)
+		where TProperty : class
 	{
-		CanFail result = new();
+		var classProperty = new ClassProperty<TParameters, TProperty>(_parameters);
+		_properties.Add(classProperty);
+		return classProperty;
+	}
 
-		Properties.ForEach(property =>
-		{
-			result.InheritFailure(property.ValidationResult);
-		});
+	public StructProperty<TParameters, TProperty> StructProperty<TProperty>(Func<TResult, TProperty?> property)
+		where TProperty : struct
+	{
+		var structProperty = new StructProperty<TParameters, TProperty>(_parameters);
+		_properties.Add(structProperty);
+		return structProperty;
+	}
 
-		//Ensure the factory method wont get called if any errors occured to the parameters
-		if (result.HasFailed)
-		{
-			return new ValidatedProperty<TProperty>(default!, result);
-		}
+	public StructProperty<TParameters, TProperty> StructProperty<TProperty>(Func<TResult, TProperty> property)
+		where TProperty : struct
+	{
+		var structProperty = new StructProperty<TParameters, TProperty>(_parameters);
+		_properties.Add(structProperty);
+		return structProperty;
+	}
 
-		var creationResult = factoryMethod.Invoke();
-		result.InheritFailure(creationResult);
+	public EnumProperty<TParameters, TProperty> EnumProperty<TProperty>(Func<TResult, TProperty?> property)
+		where TProperty : struct
+	{
+		var enumProperty = new EnumProperty<TParameters, TProperty>(_parameters);
+		_properties.Add(enumProperty);
+		return enumProperty;
+	}
 
-		if (result.HasFailed)
-		{
-			return new ValidatedProperty<TProperty>(default!, result);
-		}
+	public EnumProperty<TParameters, TProperty> EnumProperty<TProperty>(Func<TResult, TProperty> property)
+		where TProperty : struct
+	{
+		var enumProperty = new EnumProperty<TParameters, TProperty>(_parameters);
+		_properties.Add(enumProperty);
+		return enumProperty;
+	}
 
-		return new ValidatedProperty<TProperty>(creationResult.Value, result);
+	public ListProperty<TParameters, TProperty> ListProperty<TProperty>(Func<TResult, IEnumerable<TProperty>?> property)
+		where TProperty : notnull
+	{
+		var classListProperty = new ListProperty<TParameters, TProperty>(_parameters);
+		_properties.Add(classListProperty);
+		return classListProperty;
 	}
 }

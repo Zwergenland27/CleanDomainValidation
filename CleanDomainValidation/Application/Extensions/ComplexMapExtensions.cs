@@ -10,19 +10,24 @@ public static class ComplexMapExtensions
 	public static TProperty? MapComplex<TParameters, TProperty, TPropertyParameters>(
 		this OptionalClassProperty<TParameters, TProperty> property,
 		Func<TParameters, TPropertyParameters?> propertyParameters,
-		Func<PropertyBuilder<TPropertyParameters, TProperty>, ValidatedProperty<TProperty>> propertyBuilder)
-		where TProperty : notnull
-		where TPropertyParameters : notnull
+		Func<PropertyBuilder<TPropertyParameters, TProperty>, ValidatedOptionalProperty<TProperty>> propertyBuilder)
+		where TParameters : notnull
+		where TProperty : class
+		where TPropertyParameters : class
 	{
 		TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
-		if (builderParameters is null) return default;
+		if (builderParameters is null)
+		{
+			property.IsMissing = true;
+			return null;
+		}
 
-		var builder = new PropertyBuilder<TPropertyParameters, TProperty>(builderParameters);
+		var builder = new OptionalPropertyBuilder<TPropertyParameters, TProperty>(builderParameters);
 		var buildResult = propertyBuilder.Invoke(builder).Build();
 		if (buildResult.HasFailed)
 		{
 			property.ValidationResult.InheritFailure(buildResult);
-			return default;
+			return null;
 		}
 
 		return buildResult.Value;
@@ -31,44 +36,24 @@ public static class ComplexMapExtensions
 	public static TProperty? MapComplex<TParameters, TProperty, TPropertyParameters>(
 		this OptionalClassProperty<TParameters, TProperty> property,
 		Func<TParameters, TPropertyParameters?> propertyParameters,
-		Func<PropertyBuilder<TPropertyParameters, TProperty>, ValidatedProperty<TProperty>> propertyBuilder)
-		where TProperty : notnull
+		Func<PropertyBuilder<TPropertyParameters, TProperty>, ValidatedOptionalProperty<TProperty>> propertyBuilder)
+		where TParameters : notnull
+		where TProperty : class
 		where TPropertyParameters : struct
-	{
-		TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
-		if (builderParameters is null) return default;
-
-		var builder = new PropertyBuilder<TPropertyParameters, TProperty>(builderParameters.Value);
-		var buildResult = propertyBuilder.Invoke(builder).Build();
-		if (buildResult.HasFailed)
-		{
-			property.ValidationResult.InheritFailure(buildResult);
-			return default;
-		}
-
-		return buildResult.Value;
-	}
-
-	public static TProperty MapComplex<TParameters, TProperty, TPropertyParameters>(
-		this RequiredClassProperty<TParameters, TProperty> property,
-		Func<TParameters, TPropertyParameters?> propertyParameters,
-		Func<PropertyBuilder<TPropertyParameters, TProperty>, ValidatedProperty<TProperty>> propertyBuilder)
-		where TProperty : notnull
-		where TPropertyParameters: notnull
 	{
 		TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
 		if (builderParameters is null)
 		{
-			property.ValidationResult.Failed(property.MissingError);
-			return default!;
+			property.IsMissing = true;
+			return null;
 		}
 
-		var builder = new PropertyBuilder<TPropertyParameters, TProperty>(builderParameters);
+		var builder = new OptionalPropertyBuilder<TPropertyParameters, TProperty>(builderParameters.Value);
 		var buildResult = propertyBuilder.Invoke(builder).Build();
 		if (buildResult.HasFailed)
 		{
 			property.ValidationResult.InheritFailure(buildResult);
-			return default!;
+			return null;
 		}
 
 		return buildResult.Value;
@@ -77,23 +62,52 @@ public static class ComplexMapExtensions
 	public static TProperty MapComplex<TParameters, TProperty, TPropertyParameters>(
 		this RequiredClassProperty<TParameters, TProperty> property,
 		Func<TParameters, TPropertyParameters?> propertyParameters,
-		Func<PropertyBuilder<TPropertyParameters, TProperty>, ValidatedProperty<TProperty>> propertyBuilder)
-		where TProperty : notnull
+		Func<PropertyBuilder<TPropertyParameters, TProperty>, ValidatedRequiredProperty<TProperty>> propertyBuilder)
+		where TParameters : notnull
+		where TProperty : class
+		where TPropertyParameters: class
+	{
+		TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
+		if (builderParameters is null)
+		{
+			property.IsMissing = true;
+			property.ValidationResult.Failed(property.MissingError);
+			return null!;
+		}
+
+		var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(builderParameters);
+		var buildResult = propertyBuilder.Invoke(builder).Build();
+		if (buildResult.HasFailed)
+		{
+			property.ValidationResult.InheritFailure(buildResult);
+			return null!;
+		}
+
+		return buildResult.Value;
+	}
+
+	public static TProperty MapComplex<TParameters, TProperty, TPropertyParameters>(
+		this RequiredClassProperty<TParameters, TProperty> property,
+		Func<TParameters, TPropertyParameters?> propertyParameters,
+		Func<PropertyBuilder<TPropertyParameters, TProperty>, ValidatedRequiredProperty<TProperty>> propertyBuilder)
+		where TParameters : notnull
+		where TProperty : class
 		where TPropertyParameters: struct
 	{
 		TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
 		if (builderParameters is null)
 		{
+			property.IsMissing = true;
 			property.ValidationResult.Failed(property.MissingError);
-			return default!;
+			return null!;
 		}
 
-		var builder = new PropertyBuilder<TPropertyParameters, TProperty>(builderParameters.Value);
+		var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(builderParameters.Value);
 		var buildResult = propertyBuilder.Invoke(builder).Build();
 		if (buildResult.HasFailed)
 		{
 			property.ValidationResult.InheritFailure(buildResult);
-			return default!;
+			return null!;
 		}
 
 		return buildResult.Value;
@@ -104,21 +118,26 @@ public static class ComplexMapExtensions
 	#region Struct Property
 
 	public static TProperty? MapComplex<TParameters, TProperty, TPropertyParameters>(
-	this OptionalStructProperty<TParameters, TProperty> property,
-	Func<TParameters, TPropertyParameters?> propertyParameters,
-	Func<PropertyBuilder<TPropertyParameters, TProperty>, ValidatedProperty<TProperty>> propertyBuilder)
-	where TProperty : struct
-	where TPropertyParameters : notnull
+		this OptionalStructProperty<TParameters, TProperty> property,
+		Func<TParameters, TPropertyParameters?> propertyParameters,
+		Func<PropertyBuilder<TPropertyParameters, TProperty>, ValidatedOptionalProperty<TProperty>> propertyBuilder)
+		where TParameters : notnull
+		where TProperty : struct
+		where TPropertyParameters : class
 	{
 		TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
-		if (builderParameters is null) return default;
+		if (builderParameters is null)
+		{
+			property.IsMissing = true;
+			return null;
+		}
 
-		var builder = new PropertyBuilder<TPropertyParameters, TProperty>(builderParameters);
+		var builder = new OptionalPropertyBuilder<TPropertyParameters, TProperty>(builderParameters);
 		var buildResult = propertyBuilder.Invoke(builder).Build();
 		if (buildResult.HasFailed)
 		{
 			property.ValidationResult.InheritFailure(buildResult);
-			return default;
+			return null;
 		}
 
 		return buildResult.Value;
@@ -127,14 +146,46 @@ public static class ComplexMapExtensions
 	public static TProperty? MapComplex<TParameters, TProperty, TPropertyParameters>(
 		this OptionalStructProperty<TParameters, TProperty> property,
 		Func<TParameters, TPropertyParameters?> propertyParameters,
-		Func<PropertyBuilder<TPropertyParameters, TProperty>, ValidatedProperty<TProperty>> propertyBuilder)
+		Func<PropertyBuilder<TPropertyParameters, TProperty>, ValidatedOptionalProperty<TProperty>> propertyBuilder)
+		where TParameters : notnull
 		where TProperty : struct
 		where TPropertyParameters : struct
 	{
 		TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
-		if (builderParameters is null) return default;
+		if (builderParameters is null)
+		{
+			property.IsMissing = true;
+			return null;
+		}
 
-		var builder = new PropertyBuilder<TPropertyParameters, TProperty>(builderParameters.Value);
+		var builder = new OptionalPropertyBuilder<TPropertyParameters, TProperty>(builderParameters.Value);
+		var buildResult = propertyBuilder.Invoke(builder).Build();
+		if (buildResult.HasFailed)
+		{
+			property.ValidationResult.InheritFailure(buildResult);
+			return null;
+		}
+
+		return buildResult.Value;
+	}
+
+	public static TProperty MapComplex<TParameters, TProperty, TPropertyParameters>(
+		this RequiredStructProperty<TParameters, TProperty> property,
+		Func<TParameters, TPropertyParameters?> propertyParameters,
+		Func<PropertyBuilder<TPropertyParameters, TProperty>, ValidatedRequiredProperty<TProperty>> propertyBuilder)
+		where TParameters : notnull
+		where TProperty : struct
+		where TPropertyParameters : class
+	{
+		TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
+		if (builderParameters is null)
+		{
+			property.IsMissing = true;
+			property.ValidationResult.Failed(property.MissingError);
+			return default;
+		}
+
+		var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(builderParameters);
 		var buildResult = propertyBuilder.Invoke(builder).Build();
 		if (buildResult.HasFailed)
 		{
@@ -148,48 +199,25 @@ public static class ComplexMapExtensions
 	public static TProperty MapComplex<TParameters, TProperty, TPropertyParameters>(
 		this RequiredStructProperty<TParameters, TProperty> property,
 		Func<TParameters, TPropertyParameters?> propertyParameters,
-		Func<PropertyBuilder<TPropertyParameters, TProperty>, ValidatedProperty<TProperty>> propertyBuilder)
-		where TProperty : struct
-		where TPropertyParameters : notnull
-	{
-		TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
-		if (builderParameters is null)
-		{
-			property.ValidationResult.Failed(property.MissingError);
-			return default!;
-		}
-
-		var builder = new PropertyBuilder<TPropertyParameters, TProperty>(builderParameters);
-		var buildResult = propertyBuilder.Invoke(builder).Build();
-		if (buildResult.HasFailed)
-		{
-			property.ValidationResult.InheritFailure(buildResult);
-			return default!;
-		}
-
-		return buildResult.Value;
-	}
-
-	public static TProperty MapComplex<TParameters, TProperty, TPropertyParameters>(
-		this RequiredStructProperty<TParameters, TProperty> property,
-		Func<TParameters, TPropertyParameters?> propertyParameters,
-		Func<PropertyBuilder<TPropertyParameters, TProperty>, ValidatedProperty<TProperty>> propertyBuilder)
+		Func<PropertyBuilder<TPropertyParameters, TProperty>, ValidatedRequiredProperty<TProperty>> propertyBuilder)
+		where TParameters : notnull
 		where TProperty : struct
 		where TPropertyParameters : struct
 	{
 		TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
 		if (builderParameters is null)
 		{
+			property.IsMissing = true;
 			property.ValidationResult.Failed(property.MissingError);
-			return default!;
+			return default;
 		}
 
-		var builder = new PropertyBuilder<TPropertyParameters, TProperty>(builderParameters.Value);
+		var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(builderParameters.Value);
 		var buildResult = propertyBuilder.Invoke(builder).Build();
 		if (buildResult.HasFailed)
 		{
 			property.ValidationResult.InheritFailure(buildResult);
-			return default!;
+			return default;
 		}
 
 		return buildResult.Value;
@@ -202,15 +230,22 @@ public static class ComplexMapExtensions
 	public static IEnumerable<TProperty>? MapEachComplex<TParameters, TProperty, TPropertyParameters>(
 		this OptionalListProperty<TParameters, TProperty> property,
 		Func<TParameters, IEnumerable<TPropertyParameters>?> propertyParameters,
-		Func<PropertyBuilder<TPropertyParameters, TProperty>, ValidatedProperty<TProperty>> propertyBuilder)
+		Func<PropertyBuilder<TPropertyParameters, TProperty>, ValidatedOptionalProperty<TProperty>> propertyBuilder)
+		where TParameters : notnull
+		where TPropertyParameters : notnull
+		where TProperty : notnull
 	{
 		IEnumerable<TPropertyParameters>? builderParameters = propertyParameters.Invoke(property.Parameters);
-		if (builderParameters is null) return default;
+		if (builderParameters is null)
+		{
+			property.IsMissing = true;
+			return null;
+		}
 
 		List<TProperty> resultProperties = [];
 		foreach(var rawProperty in builderParameters)
 		{
-			var builder = new PropertyBuilder<TPropertyParameters, TProperty>(rawProperty);
+			var builder = new OptionalPropertyBuilder<TPropertyParameters, TProperty>(rawProperty);
 			var buildResult = propertyBuilder.Invoke(builder).Build();
 			if (buildResult.HasFailed)
 			{
@@ -225,19 +260,23 @@ public static class ComplexMapExtensions
 	public static IEnumerable<TProperty> MapEachComplex<TParameters, TProperty, TPropertyParameters>(
 		this RequiredListProperty<TParameters, TProperty> property,
 		Func<TParameters, IEnumerable<TPropertyParameters>?> propertyParameters,
-		Func<PropertyBuilder<TPropertyParameters, TProperty>, ValidatedProperty<TProperty>> propertyBuilder)
+		Func<PropertyBuilder<TPropertyParameters, TProperty>, ValidatedRequiredProperty<TProperty>> propertyBuilder)
+		where TParameters : notnull
+		where TPropertyParameters : notnull
+		where TProperty : notnull
 	{
 		IEnumerable<TPropertyParameters>? builderParameters = propertyParameters.Invoke(property.Parameters);
 		if (builderParameters is null)
 		{
+			property.IsMissing = true;
 			property.ValidationResult.Failed(property.MissingError);
-			return default!;
+			return null!;
 		}
 
 		List<TProperty> resultProperties = [];
 		foreach (var rawProperty in builderParameters)
 		{
-			var builder = new PropertyBuilder<TPropertyParameters, TProperty>(rawProperty);
+			var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(rawProperty);
 			var buildResult = propertyBuilder.Invoke(builder).Build();
 			if (buildResult.HasFailed)
 			{

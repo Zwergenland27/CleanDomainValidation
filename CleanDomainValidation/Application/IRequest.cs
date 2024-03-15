@@ -1,3 +1,3 @@
 ﻿namespace CleanDomainValidation.Application;
 
-public interface IRequest { }
+public interface IRequest;

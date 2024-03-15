@@ -3,11 +3,14 @@
 namespace CleanDomainValidation.Application.Enums;
 
 public sealed class EnumProperty<TParameters, TProperty> : IValidatableProperty
+	where TParameters : notnull
 	where TProperty : struct
 {
 	private IValidatableProperty _property;
 	private TParameters _parameters;
 
+	public bool IsRequired => _property.IsRequired;
+	public bool IsMissing => _property.IsMissing;
 	public CanFail ValidationResult => _property.ValidationResult;
 
 	internal EnumProperty(TParameters parameters)
