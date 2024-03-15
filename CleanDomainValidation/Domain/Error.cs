@@ -3,7 +3,7 @@
 /// <summary>
 /// Used to indicate an error instead of using exceptions
 /// </summary>
-public sealed class Error
+public sealed record Error
 {
 	private Error(ErrorType type, string code, string message)
 	{
