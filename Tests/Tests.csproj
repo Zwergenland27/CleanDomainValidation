@@ -27,8 +27,4 @@
     <ProjectReference Include="..\CleanDomainValidation\CleanDomainValidation.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ApplicationTests\" />
-  </ItemGroup>
-
 </Project>
