@@ -10,7 +10,7 @@ public static class ComplexMapExtensions
 	public static TProperty? MapComplex<TParameters, TProperty, TPropertyParameters>(
 		this OptionalClassProperty<TParameters, TProperty> property,
 		Func<TParameters, TPropertyParameters?> propertyParameters,
-		Func<PropertyBuilder<TPropertyParameters, TProperty>, ValidatedOptionalProperty<TProperty>> propertyBuilder)
+		Func<OptionalPropertyBuilder<TPropertyParameters, TProperty>, ValidatedOptionalProperty<TProperty>> propertyBuilder)
 		where TParameters : notnull
 		where TProperty : class
 		where TPropertyParameters : class
@@ -36,7 +36,7 @@ public static class ComplexMapExtensions
 	public static TProperty? MapComplex<TParameters, TProperty, TPropertyParameters>(
 		this OptionalClassProperty<TParameters, TProperty> property,
 		Func<TParameters, TPropertyParameters?> propertyParameters,
-		Func<PropertyBuilder<TPropertyParameters, TProperty>, ValidatedOptionalProperty<TProperty>> propertyBuilder)
+		Func<OptionalPropertyBuilder<TPropertyParameters, TProperty>, ValidatedOptionalProperty<TProperty>> propertyBuilder)
 		where TParameters : notnull
 		where TProperty : class
 		where TPropertyParameters : struct
@@ -62,7 +62,7 @@ public static class ComplexMapExtensions
 	public static TProperty MapComplex<TParameters, TProperty, TPropertyParameters>(
 		this RequiredClassProperty<TParameters, TProperty> property,
 		Func<TParameters, TPropertyParameters?> propertyParameters,
-		Func<PropertyBuilder<TPropertyParameters, TProperty>, ValidatedRequiredProperty<TProperty>> propertyBuilder)
+		Func<RequiredPropertyBuilder<TPropertyParameters, TProperty>, ValidatedRequiredProperty<TProperty>> propertyBuilder)
 		where TParameters : notnull
 		where TProperty : class
 		where TPropertyParameters: class
@@ -89,7 +89,7 @@ public static class ComplexMapExtensions
 	public static TProperty MapComplex<TParameters, TProperty, TPropertyParameters>(
 		this RequiredClassProperty<TParameters, TProperty> property,
 		Func<TParameters, TPropertyParameters?> propertyParameters,
-		Func<PropertyBuilder<TPropertyParameters, TProperty>, ValidatedRequiredProperty<TProperty>> propertyBuilder)
+		Func<RequiredPropertyBuilder<TPropertyParameters, TProperty>, ValidatedRequiredProperty<TProperty>> propertyBuilder)
 		where TParameters : notnull
 		where TProperty : class
 		where TPropertyParameters: struct
@@ -120,7 +120,7 @@ public static class ComplexMapExtensions
 	public static TProperty? MapComplex<TParameters, TProperty, TPropertyParameters>(
 		this OptionalStructProperty<TParameters, TProperty> property,
 		Func<TParameters, TPropertyParameters?> propertyParameters,
-		Func<PropertyBuilder<TPropertyParameters, TProperty>, ValidatedOptionalProperty<TProperty>> propertyBuilder)
+		Func<OptionalPropertyBuilder<TPropertyParameters, TProperty>, ValidatedOptionalProperty<TProperty>> propertyBuilder)
 		where TParameters : notnull
 		where TProperty : struct
 		where TPropertyParameters : class
@@ -146,7 +146,7 @@ public static class ComplexMapExtensions
 	public static TProperty? MapComplex<TParameters, TProperty, TPropertyParameters>(
 		this OptionalStructProperty<TParameters, TProperty> property,
 		Func<TParameters, TPropertyParameters?> propertyParameters,
-		Func<PropertyBuilder<TPropertyParameters, TProperty>, ValidatedOptionalProperty<TProperty>> propertyBuilder)
+		Func<OptionalPropertyBuilder<TPropertyParameters, TProperty>, ValidatedOptionalProperty<TProperty>> propertyBuilder)
 		where TParameters : notnull
 		where TProperty : struct
 		where TPropertyParameters : struct
@@ -172,7 +172,7 @@ public static class ComplexMapExtensions
 	public static TProperty MapComplex<TParameters, TProperty, TPropertyParameters>(
 		this RequiredStructProperty<TParameters, TProperty> property,
 		Func<TParameters, TPropertyParameters?> propertyParameters,
-		Func<PropertyBuilder<TPropertyParameters, TProperty>, ValidatedRequiredProperty<TProperty>> propertyBuilder)
+		Func<RequiredPropertyBuilder<TPropertyParameters, TProperty>, ValidatedRequiredProperty<TProperty>> propertyBuilder)
 		where TParameters : notnull
 		where TProperty : struct
 		where TPropertyParameters : class
@@ -199,7 +199,7 @@ public static class ComplexMapExtensions
 	public static TProperty MapComplex<TParameters, TProperty, TPropertyParameters>(
 		this RequiredStructProperty<TParameters, TProperty> property,
 		Func<TParameters, TPropertyParameters?> propertyParameters,
-		Func<PropertyBuilder<TPropertyParameters, TProperty>, ValidatedRequiredProperty<TProperty>> propertyBuilder)
+		Func<RequiredPropertyBuilder<TPropertyParameters, TProperty>, ValidatedRequiredProperty<TProperty>> propertyBuilder)
 		where TParameters : notnull
 		where TProperty : struct
 		where TPropertyParameters : struct
@@ -230,7 +230,7 @@ public static class ComplexMapExtensions
 	public static IEnumerable<TProperty>? MapEachComplex<TParameters, TProperty, TPropertyParameters>(
 		this OptionalListProperty<TParameters, TProperty> property,
 		Func<TParameters, IEnumerable<TPropertyParameters>?> propertyParameters,
-		Func<PropertyBuilder<TPropertyParameters, TProperty>, ValidatedOptionalProperty<TProperty>> propertyBuilder)
+		Func<RequiredPropertyBuilder<TPropertyParameters, TProperty>, ValidatedRequiredProperty<TProperty>> propertyBuilder)
 		where TParameters : notnull
 		where TPropertyParameters : notnull
 		where TProperty : notnull
@@ -245,7 +245,7 @@ public static class ComplexMapExtensions
 		List<TProperty> resultProperties = [];
 		foreach(var rawProperty in builderParameters)
 		{
-			var builder = new OptionalPropertyBuilder<TPropertyParameters, TProperty>(rawProperty);
+			var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(rawProperty);
 			var buildResult = propertyBuilder.Invoke(builder).Build();
 			if (buildResult.HasFailed)
 			{
@@ -260,7 +260,7 @@ public static class ComplexMapExtensions
 	public static IEnumerable<TProperty> MapEachComplex<TParameters, TProperty, TPropertyParameters>(
 		this RequiredListProperty<TParameters, TProperty> property,
 		Func<TParameters, IEnumerable<TPropertyParameters>?> propertyParameters,
-		Func<PropertyBuilder<TPropertyParameters, TProperty>, ValidatedRequiredProperty<TProperty>> propertyBuilder)
+		Func<RequiredPropertyBuilder<TPropertyParameters, TProperty>, ValidatedRequiredProperty<TProperty>> propertyBuilder)
 		where TParameters : notnull
 		where TPropertyParameters : notnull
 		where TProperty : notnull
