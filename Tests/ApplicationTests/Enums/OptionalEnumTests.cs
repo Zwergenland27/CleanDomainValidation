@@ -22,7 +22,7 @@ public enum OTestEnum
 
 public class OptionalEnumTests
 {
-	private Error _invalidEnumError = Error.Validation("Enum.Invalid", "The enum is invalid");
+	private static Error _invalidEnumError => Error.Validation("Enum.Invalid", "The enum is invalid");
 
 	[Fact]
 	public void IsRequired_Should_BeFalse()

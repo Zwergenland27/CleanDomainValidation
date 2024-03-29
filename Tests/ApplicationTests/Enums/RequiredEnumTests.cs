@@ -21,8 +21,8 @@ public enum RTestEnum
 
 public class RequiredEnumTests
 {
-	private Error _missingError = Error.Validation("Enum.Missing", "The enum is missing");
-	private Error _invalidEnumError = Error.Validation("Enum.Invalid", "The enum is invalid");
+	private static Error _missingError => Error.Validation("Enum.Missing", "The enum is missing");
+	private static Error _invalidEnumError => Error.Validation("Enum.Invalid", "The enum is invalid");
 
 	[Fact]
 	public void IsRequired_Should_BeTrue()
