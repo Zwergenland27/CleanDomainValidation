@@ -378,6 +378,186 @@ public class RequiredClassTests
 
 	#endregion
 
+	#region Constructor Mapped
+
+	[Fact]
+	public void ConstructorMapClass_ShouldReturnValueObject_WhenValueNotNull()
+	{
+		//Arrange
+		var value = "value";
+		var parameters = new RClassParameter(value);
+		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+
+		//Act
+		var validatedValue = property.Map(p => p.Value, v => new RClassValueObject(v));
+
+		//Assert
+		validatedValue.Should().Be(new RClassValueObject(value));
+	}
+
+	[Fact]
+	public void ConstructorMapStruct_ShouldReturnValueObject_WhenValueNotNull()
+	{
+		//Arrange
+		var value = 1;
+		var parameters = new RStructParameter(value);
+		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+
+		//Act
+		var validatedValue = property.Map(p => p.Value, v => new RStructValueObject(v));
+
+		//Assert
+		validatedValue.Should().Be(new RStructValueObject(value));
+	}
+
+	[Fact]
+	public void ConstructorMapClass_ShouldNotSetErrors_WhenValueNotNull()
+	{
+		//Arrange
+		var value = "value";
+		var parameters = new RClassParameter(value);
+		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+
+		//Act
+		_ = property.Map(p => p.Value, v => new RClassValueObject(v));
+
+		//Assert
+		property.ValidationResult.HasFailed.Should().BeFalse();
+	}
+
+	[Fact]
+	public void ConstructorMapStruct_ShouldNotSetErrors_WhenValueNotNull()
+	{
+		//Arrange
+		var value = 1;
+		var parameters = new RStructParameter(value);
+		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+
+		//Act
+		_ = property.Map(p => p.Value, v => new RStructValueObject(v));
+
+		//Assert
+		property.ValidationResult.HasFailed.Should().BeFalse();
+	}
+
+	[Fact]
+	public void ConstructorMapClass_IsMissingShouldBeFalse_WhenValueNotNull()
+	{
+		//Arrange
+		var value = "value";
+		var parameters = new RClassParameter(value);
+		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+
+		//Act
+		_ = property.Map(p => p.Value, v => new RClassValueObject(v));
+
+		//Assert
+		property.IsMissing.Should().BeFalse();
+	}
+
+	[Fact]
+	public void ConstructorMapStruct_IsMissingShouldBeFalse_WhenValueNotNull()
+	{
+		//Arrange
+		var value = 1;
+		var parameters = new RStructParameter(value);
+		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+
+		//Act
+		_ = property.Map(p => p.Value, v => new RStructValueObject(v));
+
+		//Assert
+		property.IsMissing.Should().BeFalse();
+	}
+
+	[Fact]
+	public void ConstructorMapClass_ShouldReturnNull_WhenValueNull()
+	{
+		//Arrange
+		var parameters = new RClassParameter(null);
+		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+
+		//Act
+		var validatedProperty = property.Map(p => p.Value, v => new RClassValueObject(v));
+
+		//Assert
+		validatedProperty.Should().Be(null);
+	}
+
+	[Fact]
+	public void ConstructorMapStruct_ShouldReturnNull_WhenValueNull()
+	{
+		//Arrange
+		var parameters = new RStructParameter(null);
+		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+
+		//Act
+		var validatedProperty = property.Map(p => p.Value, v => new RStructValueObject(v));
+
+		//Assert
+		validatedProperty.Should().Be(null);
+	}
+
+	[Fact]
+	public void ConstructorMapClass_ShouldSetMissingError_WhenValueNull()
+	{
+		//Arrange
+		var parameters = new RClassParameter(null);
+		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+
+		//Act
+		_ = property.Map(p => p.Value, v => new RClassValueObject(v));
+
+		//Assert
+		property.ValidationResult.HasFailed.Should().BeTrue();
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missing);
+	}
+
+	[Fact]
+	public void ConstructorMapStruct_ShouldSetMissingError_WhenValueNull()
+	{
+		//Arrange
+		var parameters = new RStructParameter(null);
+		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+
+		//Act
+		_ = property.Map(p => p.Value, v => new RStructValueObject(v));
+
+		//Assert
+		property.ValidationResult.HasFailed.Should().BeTrue();
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missing);
+	}
+
+	[Fact]
+	public void ConstructorMapClass_IsMissingShouldBeTrue_WhenValueNull()
+	{
+		//Arrange
+		var parameters = new RClassParameter(null);
+		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+
+		//Act
+		_ = property.Map(p => p.Value, v => new RClassValueObject(v));
+
+		//Assert
+		property.IsMissing.Should().BeTrue();
+	}
+
+	[Fact]
+	public void ConstructorMapStruct_IsMissingShouldBeTrue_WhenValueNull()
+	{
+		//Arrange
+		var parameters = new RStructParameter(null);
+		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+
+		//Act
+		_ = property.Map(p => p.Value, v => new RStructValueObject(v));
+
+		//Assert
+		property.IsMissing.Should().BeTrue();
+	}
+
+	#endregion
+
 	#region Complex Mapped
 
 	[Fact]

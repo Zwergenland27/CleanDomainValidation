@@ -443,6 +443,184 @@ public class OptionalListTests
 
 	#endregion
 
+	#region Constructor Mapped
+
+	[Fact]
+	public void ConstructorMapEachClass_ShouldReturnValueObjectList_WhenParameterListIsNotNull()
+	{
+		//Arrange
+		List<string> value = ["value1", "value2"];
+		var parameters = new OClassListParameter(value);
+		var property = new OptionalListProperty<OClassListParameter, OClassValueObject>(parameters);
+
+		//Act
+		var result = property.MapEach(p => p.Value, v => new OClassValueObject(v));
+
+		//Assert
+		result.Should().BeEquivalentTo(value.Select(OClassValueObject.Create).Select(x => x.Value));
+	}
+
+	[Fact]
+	public void ConstructorMapEachStruct_ShouldReturnValueObjectList_WhenParameterListIsNotNull()
+	{
+		//Arrange
+		List<int> value = [1, 2];
+		var parameters = new OStructListParameter(value);
+		var property = new OptionalListProperty<OStructListParameter, OStructValueObject>(parameters);
+
+		//Act
+		var result = property.MapEach(p => p.Value, v => new OStructValueObject(v));
+
+		//Assert
+		result.Should().BeEquivalentTo(value.Select(OStructValueObject.Create).Select(x => x.Value));
+	}
+
+	[Fact]
+	public void ConstructorMapEachClass_ShouldNotSetErrors_WhenParameterListIsNotNull()
+	{
+		//Arrange
+		List<string> value = ["value1", "value2"];
+		var parameters = new OClassListParameter(value);
+		var property = new OptionalListProperty<OClassListParameter, OClassValueObject>(parameters);
+
+		//Act
+		var result = property.MapEach(p => p.Value, v => new OClassValueObject(v));
+
+		//Assert
+		property.ValidationResult.HasFailed.Should().BeFalse();
+	}
+
+	[Fact]
+	public void ConstructorMapEachStruct_ShouldNotSetErrors_WhenParameterListIsNotNull()
+	{
+		//Arrange
+		List<int> value = [1, 2];
+		var parameters = new OStructListParameter(value);
+		var property = new OptionalListProperty<OStructListParameter, OStructValueObject>(parameters);
+
+		//Act
+		var result = property.MapEach(p => p.Value, v => new OStructValueObject(v));
+
+		//Assert
+		property.ValidationResult.HasFailed.Should().BeFalse();
+	}
+
+	[Fact]
+	public void ConstructorMapEachClass_IsMissingShouldBeFalse_WhenParameterListIsNotNull()
+	{
+		//Arrange
+		List<string> value = ["value1", "value2"];
+		var parameters = new OClassListParameter(value);
+		var property = new OptionalListProperty<OClassListParameter, OClassValueObject>(parameters);
+
+		//Act
+		var result = property.MapEach(p => p.Value, v => new OClassValueObject(v));
+
+		//Assert
+		property.IsMissing.Should().BeFalse();
+	}
+
+	[Fact]
+	public void ConstructorMapEachStruct_IsMissingShouldBeFalse_WhenParameterListIsNotNull()
+	{
+		//Arrange
+		List<int> value = [1, 2];
+		var parameters = new OStructListParameter(value);
+		var property = new OptionalListProperty<OStructListParameter, OStructValueObject>(parameters);
+
+		//Act
+		var result = property.MapEach(p => p.Value, v => new OStructValueObject(v));
+
+		//Assert
+		property.IsMissing.Should().BeFalse();
+	}
+
+	[Fact]
+	public void ConstructorMapEachClass_ShouldReturnNull_WhenParameterListIsNull()
+	{
+		//Arrange
+		var parameters = new OClassListParameter(null);
+		var property = new OptionalListProperty<OClassListParameter, OClassValueObject>(parameters);
+
+		//Act
+		var result = property.MapEach(p => p.Value, v => new OClassValueObject(v));
+
+		//Assert
+		result.Should().BeNull();
+	}
+
+	[Fact]
+	public void ConstructorMapEachStruct_ShouldReturnNull_WhenParameterListIsNull()
+	{
+		//Arrange
+		var parameters = new OStructListParameter(null);
+		var property = new OptionalListProperty<OStructListParameter, OStructValueObject>(parameters);
+
+		//Act
+		var result = property.MapEach(p => p.Value, v => new OStructValueObject(v));
+
+		//Assert
+		result.Should().BeNull();
+	}
+
+	[Fact]
+	public void ConstructorMapEachClass_ShouldNotSetErrors_WhenParameterListIsNull()
+	{
+		//Arrange
+		var parameters = new OClassListParameter(null);
+		var property = new OptionalListProperty<OClassListParameter, OClassValueObject>(parameters);
+
+		//Act
+		var result = property.MapEach(p => p.Value, v => new OClassValueObject(v));
+
+		//Assert
+		property.ValidationResult.HasFailed.Should().BeFalse();
+	}
+
+	[Fact]
+	public void ConstructorMapEachStruct_ShouldNotSetErrors_WhenParameterListIsNull()
+	{
+		//Arrange
+		var parameters = new OStructListParameter(null);
+		var property = new OptionalListProperty<OStructListParameter, OStructValueObject>(parameters);
+
+		//Act
+		var result = property.MapEach(p => p.Value, v => new OStructValueObject(v));
+
+		//Assert
+		property.ValidationResult.HasFailed.Should().BeFalse();
+	}
+
+	[Fact]
+	public void ConstructorMapEachClass_IsMissingShouldBeTrue_WhenParameterListIsNull()
+	{
+		//Arrange
+		var parameters = new OClassListParameter(null);
+		var property = new OptionalListProperty<OClassListParameter, OClassValueObject>(parameters);
+
+		//Act
+		var result = property.MapEach(p => p.Value, v => new OClassValueObject(v));
+
+		//Assert
+		property.IsMissing.Should().BeTrue();
+	}
+
+	[Fact]
+	public void ConstructorMapEachStruct_IsMissingShouldBeTrue_WhenParameterListIsNull()
+	{
+		//Arrange
+		var parameters = new OStructListParameter(null);
+		var property = new OptionalListProperty<OStructListParameter, OStructValueObject>(parameters);
+
+		//Act
+		var result = property.MapEach(p => p.Value, v => new OStructValueObject(v));
+
+		//Assert
+		property.IsMissing.Should().BeTrue();
+	}
+
+	#endregion
+
 	#region Complex Mapped
 
 	[Fact]
