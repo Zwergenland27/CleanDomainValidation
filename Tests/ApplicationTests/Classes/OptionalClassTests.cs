@@ -41,6 +41,7 @@ public class OptionalClassTests
         //Assert
         property.IsRequired.Should().BeFalse();
     }
+
     #region Direct Mapped
 
     [Fact]
