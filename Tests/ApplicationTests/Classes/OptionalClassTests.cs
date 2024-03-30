@@ -566,7 +566,7 @@ public class OptionalClassTests
         //Act
         var validatedProperty = property.MapComplex(p => p.Value, builder =>
             {
-                return new ValidatedOptionalProperty<OClassValueObject>(new OClassValueObject(value));
+                return new ValidatedOptionalClassProperty<OClassValueObject>(new OClassValueObject(value));
             });
 
 
@@ -585,7 +585,7 @@ public class OptionalClassTests
         //Act
         var validatedProperty = property.MapComplex(p => p.Value, builder =>
             {
-                return new ValidatedOptionalProperty<OStructValueObject>(new OStructValueObject(value));
+                return new ValidatedOptionalClassProperty<OStructValueObject>(new OStructValueObject(value));
             });
 
         //Assert
@@ -603,7 +603,7 @@ public class OptionalClassTests
         //Act
         _ = property.MapComplex(p => p.Value, builder =>
         {
-            return new ValidatedOptionalProperty<OClassValueObject>(new OClassValueObject(value));
+            return new ValidatedOptionalClassProperty<OClassValueObject>(new OClassValueObject(value));
         });
 
         //Assert
@@ -621,7 +621,7 @@ public class OptionalClassTests
         //Act
         _ = property.MapComplex(p => p.Value, builder =>
         {
-            return new ValidatedOptionalProperty<OStructValueObject>(new OStructValueObject(value));
+            return new ValidatedOptionalClassProperty<OStructValueObject>(new OStructValueObject(value));
         });
 
         //Assert
@@ -639,7 +639,7 @@ public class OptionalClassTests
         //Act
         _ = property.MapComplex(p => p.Value, builder =>
             {
-                return new ValidatedOptionalProperty<OClassValueObject>(new OClassValueObject(value));
+                return new ValidatedOptionalClassProperty<OClassValueObject>(new OClassValueObject(value));
             });
 
         //Assert
@@ -657,7 +657,7 @@ public class OptionalClassTests
         //Act
         _ = property.MapComplex(p => p.Value, builder =>
         {
-            return new ValidatedOptionalProperty<OStructValueObject>(new OStructValueObject(value));
+            return new ValidatedOptionalClassProperty<OStructValueObject>(new OStructValueObject(value));
         });
 
         //Assert
@@ -675,7 +675,7 @@ public class OptionalClassTests
         //Act
         var validatedProperty = property.MapComplex(p => p.Value, builder =>
         {
-            return new ValidatedOptionalProperty<OClassValueObject>(Error.Validation("Error.Validation", "An error occured"));
+            return new ValidatedOptionalClassProperty<OClassValueObject>(Error.Validation("Error.Validation", "An error occured"));
         });
 
         //Assert
@@ -693,7 +693,7 @@ public class OptionalClassTests
         //Act
         var validatedProperty = property.MapComplex(p => p.Value, builder =>
             {
-                return new ValidatedOptionalProperty<OStructValueObject>(Error.Validation("Error.Validation", "An error occured"));
+                return new ValidatedOptionalClassProperty<OStructValueObject>(Error.Validation("Error.Validation", "An error occured"));
             });
 
         //Assert
@@ -711,7 +711,7 @@ public class OptionalClassTests
         //Act
         var validatedProperty = property.MapComplex(p => p.Value, builder =>
         {
-            return new ValidatedOptionalProperty<OClassValueObject>(Error.Validation("Error.Validation", "An error occured"));
+            return new ValidatedOptionalClassProperty<OClassValueObject>(Error.Validation("Error.Validation", "An error occured"));
         });
 
         //Assert
@@ -730,7 +730,7 @@ public class OptionalClassTests
         //Act
         var validatedProperty = property.MapComplex(p => p.Value, builder =>
         {
-            return new ValidatedOptionalProperty<OStructValueObject>(Error.Validation("Error.Validation", "An error occured"));
+            return new ValidatedOptionalClassProperty<OStructValueObject>(Error.Validation("Error.Validation", "An error occured"));
         });
 
         //Assert
@@ -748,7 +748,7 @@ public class OptionalClassTests
         //Act
         var validatedProperty = property.MapComplex(p => p.Value, builder =>
             {
-                return new ValidatedOptionalProperty<OClassValueObject>((OClassValueObject?)null);
+                return new ValidatedOptionalClassProperty<OClassValueObject>((OClassValueObject?)null);
             });
 
         //Assert
@@ -765,7 +765,7 @@ public class OptionalClassTests
         //Act
         var validatedProperty = property.MapComplex(p => p.Value, builder =>
             {
-                return new ValidatedOptionalProperty<OStructValueObject>((OStructValueObject?)null);
+                return new ValidatedOptionalClassProperty<OStructValueObject>((OStructValueObject?)null);
             });
 
         //Assert
@@ -782,7 +782,7 @@ public class OptionalClassTests
         //Act
         _ = property.MapComplex(p => p.Value, builder =>
             {
-                return new ValidatedOptionalProperty<OClassValueObject>((OClassValueObject?)null);
+                return new ValidatedOptionalClassProperty<OClassValueObject>((OClassValueObject?)null);
             });
 
         //Assert
@@ -799,7 +799,7 @@ public class OptionalClassTests
         //Act
         _ = property.MapComplex(p => p.Value, builder =>
             {
-                return new ValidatedOptionalProperty<OStructValueObject>((OStructValueObject?)null);
+                return new ValidatedOptionalClassProperty<OStructValueObject>((OStructValueObject?)null);
             });
 
         //Assert
@@ -816,7 +816,7 @@ public class OptionalClassTests
         //Act
         _ = property.MapComplex(p => p.Value, builder =>
         {
-            return new ValidatedOptionalProperty<OClassValueObject>((OClassValueObject?)null);
+            return new ValidatedOptionalClassProperty<OClassValueObject>((OClassValueObject?)null);
         });
 
         //Assert
@@ -833,7 +833,7 @@ public class OptionalClassTests
         //Act
         _ = property.MapComplex(p => p.Value, builder =>
         {
-            return new ValidatedOptionalProperty<OStructValueObject>((OStructValueObject?)null);
+            return new ValidatedOptionalClassProperty<OStructValueObject>((OStructValueObject?)null);
         });
 
         //Assert

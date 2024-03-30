@@ -3,6 +3,7 @@
 namespace CleanDomainValidation.Application;
 
 public sealed class RequiredPropertyBuilder<TParameters, TResult> : PropertyBuilder<TParameters, TResult>
+	where TParameters : notnull
 	where TResult : notnull
 {
 	internal RequiredPropertyBuilder(TParameters parameters) : base(parameters) { }

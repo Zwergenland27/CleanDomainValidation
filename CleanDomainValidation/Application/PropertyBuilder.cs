@@ -4,7 +4,6 @@ using CleanDomainValidation.Application.Lists;
 using CleanDomainValidation.Application.Structs;
 
 namespace CleanDomainValidation.Application;
-//TODO: TParameters muss auch notnull sein?
 public abstract class PropertyBuilder<TParameters, TResult>
 	where TParameters : notnull
 	where TResult : notnull

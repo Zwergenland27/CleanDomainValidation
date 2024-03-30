@@ -2,12 +2,12 @@
 
 namespace CleanDomainValidation.Application;
 
-public sealed class ValidatedOptionalProperty<TRequest>
+public sealed class ValidatedOptionalClassProperty<TRequest>
 	where TRequest : notnull
 {
 	private readonly CanFail<TRequest?> _result;
 
-	internal ValidatedOptionalProperty(CanFail<TRequest?> result)
+	internal ValidatedOptionalClassProperty(CanFail<TRequest?> result)
 	{
 		_result = result;
 	}

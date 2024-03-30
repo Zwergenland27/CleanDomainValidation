@@ -2,12 +2,13 @@
 
 namespace CleanDomainValidation.Application;
 
-public sealed class OptionalPropertyBuilder<TParameters, TResult> : PropertyBuilder<TParameters, TResult>
-	where TResult : notnull
+public sealed class OptionalStructPropertyBuilder<TParameters, TResult> : PropertyBuilder<TParameters, TResult>
+	where TParameters : notnull
+	where TResult : struct
 {
-	internal OptionalPropertyBuilder(TParameters parameters) : base(parameters) { }
+	internal OptionalStructPropertyBuilder(TParameters parameters) : base(parameters) { }
 
-	public ValidatedOptionalProperty<TResult> Build(Func<TResult> creationMethod)
+	public ValidatedOptionalStructProperty<TResult> Build(Func<TResult> creationMethod)
 	{
 		CanFail<TResult?> result = new();
 
@@ -15,7 +16,7 @@ public sealed class OptionalPropertyBuilder<TParameters, TResult> : PropertyBuil
 
 		foreach (var property in Properties)
 		{
-			if(property.IsRequired && property.IsMissing)
+			if (property.IsRequired && property.IsMissing)
 			{
 				requiredPropertyMissing = true;
 				continue;
@@ -23,9 +24,9 @@ public sealed class OptionalPropertyBuilder<TParameters, TResult> : PropertyBuil
 			result.InheritFailure(property.ValidationResult);
 		}
 
-		if(!result.HasFailed && requiredPropertyMissing)
+		if (!result.HasFailed && requiredPropertyMissing)
 		{
-			result.Succeeded(default);
+			result.Succeeded(null);
 		}
 
 		if (!result.HasFailed && !requiredPropertyMissing)
@@ -33,10 +34,10 @@ public sealed class OptionalPropertyBuilder<TParameters, TResult> : PropertyBuil
 			result.Succeeded(creationMethod.Invoke());
 		}
 
-		return new ValidatedOptionalProperty<TResult>(result);
+		return new ValidatedOptionalStructProperty<TResult>(result);
 	}
 
-	public ValidatedOptionalProperty<TResult> Build(Func<CanFail<TResult>> factoryMethod)
+	public ValidatedOptionalStructProperty<TResult> Build(Func<CanFail<TResult>> factoryMethod)
 	{
 		CanFail<TResult?> result = new();
 
@@ -55,13 +56,13 @@ public sealed class OptionalPropertyBuilder<TParameters, TResult> : PropertyBuil
 		//Ensure the factory method wont get called if any errors occured to the parameters
 		if (result.HasFailed)
 		{
-			return new ValidatedOptionalProperty<TResult>(result);
+			return new ValidatedOptionalStructProperty<TResult>(result);
 		}
 
 		if (requiredPropertyMissing)
 		{
-			result.Succeeded(default);
-			return new ValidatedOptionalProperty<TResult>(result);
+			result.Succeeded(null);
+			return new ValidatedOptionalStructProperty<TResult>(result);
 		}
 
 		CanFail<TResult> creationResult = factoryMethod.Invoke();
@@ -74,6 +75,6 @@ public sealed class OptionalPropertyBuilder<TParameters, TResult> : PropertyBuil
 			result.Succeeded(creationResult.Value);
 		}
 
-		return new ValidatedOptionalProperty<TResult>(result);
+		return new ValidatedOptionalStructProperty<TResult>(result);
 	}
 }

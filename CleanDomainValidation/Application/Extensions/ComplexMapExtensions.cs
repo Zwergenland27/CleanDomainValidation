@@ -10,7 +10,7 @@ public static class ComplexMapExtensions
 	public static TProperty? MapComplex<TParameters, TProperty, TPropertyParameters>(
 		this OptionalClassProperty<TParameters, TProperty> property,
 		Func<TParameters, TPropertyParameters?> propertyParameters,
-		Func<OptionalPropertyBuilder<TPropertyParameters, TProperty>, ValidatedOptionalProperty<TProperty>> propertyBuilder)
+		Func<OptionalClassPropertyBuilder<TPropertyParameters, TProperty>, ValidatedOptionalClassProperty<TProperty>> propertyBuilder)
 		where TParameters : notnull
 		where TProperty : class
 		where TPropertyParameters : class
@@ -22,7 +22,7 @@ public static class ComplexMapExtensions
 			return null;
 		}
 
-		var builder = new OptionalPropertyBuilder<TPropertyParameters, TProperty>(builderParameters);
+		var builder = new OptionalClassPropertyBuilder<TPropertyParameters, TProperty>(builderParameters);
 		var buildResult = propertyBuilder.Invoke(builder).Build();
 		if (buildResult.HasFailed)
 		{
@@ -36,7 +36,7 @@ public static class ComplexMapExtensions
 	public static TProperty? MapComplex<TParameters, TProperty, TPropertyParameters>(
 		this OptionalClassProperty<TParameters, TProperty> property,
 		Func<TParameters, TPropertyParameters?> propertyParameters,
-		Func<OptionalPropertyBuilder<TPropertyParameters, TProperty>, ValidatedOptionalProperty<TProperty>> propertyBuilder)
+		Func<OptionalClassPropertyBuilder<TPropertyParameters, TProperty>, ValidatedOptionalClassProperty<TProperty>> propertyBuilder)
 		where TParameters : notnull
 		where TProperty : class
 		where TPropertyParameters : struct
@@ -48,7 +48,7 @@ public static class ComplexMapExtensions
 			return null;
 		}
 
-		var builder = new OptionalPropertyBuilder<TPropertyParameters, TProperty>(builderParameters.Value);
+		var builder = new OptionalClassPropertyBuilder<TPropertyParameters, TProperty>(builderParameters.Value);
 		var buildResult = propertyBuilder.Invoke(builder).Build();
 		if (buildResult.HasFailed)
 		{
@@ -120,7 +120,7 @@ public static class ComplexMapExtensions
 	public static TProperty? MapComplex<TParameters, TProperty, TPropertyParameters>(
 		this OptionalStructProperty<TParameters, TProperty> property,
 		Func<TParameters, TPropertyParameters?> propertyParameters,
-		Func<OptionalPropertyBuilder<TPropertyParameters, TProperty>, ValidatedOptionalProperty<TProperty>> propertyBuilder)
+		Func<OptionalStructPropertyBuilder<TPropertyParameters, TProperty>, ValidatedOptionalStructProperty<TProperty>> propertyBuilder)
 		where TParameters : notnull
 		where TProperty : struct
 		where TPropertyParameters : class
@@ -132,7 +132,7 @@ public static class ComplexMapExtensions
 			return null;
 		}
 
-		var builder = new OptionalPropertyBuilder<TPropertyParameters, TProperty>(builderParameters);
+		var builder = new OptionalStructPropertyBuilder<TPropertyParameters, TProperty>(builderParameters);
 		var buildResult = propertyBuilder.Invoke(builder).Build();
 		if (buildResult.HasFailed)
 		{
@@ -146,7 +146,7 @@ public static class ComplexMapExtensions
 	public static TProperty? MapComplex<TParameters, TProperty, TPropertyParameters>(
 		this OptionalStructProperty<TParameters, TProperty> property,
 		Func<TParameters, TPropertyParameters?> propertyParameters,
-		Func<OptionalPropertyBuilder<TPropertyParameters, TProperty>, ValidatedOptionalProperty<TProperty>> propertyBuilder)
+		Func<OptionalStructPropertyBuilder<TPropertyParameters, TProperty>, ValidatedOptionalStructProperty<TProperty>> propertyBuilder)
 		where TParameters : notnull
 		where TProperty : struct
 		where TPropertyParameters : struct
@@ -158,7 +158,7 @@ public static class ComplexMapExtensions
 			return null;
 		}
 
-		var builder = new OptionalPropertyBuilder<TPropertyParameters, TProperty>(builderParameters.Value);
+		var builder = new OptionalStructPropertyBuilder<TPropertyParameters, TProperty>(builderParameters.Value);
 		var buildResult = propertyBuilder.Invoke(builder).Build();
 		if (buildResult.HasFailed)
 		{
