@@ -4,29 +4,30 @@ using System.Reflection;
 
 namespace CleanDomainValidation.Application;
 
-public class Build<TRequest>
+public class Builder<TRequest>
 	where TRequest : IRequest
 {
-	private Build() { }
+	private Builder() { }
 
-	public static Build<TParameters, TRequest> Bind<TParameters>(TParameters parameters)
+	public static Builder<TParameters, TRequest> BindParameters<TParameters>(TParameters parameters)
 		where TParameters : IParameters
 	{
-		return new Build<TParameters, TRequest>(parameters);
+		return new Builder<TParameters, TRequest>(parameters);
 	}
 }
 
-public class Build<TParameters, TRequest>
+public class Builder<TParameters, TRequest>
 	where TParameters : IParameters
 	where TRequest : IRequest
 {
 	private TParameters _parameters;
-	internal Build(TParameters parameters)
+	internal Builder(TParameters parameters)
 	{
 		_parameters = parameters;
 	}
 
-	public Build<TParameters, TRequest> Map<TProperty>(Expression<Func<TParameters, TProperty>> propertyExpression, TProperty value)
+	public Builder<TParameters, TRequest> MapParameter<TProperty>(Expression<Func<TParameters, TProperty>> propertyExpression, TProperty value)
+		where TProperty : notnull
 	{
 		var memberExpression = propertyExpression.Body as MemberExpression;
 		if (memberExpression == null)
@@ -44,7 +45,7 @@ public class Build<TParameters, TRequest>
 		return this;
 	}
 
-	public CanFail<TRequest> Using<TRequestBuilder>()
+	public CanFail<TRequest> BuildUsing<TRequestBuilder>()
 		where TRequestBuilder : IRequestBuilder<TParameters, TRequest>, new()
 	{
 		TRequestBuilder builder = new();
