@@ -4,11 +4,18 @@ using System.Reflection;
 
 namespace CleanDomainValidation.Application;
 
+/// <summary>
+/// Builder for creating a validated request of type <typeparamref name="TRequest"/>
+/// </summary>
 public class Builder<TRequest>
 	where TRequest : IRequest
 {
 	private Builder() { }
 
+	/// <summary>
+	/// Adds the unvalidated parameter object of type <typeparamref name="TParameters"/> to the builder
+	/// </summary>
+	/// <returns>Instance for a builder that maps parameters <typeparamref name="TParameters"/> to the request <typeparamref name="TRequest"/></returns>
 	public static Builder<TParameters, TRequest> BindParameters<TParameters>(TParameters parameters)
 		where TParameters : IParameters
 	{
@@ -16,7 +23,10 @@ public class Builder<TRequest>
 	}
 }
 
-public class Builder<TParameters, TRequest>
+/// <summary>
+/// Builder that maps parameters <typeparamref name="TParameters"/> to the request <typeparamref name="TRequest"/>
+/// </summary>
+public sealed class Builder<TParameters, TRequest>
 	where TParameters : IParameters
 	where TRequest : IRequest
 {
@@ -26,6 +36,10 @@ public class Builder<TParameters, TRequest>
 		_parameters = parameters;
 	}
 
+	/// <summary>
+	/// Sets property <paramref name="propertyExpression"/> of the parameters object to <paramref name="value"/>
+	/// </summary>
+	/// <returns>The builder itself for chaining methods</returns>
 	public Builder<TParameters, TRequest> MapParameter<TProperty>(Expression<Func<TParameters, TProperty>> propertyExpression, TProperty value)
 	{
 		var memberExpression = propertyExpression.Body as MemberExpression;
@@ -44,6 +58,11 @@ public class Builder<TParameters, TRequest>
 		return this;
 	}
 
+	/// <summary>
+	/// Builds the request object using a request builder of type <typeparamref name="TRequestBuilder"/>
+	/// </summary>
+	/// <typeparam name="TRequestBuilder"></typeparam>
+	/// <returns></returns>
 	public CanFail<TRequest> BuildUsing<TRequestBuilder>()
 		where TRequestBuilder : IRequestBuilder<TParameters, TRequest>, new()
 	{
