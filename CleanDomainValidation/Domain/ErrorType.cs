@@ -19,6 +19,12 @@ public enum ErrorType
 	/// </summary>
 	/// <example>A required parameter is missing</example>
 	Validation,
+
+	/// <summary>
+	/// The user is not authorized to perform the action
+	/// </summary>
+	/// <example>A non admin user tries to change the permission of other users</example>
+	Forbidden,
 	/// <summary>
 	/// An unexpected error occured
 	/// </summary>
