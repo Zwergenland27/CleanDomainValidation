@@ -9,7 +9,7 @@ public interface ICanFail
 	/// Gets the list of errors
 	/// </summary>
 	/// <exception cref="NoErrorsOccuredException">Property is accessed when no errors occured</exception>
-	IReadOnlyList<Error> Errors { get; }
+	ReadOnlyErrorCollection Errors { get; }
 
 	/// <summary>
 	/// Indicates that one ore more errors have occured

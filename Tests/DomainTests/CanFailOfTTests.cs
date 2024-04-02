@@ -206,24 +206,14 @@ public class CanFailOfTTests
 	}
 
 	[Fact]
-	public void FromFailureFactory_Should_ThrowNoErrorsOccuredException_When_ResultNotFailed()
-	{
-		//Arrange
-		CanFail resultOne = new();
-
-		//Act & Assert
-		FluentActions.Invoking(() => CanFail<string>.FromFailure(resultOne)).Should().Throw<NoErrorsOccuredException>();
-	}
-
-	[Fact]
-	public void FromFailureFactory_Should_ReturnFailWithError()
+	public void FromErrorsFactory_Should_ReturnFailWithError()
 	{
 		//Arrange
 		CanFail resultOne = new();
 		resultOne.Failed(_exampleError);
 
 		//Act
-		CanFail<string> result = CanFail<string>.FromFailure(resultOne);
+		CanFail<string> result = CanFail<string>.FromErrors(resultOne.Errors);
 
 		//Assert
 		result.Errors.Should().ContainSingle().Which.Should().Be(_exampleError);
@@ -246,7 +236,7 @@ public class CanFailOfTTests
 		string value = "value";
 
 		//Act
-		CanFail<string> result = CanFail<string>.Success(value);
+		CanFail<string> result = value;
 
 		//Assert
 		result.HasFailed.Should().BeFalse();
@@ -254,53 +244,16 @@ public class CanFailOfTTests
 	}
 
 	[Fact]
-	public void GetFailureAsTOther_Should_ReturnCanFailOfTOtherWithError()
+	public void ImplicitFromErrors_Should_ReturnFailWithError()
 	{
 		//Arrange
 		CanFail<int> resultOne = new();
 		resultOne.Failed(_exampleError);
 
 		//Act
-		CanFail<string> result = resultOne.GetFailureAs<string>();
+		CanFail<string> result = resultOne.Errors;
 
 		//Assert
 		result.Errors.Should().ContainSingle().Which.Should().Be(_exampleError);
-	}
-
-	[Fact]
-	public void GetFailureAsTOther_Should_ThrowNoErrorsOccuredException_When_NotFailed()
-	{
-		//Arrange
-		CanFail<int> resultOne = new();
-
-		//Act & Assert
-		FluentActions.Invoking(resultOne.GetFailureAs<string>).Should().Throw<NoErrorsOccuredException>();
-	}
-
-	[Fact]
-	public void Inherit_Should_ReturnCanFailWithErrors()
-	{
-		//Arrange
-		CanFail<int> resultOne = new();
-		resultOne.Failed(_exampleError);
-
-		//Act
-		CanFail result = resultOne.Inherit();
-
-		//Assert
-		result.Errors.Should().ContainSingle().Which.Should().Be(_exampleError);
-	}
-
-	[Fact]
-	public void Inherit_Should_ReturnCanFailWithoutErrors_When_NotFailed()
-	{
-		//Arrange
-		CanFail<int> resultOne = new();
-
-		//Act
-		CanFail result = resultOne.Inherit();
-
-		//Assert
-		result.HasFailed.Should().BeFalse();
 	}
 }

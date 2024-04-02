@@ -163,24 +163,14 @@ public class CanFailTests
 	}
 
 	[Fact]
-	public void FromFailureFactory_Should_ThrowNoErrorsOccuredException_When_ResultNotFailed()
-	{
-		//Arrange
-		CanFail resultOne = new();
-
-		//Act & Assert
-		FluentActions.Invoking(() => CanFail.FromFailure(resultOne)).Should().Throw<NoErrorsOccuredException>();
-	}
-
-	[Fact]
-	public void FromFailureFactory_Should_ReturnFailWithError()
+	public void FromErrorsFactory_Should_ReturnFailWithError()
 	{
 		//Arrange
 		CanFail resultOne = new();
 		resultOne.Failed(_exampleError);
 
 		//Act
-		CanFail result = CanFail.FromFailure(resultOne);
+		CanFail result = CanFail.FromErrors(resultOne.Errors);
 
 		//Assert
 		result.Errors.Should().ContainSingle().Which.Should().Be(_exampleError);
@@ -197,26 +187,16 @@ public class CanFailTests
 	}
 
 	[Fact]
-	public void GetFailureAsTOther_Should_ReturnCanFailOfTOtherWithError()
+	public void ImplicitFromErrors_Should_ReturnFailWithError()
 	{
 		//Arrange
 		CanFail resultOne = new();
 		resultOne.Failed(_exampleError);
 
 		//Act
-		CanFail<string> result = resultOne.GetFailureAs<string>();
+		CanFail result = resultOne.Errors;
 
 		//Assert
 		result.Errors.Should().ContainSingle().Which.Should().Be(_exampleError);
-	}
-
-	[Fact]
-	public void GetFailureAsTOther_Should_ThrowNoErrorsOccuredException_When_NotFailed()
-	{
-		//Arrange
-		CanFail resultOne = new();
-
-		//Act & Assert
-		FluentActions.Invoking(resultOne.GetFailureAs<string>).Should().Throw<NoErrorsOccuredException>();
 	}
 }
