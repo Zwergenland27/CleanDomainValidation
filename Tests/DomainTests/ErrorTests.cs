@@ -76,6 +76,26 @@ public class ErrorTests
 	}
 
 	[Fact]
+	public void ForbiddenFactory_Should_SetConflictType()
+	{
+		//Act
+		Error error = Error.Forbidden(_exampleCode, _exampleMessage);
+
+		//Assert
+		error.Type.Should().Be(ErrorType.Forbidden);
+	}
+
+	[Fact]
+	public void ForbiddenFactory_Should_SetCodeAndMessage()
+	{
+		//Act
+		Error error = Error.Forbidden(_exampleCode, _exampleMessage);
+
+		//Assert
+		ValidateError(error);
+	}
+
+	[Fact]
 	public void UnexpectedFactory_Should_SetConflictType()
 	{
 		//Act

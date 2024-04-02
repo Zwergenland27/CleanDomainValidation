@@ -58,6 +58,14 @@ public sealed record Error
 	}
 
 	/// <summary>
+	/// Creates new Error of type Forbidden
+	/// </summary>
+	public static Error Forbidden(string code, string message)
+	{
+		return new Error(ErrorType.Forbidden, code, message);
+	}
+
+	/// <summary>
 	/// Creates new Error of type Unexpected
 	/// </summary>
 	public static Error Unexpected(string code, string message)

@@ -27,7 +27,6 @@ public class Builder<TParameters, TRequest>
 	}
 
 	public Builder<TParameters, TRequest> MapParameter<TProperty>(Expression<Func<TParameters, TProperty>> propertyExpression, TProperty value)
-		where TProperty : notnull
 	{
 		var memberExpression = propertyExpression.Body as MemberExpression;
 		if (memberExpression == null)

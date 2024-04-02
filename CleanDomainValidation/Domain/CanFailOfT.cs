@@ -31,7 +31,7 @@ public sealed class CanFail<TResult> : AbstractCanFail, ICanFail<TResult>
 	{
 		get
 		{
-			if (_errors.Count != 0) throw new ValueInvalidException();
+			if (HasFailed) throw new ValueInvalidException();
 			if (!_valueSet) throw new ValueNotSetException();
 			return _value;
 		}
@@ -50,29 +50,8 @@ public sealed class CanFail<TResult> : AbstractCanFail, ICanFail<TResult>
 	}
 
 	/// <summary>
-	/// Converts failure result to <see cref="CanFail{TResult}"/> with <typeparamref name="TOther"/> being the result type
-	/// </summary>
-	public CanFail<TOther> GetFailureAs<TOther>()
-	{
-		return CanFail<TOther>.FromFailure(this);
-	}
-
-	/// <summary>
-	/// Converts result to <see cref="CanFail"/>
-	/// </summary>
-	public CanFail Inherit()
-	{
-		CanFail result = new();
-		result.InheritFailure(this);
-		return result;
-	}
-
-	/// <summary>
 	/// Creates successfull <see cref="CanFail{TResult}"/> înstance containing the <paramref name="value"/>
 	/// </summary>
-	/// <remarks>
-	/// This is what the implicit conversion from <typeparamref name="TResult"/> to <see cref="CanFail{TResult}"/> does
-	/// </remarks>
 	public static CanFail<TResult> Success(TResult value)
 	{
 		var canFail = new CanFail<TResult>();
@@ -83,9 +62,6 @@ public sealed class CanFail<TResult> : AbstractCanFail, ICanFail<TResult>
 	/// <summary>
 	/// Create <see cref="CanFail{TResult}"/> instance containing the <paramref name="error"/>
 	/// </summary>
-	/// <remarks>
-	/// This is what the implicit conversion from <see cref="Error"/> to <see cref="CanFail{TResult}"/> does
-	/// </remarks>
 	public static CanFail<TResult> FromError(Error error)
 	{
 		var canFail = new CanFail<TResult>();
@@ -94,17 +70,13 @@ public sealed class CanFail<TResult> : AbstractCanFail, ICanFail<TResult>
 	}
 
 	/// <summary>
-	/// Create <see cref="CanFail"/> instance from a class of <see cref="AbstractCanFail"/> that has failed
+	/// Create <see cref="CanFail{TResult}"/> instance from errors returned by another <see cref="AbstractCanFail"/> object
 	/// </summary>
-	public static CanFail<TResult> FromFailure(AbstractCanFail result)
+	/// <param name="errors">List of the errors of the other <see cref="AbstractCanFail"/> object</param>
+	public static CanFail<TResult> FromErrors(ReadOnlyErrorCollection errors)
 	{
-		if (!result.HasFailed)
-		{
-			throw new NoErrorsOccuredException($"Cannot use CanFail<{typeof(TResult)}>.FromFailure on a result that has not failed");
-		}
-
 		var canFail = new CanFail<TResult>();
-		canFail.InheritFailure(result);
+		canFail.Failed(errors);
 		return canFail;
 	}
 
@@ -122,5 +94,14 @@ public sealed class CanFail<TResult> : AbstractCanFail, ICanFail<TResult>
 	public static implicit operator CanFail<TResult>(TResult value)
 	{
 		return Success(value);
+	}
+
+	/// <summary>
+	/// Create <see cref="CanFail{TResult}"/> instance from errors returned by another <see cref="AbstractCanFail"/> object
+	/// </summary>
+	/// <param name="errors">List of the errors of the other <see cref="AbstractCanFail"/> object</param>
+	public static implicit operator CanFail<TResult>(ReadOnlyErrorCollection errors)
+	{
+		return FromErrors(errors);
 	}
 }

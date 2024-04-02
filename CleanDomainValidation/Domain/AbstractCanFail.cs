@@ -9,10 +9,10 @@ public abstract class AbstractCanFail : ICanFail
 	/// <summary>
 	/// List of errros that occured
 	/// </summary>
-	protected readonly List<Error> _errors = [];
+	private readonly List<Error> _errors = [];
 	
 	/// <inheritdoc/>
-	public IReadOnlyList<Error> Errors => _errors.Count == 0 ? throw new NoErrorsOccuredException() : _errors ;
+	public ReadOnlyErrorCollection Errors => _errors.Count == 0 ? throw new NoErrorsOccuredException() : new ReadOnlyErrorCollection(_errors);
 	
 	/// <inheritdoc/>
 	public bool HasFailed => _errors.Count != 0;
@@ -46,6 +46,11 @@ public abstract class AbstractCanFail : ICanFail
 	public void Failed(Error error)
 	{
 		_errors.Add(error);
+	}
+
+	internal void Failed(ReadOnlyErrorCollection errors)
+	{
+		_errors.AddRange(errors);
 	}
 
 	/// <summary>
