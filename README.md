@@ -1,134 +1,106 @@
 # CleanDomainValidation
-With this package you write your validation logic once in your domain layer and use it anywhere by just calling one method.
-By returning custom error objects and not throwing exceptions you can achieve a better information flow without try catch blocks all over your code!
-This package also brings methods for better validation and mapping of API Requests to commands or queries using an validator optimized for error handling.
-The CanFail part of the package is inspired by the [ErrorOr Package](https://github.com/amantinband/error-or/)
+Domain Model Validation and Rich Domain Models with Value Objects are one of the most important parts of DDD. But as soon as you need
+to implement those in the domain and application layer, that this is not really a nice part, especially in the request mapping and validation stage.
+By using this package, you will write your validation logic once in the domain layer and will be able to use it more easily in the application layer.
 
 ## How Domain validation works
-Any Entity parameter that needs to be validated must be implemented as a new class. This is called a "value object" and you will get many more benefits with this pattern.
-Instead of using a public constructor, make it private and create a static factory method for creating an object instance. Put your validation logic in this method and make it
-return CanFail<T>.
+Instead of throwing Exceptions all over your code, result objects will be used to indicate that a method can fail. The idea for this result object
+is originally from the [ErrorOr Package](https://github.com/amantinband/error-or/).
 
-### Example
-If you are creating a user entity with an Email Field, create a valueobject for the email type and use it instead of string.
+### How Errors work
+
+To indicate that something went wrong, `Error` classes are used. Since most backends are accessed through the web via HTTP, the Error objects
+are seperated into different groups conforming to [RFC 7231](https://datatracker.ietf.org/doc/html/rfc7231#section-6):
+- Conflict: The request cannot be processed because the domain does not allow it. Example: A user is trying to change his birthday to the future
+- Not found: The requested object cannot not be found
+- Validation: The request contains invalid objects, for example an invalid email
+- Forbidden: The user is not authorized to do what he did, for example when a non admin user is trying to access the admin console
+When an error is generated, an error code and a message needs to be specified.
+- Error code: Unique human readable code that explains the error with one word. I suggest the following format: AggregateRoot[.SubEntity].ErrorCode
+- Message: Human readable message that explains what went wrong more detailed
+
+> **Example:** <br>
+> A company aggregate contains employee entities, where the birthday can be set
+> The birthday of the employee needs to be in the past and must be at least 18 years ago.
+> The errors might look like the following:
+> ```cs
+> //Birthday is in the future error
+> Error.Conflict("Company.Employee.BirthdayInTheFuture", "The birthday of a person cannot be in the future");
+>
+> //Employee is younger then 18 error
+> Error.Conflict("Company.Employee.TooYoung", $"The employee needs to be 18 years old, but is only {age} years old.")
+> ```
+
+> [!TIP]
+> To achieve a better overview of all the domain errors that can occur, it may be useful to create a static Error class for each aggregate.
+Example Errors.Company.cs:
+>```cs
+>public static partial class Errors
+>{
+>  public static class Company
+>  {
+>    public static Error NotFound => Error.NotFound(
+>      "Company.NotFound",
+>      "The company with this id could not be found");
+>
+>    public static Error Employee
+>    {
+>      public static Error BirthdayInTheFuture => Error.Conflict(
+>        "Company.Employee.BirthdayInTheFuture",
+>        "The birthday of a person cannot be in the future");
+>      
+>      public static Error TooYoung(int age) => Error.Conflict(
+>        "Company.Employee.TooYoung",
+>        $"The employee needs to be 18 years old, but is only {age} years old.");
+>    }
+>  }
+>}
+>```
+> You now have a specification of all errors of the domain in one place which makes it much more easy to maintain them.
+
+### How result objects work
+A void returning method that contains code that can fail, should use `CanFail` as a return type. If the method already returns type `T`, `CanFail<T>` shall be used.
+
+Using Errrors in your code can be done in two ways:
 ```cs
-public class Email
+//Option 1: return Error object
+public CanFail CanFailByReturn(int number)
 {
-  private Email(string value)
-  {
-    Value = value;
-  }
+  //Error object will be implicitly converted to CanFail with this error
+  if(number < 5) return Error.Validation("Aggregate.NumberTooSmall", "The number cannot be smaller than 5");
 
-  public string Value {get; private set;}
+  //Works the same as in the example above, but uses the static Error class which makes the code much more readable and descriptive
+  if(number > 10) return Errors.Aggregate.NumberTooBig;
 
-  public CanFail<Email> Create(string value)
-  {
-    if(String.IsNullOrEmpty(value)
-    {
-      return Error.Validation("Email.Empty", "The email cannot be empty");
-    }
+  this.Number = number;
 
-    if(!value.Contains('@'))
-    {
-      return Error.Validation("Email.Invalid", "The email is in an invalid format");
-    }
-
-    return new Email(value);
-  }
-}
-```
-You can create the Email with the following code:
-```cs
-public CanFail CreateUser(string email)
-{
-  //Call the factory method
-  var emailCreationResult = Email.Create(email);
-
-  //check if email creation failed
-  if(emailCreationResult.HasFailed)
-  {
-    //return errors
-    return CanFail.FromFailure(emailCreationResult);
-  }
-  
-  //create user with the result value
-  User user = new User(emailCreationResult.Value);
-
-  //return success
+  //Marks that the method has been executed successfully
   return CanFail.Success();
 }
-```
-But feel free of using the Error class and CanFail for other methods that have to handle exceptions as well.
 
-# The more important part: validating API requests
-The most annoying part of implementing a REST API with clean architecture and DDD is redefining validation behaviour in the Application Layer and not receiving the validated valueobjects.
-Since we already created the factory method which supports error handling, there is no more need for custom validation configurations.
+//Option2: return CanFail object
+public CanFail CanFailByObject(int number){
+  
+  //new CanFail instance has not failed
+  CanFail result = new CanFail();
 
-If you are familiar with the CQRS pattern and MediatR, you are used to the following behaviour:
-- The json request is automatically mapped to an object containing the needed parameters
-- A manually configured validator will validate the incoming object paramers and reject the request if the validation fails
-- A request object needs to be created
-- The request object will be sent to the request handler
-- Use case will be executed
-The bad information first: You will need all of this steps for this approach as well BUT:
-- The request object contains already the value objects (so they can be used much easier in the handler)
-- The factory methods of the value objects can be used for validation, so no custom validation logic needs to be implemented
-- If something fails, CanFail will be used to return the errors so they can be handled in the controller without Exception handling
+  if(number < 5)
+  {
+    result.Failed(Errors.Aggregate.NumberTooSmall);
+  }
+  else if(number > 10)
+  {
+    result.Failed(Errors.Aggregate.NumberTooBig);
+  }
 
-Lets think about a REST API where you can create a user. You have an endpoint that takes a user json of the following format:
-```json
-{
-    "email": "meow"
+  //If the result has not failed
+  if(!result.HasFailed)
+  {
+      //Set the validated number
+      this.Number = number;
+  }
+
+  //Return CanFail object which contains occured errors
+  return result;
 }
 ```
-
-The json will be converted to
-```cs
-public class UserParameter : IParameter
-{
-    public string? Email {get; set;}
-}
-```
-ℹ️ All parameters will be defined as nullable as we want to handle null values manually as well.
-Our command will be looking like this:
-```cs
-public record CreateUserCommand(Email Email) : ICommand
-```
-With those two clases we can create the validator for the command:
-```cs
-public class CreateCommandValidator : CommandValidator<UserParameter, CreateUserCommand>>
-{
-    protected override void Configure(UserParameter parameters)
-    {
-        //Configure the email as an required parameter
-        //so the given Error wil be returned when it is null. 
-        var validatedEmail = RequiredAttribute(
-            parameters.Email, Error.Validation("User.Email.Missing", "The email attribute is missing",
-            value => Email.Create(value));
-
-        //Configure the method that will be called to create the command
-        CreateInstance(() => new CreateUserCommand(validatedEmail));
-    }
-}
-```
-
-In the API Controller, the command can be created the following way:
-```cs
-public void ControllerMethod(UserParameter parameters)
-{
-    var createUserCommand = CommandBuilder<CreateUserCommand>
-        .AddParameter(parameters)
-        .ValiateByUsing<CreateCommandValidator>();
-
-    //Handle command creation failure
-    if(createUserCommand.HasFailed)
-    {
-        ...
-        return;
-    }
-    
-    //You can access the valid command here using createUserCommand.Value
-}
-```
-
-To Be Continued...
