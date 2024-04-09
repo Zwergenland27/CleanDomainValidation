@@ -59,7 +59,8 @@ Example Errors.Company.cs:
 > You now have a specification of all errors of the domain in one place which makes it much more easy to maintain them.
 
 ### How result objects work
-A void returning method that contains code that can fail, should use `CanFail` as a return type. If the method already returns type `T`, `CanFail<T>` shall be used.
+#### Void returning methods
+A void returning method that contains code that can fail, should use `CanFail` as a return type.
 
 Using Errrors in your code can be done in two ways:
 ```cs
@@ -102,5 +103,107 @@ public CanFail CanFailByObject(int number){
 
   //Return CanFail object which contains occured errors
   return result;
+}
+```
+
+#### `T` returning methods
+A `T` returning method that contains code that can fail, should use `CanFail<T>` as a return type
+
+Error handling works exactly like [error handling for void returning methods](#void-returning-methods) but instead of returning `CanFail.Success()`, `T` can be returned.
+
+> Example for an Email [value object](https://martinfowler.com/bliki/ValueObject.html) with the factory method `Create` 
+>```cs
+>public class Email
+>{
+>  //Private, so that the class can only be created from the factory method
+>  //which validates the value
+>  private Email(string value)
+>  {
+>    Value = value;
+>  }
+>
+>  public string Value {get;}
+>
+>  public static CanFail<Email> Create(string value)
+>  {
+>    //The IsEmail() method will check if the email is valid
+>    if(!value.IsValidEmail()) return Errors.Aggregate.Email.Invalid;
+>
+>    return new Email(value);
+>  }
+>  
+>  //It is also possible to use the result object
+>  public static CanFail<Email> AlternativeCreate(string value)
+>  {
+>    CanFail<Email> result = new();
+>    if(!value.IsValidEmail())
+>    {
+>      result.Failed(Errors.Aggregate.Email.Invalid)
+>    }
+>    else
+>    {
+>      result.Success(new Email(value));
+>    }
+>    return result;
+>  }
+>}
+>```
+
+#### Nested Failures
+In many cases the error is not directly generated in the outer method itself but the method is calling an inner method that returns a result object.
+Obviously if the inner method can fail, the outer method must return a result object as well.
+The following examples will show how to forward inner errors.
+```cs
+public class Username
+{
+  private Username(string value)
+  {
+    Value = value;
+  }
+
+  public string Value {get;}
+
+  private static CanFail Validate(string value)
+  {
+    if(value.Length < 3) return Errors.Aggregate.Username.TooShort; 
+    if(value.Length > 10) return Errors.Aggregate.Username.TooLong;
+
+    return CanFail.Success();
+  }
+
+  private static CanFail CheckForbidden(string value)
+  {
+    if(value == "Admin") return Errors.Aggregate.Username.Invalid;
+    return CanFail.Success();
+  }
+
+  public static CanFail<Username> Create(string value)
+  {
+    var validationResult = Validate(value);
+
+    //Forwarding the errors that occured in validationResult
+    if(validationResult.HasFailed) return validationResult.Errors;
+
+    return new Email(value);
+  }
+
+  //In this example multiple checks will be stored in the result
+  public static CanFail<Username> CreateWithForbiddenCheck(string value)
+  {
+    CanFail<Username> result = new();
+
+    var validationResult = Validate(value);
+    result.InheritFailure(validationResult);
+    
+    var forbiddenResult = CheckForbidden(value);
+    result.InheritFailure(forbiddenResult);
+
+    if(!result.HasFailed)
+    {
+      result.Success(new Email(value));
+    }
+
+    return result;
+  }
 }
 ```
