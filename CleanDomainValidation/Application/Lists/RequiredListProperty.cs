@@ -6,15 +6,12 @@ public sealed class RequiredListProperty<TParameters, TProperty> : IValidatableP
 	where TParameters : notnull
 	where TProperty : notnull
 {
-	public bool IsRequired => true;
-	public bool IsMissing { get; set; }
 	public Error MissingError { get; }
 	public TParameters Parameters { get; }
 	public CanFail ValidationResult { get; } = new();
 
 	internal RequiredListProperty(TParameters parameters, Error missingError)
 	{
-		IsMissing = false;
 		Parameters = parameters;
 		MissingError = missingError;
 	}

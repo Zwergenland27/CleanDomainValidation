@@ -45,18 +45,6 @@ public class RequiredListTests
 	private static Error _missingError = Error.Validation("Error.Missing", "The value is missing");
 	private static Error _invalidEnumError => Error.Validation("Enum.Invalid", "The enum is invalid");
 
-	[Fact]
-	public void IsRequired_Should_BeTrue()
-	{
-		//Arrange
-		List<string> value = ["value1"];
-		var parameters = new OClassListParameter(value);
-		var property = new RequiredListProperty<OClassListParameter, string>(parameters, _missingError);
-
-		//Assert
-		property.IsRequired.Should().BeTrue();
-	}
-
 	#region Direct Mapped
 
 	[Fact]
@@ -120,36 +108,6 @@ public class RequiredListTests
 	}
 
 	[Fact]
-	public void DirectMapEachClass_IsMissingShouldBeFalse_WhenParameterListIsNotNull()
-	{
-		//Arrange
-		List<string> value = ["value1", "value2"];
-		var parameters = new RClassListParameter(value);
-		var property = new RequiredListProperty<RClassListParameter, string>(parameters, _missingError);
-
-		//Act
-		var result = property.MapEach(p => p.Value);
-
-		//Assert
-		property.IsMissing.Should().BeFalse();
-	}
-
-	[Fact]
-	public void DirectMapEachStruct_IsMissingShouldBeFalse_WhenParameterListIsNotNull()
-	{
-		//Arrange
-		List<int> value = [1, 2];
-		var parameters = new RStructListParameter(value);
-		var property = new RequiredListProperty<RStructListParameter, int>(parameters, _missingError);
-
-		//Act
-		var result = property.MapEach(p => p.Value);
-
-		//Assert
-		property.IsMissing.Should().BeFalse();
-	}
-
-	[Fact]
 	public void DirectMapEachClass_ShouldReturnNull_WhenParameterListIsNull()
 	{
 		//Arrange
@@ -205,34 +163,6 @@ public class RequiredListTests
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
 		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missingError);
-	}
-
-	[Fact]
-	public void DirectMapEachClass_IsMissingShouldBeTrue_WhenParameterListIsNull()
-	{
-		//Arrange
-		var parameters = new RClassListParameter(null);
-		var property = new RequiredListProperty<RClassListParameter, string>(parameters, _missingError);
-
-		//Act
-		var result = property.MapEach(p => p.Value);
-
-		//Assert
-		property.IsMissing.Should().BeTrue();
-	}
-
-	[Fact]
-	public void DirectMapEachStruct_IsMissingShouldBeTrue_WhenParameterListIsNull()
-	{
-		//Arrange
-		var parameters = new RStructListParameter(null);
-		var property = new RequiredListProperty<RStructListParameter, int>(parameters, _missingError);
-
-		//Act
-		var result = property.MapEach(p => p.Value);
-
-		//Assert
-		property.IsMissing.Should().BeTrue();
 	}
 
 	#endregion
@@ -297,36 +227,6 @@ public class RequiredListTests
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeFalse();
-	}
-
-	[Fact]
-	public void FactoryMapEachClass_IsMissingShouldBeFalse_WhenParameterListIsNotNull()
-	{
-		//Arrange
-		List<string> value = ["value1", "value2"];
-		var parameters = new RClassListParameter(value);
-		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, _missingError);
-
-		//Act
-		var result = property.MapEach(p => p.Value, RClassValueObject.Create);
-
-		//Assert
-		property.IsMissing.Should().BeFalse();
-	}
-
-	[Fact]
-	public void FactoryMapEachStruct_IsMissingShouldBeFalse_WhenParameterListIsNotNull()
-	{
-		//Arrange
-		List<int> value = [1, 2];
-		var parameters = new RStructListParameter(value);
-		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, _missingError);
-
-		//Act
-		var result = property.MapEach(p => p.Value, RStructValueObject.Create);
-
-		//Assert
-		property.IsMissing.Should().BeFalse();
 	}
 
 	[Fact]
@@ -419,34 +319,6 @@ public class RequiredListTests
 		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missingError);
 	}
 
-	[Fact]
-	public void FactoryMapEachClass_IsMissingShouldBeTrue_WhenParameterListIsNull()
-	{
-		//Arrange
-		var parameters = new RClassListParameter(null);
-		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, _missingError);
-
-		//Act
-		var result = property.MapEach(p => p.Value, RClassValueObject.Create);
-
-		//Assert
-		property.IsMissing.Should().BeTrue();
-	}
-
-	[Fact]
-	public void FactoryMapEachStruct_IsMissingShouldBeTrue_WhenParameterListIsNull()
-	{
-		//Arrange
-		var parameters = new RStructListParameter(null);
-		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, _missingError);
-
-		//Act
-		var result = property.MapEach(p => p.Value, RStructValueObject.Create);
-
-		//Assert
-		property.IsMissing.Should().BeTrue();
-	}
-
 	#endregion
 
 	#region Constructor Mapped
@@ -512,36 +384,6 @@ public class RequiredListTests
 	}
 
 	[Fact]
-	public void ConstructorMapEachClass_IsMissingShouldBeFalse_WhenParameterListIsNotNull()
-	{
-		//Arrange
-		List<string> value = ["value1", "value2"];
-		var parameters = new RClassListParameter(value);
-		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, _missingError);
-
-		//Act
-		var result = property.MapEach(p => p.Value, v => new RClassValueObject(v));
-
-		//Assert
-		property.IsMissing.Should().BeFalse();
-	}
-
-	[Fact]
-	public void ConstructorMapEachStruct_IsMissingShouldBeFalse_WhenParameterListIsNotNull()
-	{
-		//Arrange
-		List<int> value = [1, 2];
-		var parameters = new RStructListParameter(value);
-		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, _missingError);
-
-		//Act
-		var result = property.MapEach(p => p.Value, v => new RStructValueObject(v));
-
-		//Assert
-		property.IsMissing.Should().BeFalse();
-	}
-
-	[Fact]
 	public void ConstructorMapEachClass_ShouldReturnNull_WhenParameterListIsNull()
 	{
 		//Arrange
@@ -598,35 +440,6 @@ public class RequiredListTests
 		property.ValidationResult.HasFailed.Should().BeTrue();
 		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missingError);
 	}
-
-	[Fact]
-	public void ConstructorMapEachClass_IsMissingShouldBeTrue_WhenParameterListIsNull()
-	{
-		//Arrange
-		var parameters = new RClassListParameter(null);
-		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, _missingError);
-
-		//Act
-		var result = property.MapEach(p => p.Value, v => new RClassValueObject(v));
-
-		//Assert
-		property.IsMissing.Should().BeTrue();
-	}
-
-	[Fact]
-	public void ConstructorMapEachStruct_IsMissingShouldBeTrue_WhenParameterListIsNull()
-	{
-		//Arrange
-		var parameters = new RStructListParameter(null);
-		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, _missingError);
-
-		//Act
-		var result = property.MapEach(p => p.Value, v => new RStructValueObject(v));
-
-		//Assert
-		property.IsMissing.Should().BeTrue();
-	}
-
 	#endregion
 
 	#region Compex Mapped
@@ -713,48 +526,6 @@ public class RequiredListTests
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeFalse();
-	}
-
-	[Fact]
-	public void ComplexMapEachClass_IsMissingShouldBeFalse_WhenParameterListIsNotNull()
-	{
-		//Arrange
-		List<string> value = ["value1", "value2"];
-		var parameters = new RClassListParameter(value);
-		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, _missingError);
-
-		//Act
-		var result = property.MapEachComplex(p => p.Value, builder =>
-		{
-			var value = builder.ClassProperty(p => p.Value)
-				.Required(Error.Validation("Error.Missing", "missing error"))
-				.Map(r => r);
-			return builder.Build(() => RClassValueObject.Create(value));
-		});
-
-		//Assert
-		property.IsMissing.Should().BeFalse();
-	}
-
-	[Fact]
-	public void ComplexMapEachStruct_IsMissingShouldBeFalse_WhenParameterListIsNotNull()
-	{
-		//Arrange
-		List<int> value = [1, 2];
-		var parameters = new RStructListParameter(value);
-		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, _missingError);
-
-		//Act
-		var result = property.MapEachComplex(p => p.Value, builder =>
-		{
-			var value = builder.StructProperty(p => p.Value)
-				.Required(Error.Validation("Error.Missing", "missing error"))
-				.Map(r => r);
-			return builder.Build(() => RStructValueObject.Create(value));
-		});
-
-		//Assert
-		property.IsMissing.Should().BeFalse();
 	}
 
 	[Fact]
@@ -883,46 +654,6 @@ public class RequiredListTests
 		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missingError);
 	}
 
-	[Fact]
-	public void ComplexMapEachClass_IsMissingShouldBeTrue_WhenParameterListIsNull()
-	{
-		//Arrange
-		var parameters = new RClassListParameter(null);
-		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, _missingError);
-
-		//Act
-		var result = property.MapEachComplex(p => p.Value, builder =>
-		{
-			var value = builder.ClassProperty(p => p.Value)
-				.Required(Error.Validation("Error.Missing", "missing error"))
-				.Map(r => r);
-			return builder.Build(() => RClassValueObject.Create(value));
-		});
-
-		//Assert
-		property.IsMissing.Should().BeTrue();
-	}
-
-	[Fact]
-	public void ComplexMapEachStruct_IsMissingShouldBeTrue_WhenParameterListIsNull()
-	{
-		//Arrange
-		var parameters = new RStructListParameter(null);
-		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, _missingError);
-
-		//Act
-		var result = property.MapEachComplex(p => p.Value, builder =>
-		{
-			var value = builder.StructProperty(p => p.Value)
-				.Required(Error.Validation("Error.Missing", "missing error"))
-				.Map(r => r);
-			return builder.Build(() => RStructValueObject.Create(value));
-		});
-
-		//Assert
-		property.IsMissing.Should().BeTrue();
-	}
-
 	#endregion
 
 	#region Enum
@@ -985,36 +716,6 @@ public class RequiredListTests
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeFalse();
-	}
-
-	[Fact]
-	public void MapEachEnum_IsMissingShouldBeFalse_WhenStringListIsNotNull()
-	{
-		//Arrange
-		List<string> value = ["One", "Two"];
-		var parameters = new RStringListParameter(value);
-		var property = new RequiredListProperty<RStringListParameter, RTestEnum>(parameters, _missingError);
-
-		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
-
-		//Assert
-		property.IsMissing.Should().BeFalse();
-	}
-
-	[Fact]
-	public void MapEachEnum_IsMissingShouldBeFalse_WhenIntListIsNotNull()
-	{
-		//Arrange
-		List<int> value = [0, 1];
-		var parameters = new RIntListParameter(value);
-		var property = new RequiredListProperty<RIntListParameter, RTestEnum>(parameters, _missingError);
-
-		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
-
-		//Assert
-		property.IsMissing.Should().BeFalse();
 	}
 
 	[Fact]
@@ -1105,34 +806,6 @@ public class RequiredListTests
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
 		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missingError);
-	}
-
-	[Fact]
-	public void MapEachEnum_IsMissingShouldBeTrue_WhenStringListIsNull()
-	{
-		//Arrange
-		var parameters = new RStringListParameter(null);
-		var property = new RequiredListProperty<RStringListParameter, RTestEnum>(parameters, _missingError);
-
-		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
-
-		//Assert
-		property.IsMissing.Should().BeTrue();
-	}
-
-	[Fact]
-	public void MapEachEnum_IsMissingShouldBeTrue_WhenIntListIsNull()
-	{
-		//Arrange
-		var parameters = new RIntListParameter(null);
-		var property = new RequiredListProperty<RIntListParameter, RTestEnum>(parameters, _missingError);
-
-		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
-
-		//Assert
-		property.IsMissing.Should().BeTrue();
 	}
 
 	#endregion

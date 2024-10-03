@@ -24,18 +24,6 @@ public class OptionalEnumTests
 {
 	private static Error _invalidEnumError => Error.Validation("Enum.Invalid", "The enum is invalid");
 
-	[Fact]
-	public void IsRequired_Should_BeFalse()
-	{
-		//Arrange
-		var value = "One";
-		var parameters = new OStringParameter(value);
-		var property = new OptionalEnumProperty<OStringParameter, OTestEnum>(parameters);
-
-		//Assert
-		property.IsRequired.Should().BeFalse();
-	}
-
 	#region String to enum
 
 	[Fact]
@@ -66,21 +54,6 @@ public class OptionalEnumTests
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeFalse();
-	}
-
-	[Fact]
-	public void Map_IsMissingShouldBeFalse_WhenStringNotNull()
-	{
-		//Arrange
-		var value = "One";
-		var parameters = new OStringParameter(value);
-		var property = new OptionalEnumProperty<OStringParameter, OTestEnum>(parameters);
-
-		//Act
-		_ = property.Map(p => p.Value, _invalidEnumError);
-
-		//Assert
-		property.IsMissing.Should().BeFalse();
 	}
 
 	[Fact]
@@ -127,20 +100,6 @@ public class OptionalEnumTests
 		property.ValidationResult.HasFailed.Should().BeFalse();
 	}
 
-	[Fact]
-	public void Map_IsMissingShouldBeTrue_WhenStringNull()
-	{
-		//Arrange
-		var parameters = new OStringParameter(null);
-		var property = new OptionalEnumProperty<OStringParameter, OTestEnum>(parameters);
-
-		//Act
-		_ = property.Map(p => p.Value, _invalidEnumError);
-
-		//Assert
-		property.IsMissing.Should().BeTrue();
-	}
-
 	#endregion
 
 	#region Int to enum
@@ -175,20 +134,6 @@ public class OptionalEnumTests
 		property.ValidationResult.HasFailed.Should().BeFalse();
 	}
 
-	[Fact]
-	public void Map_IsMissingShouldBeFalse_WhenIntNotNull()
-	{
-		//Arrange
-		var value = 0;
-		var parameters = new OIntParameter(value);
-		var property = new OptionalEnumProperty<OIntParameter, OTestEnum>(parameters);
-
-		//Act
-		_ = property.Map(p => p.Value, _invalidEnumError);
-
-		//Assert
-		property.IsMissing.Should().BeFalse();
-	}
 
 	[Fact]
 	public void Map_ShouldSetInvalidEnumError_WhenIntInvalid()
@@ -232,20 +177,6 @@ public class OptionalEnumTests
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeFalse();
-	}
-
-	[Fact]
-	public void Map_IsMissingShouldBeTrue_WhenIntNull()
-	{
-		//Arrange
-		var parameters = new OIntParameter(null);
-		var property = new OptionalEnumProperty<OIntParameter, OTestEnum>(parameters);
-
-		//Act
-		_ = property.Map(p => p.Value, _invalidEnumError);
-
-		//Assert
-		property.IsMissing.Should().BeTrue();
 	}
 
 	#endregion

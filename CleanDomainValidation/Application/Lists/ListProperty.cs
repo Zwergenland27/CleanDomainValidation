@@ -8,9 +8,6 @@ public sealed class ListProperty<TParameters, TProperty> : IValidatableProperty
 {
 	private IValidatableProperty _property;
 	private TParameters _parameters;
-
-	public bool IsRequired => _property.IsRequired;
-	public bool IsMissing => _property.IsMissing;
 	public CanFail ValidationResult => _property.ValidationResult;
 
 	internal ListProperty(TParameters parameters)
