@@ -78,7 +78,7 @@ public class CanFailTests
 	{
 		//Arrange
 		CanFail result = new();
-		Error differentError = Error.Conflict("Code", "Message");
+		Error differentError = Error.Validation("Code", "Message");
 
 		//Act
 		result.Failed(_exampleError);
