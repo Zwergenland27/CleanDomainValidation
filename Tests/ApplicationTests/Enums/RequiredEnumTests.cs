@@ -21,20 +21,8 @@ public enum RTestEnum
 
 public class RequiredEnumTests
 {
-	private static Error _missingError => Error.Validation("Enum.Missing", "The enum is missing");
-	private static Error _invalidEnumError => Error.Validation("Enum.Invalid", "The enum is invalid");
-
-	[Fact]
-	public void IsRequired_Should_BeTrue()
-	{
-		//Arrange
-		var value = "One";
-		var parameters = new RStringParameter(value);
-		var property = new RequiredEnumProperty<RStringParameter, RTestEnum>(parameters, _missingError);
-
-		//Assert
-		property.IsRequired.Should().BeTrue();
-	}
+	private static Error MissingError => Error.Validation("Enum.Missing", "The enum is missing");
+	private static Error InvalidEnumError => Error.Validation("Enum.Invalid", "The enum is invalid");
 
 	#region String to enum
 
@@ -44,10 +32,10 @@ public class RequiredEnumTests
 		//Arrange
 		var value = "One";
 		var parameters = new RStringParameter(value);
-		var property = new RequiredEnumProperty<RStringParameter, RTestEnum>(parameters, _missingError);
+		var property = new RequiredEnumProperty<RStringParameter, RTestEnum>(parameters, MissingError);
 
 		//Act
-		var validatedProperty = property.Map(p => p.Value, _invalidEnumError);
+		var validatedProperty = property.Map(p => p.Value, InvalidEnumError);
 
 		//Assert
 		validatedProperty.Should().Be(RTestEnum.One);
@@ -59,28 +47,13 @@ public class RequiredEnumTests
 		//Arrange
 		var value = "One";
 		var parameters = new RStringParameter(value);
-		var property = new RequiredEnumProperty<RStringParameter, RTestEnum>(parameters, _missingError);
+		var property = new RequiredEnumProperty<RStringParameter, RTestEnum>(parameters, MissingError);
 
 		//Act
-		var validatedProperty = property.Map(p => p.Value, _invalidEnumError);
+		var validatedProperty = property.Map(p => p.Value, InvalidEnumError);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeFalse();
-	}
-
-	[Fact]
-	public void Map_IsMissingShouldBeFalse_WhenStringNotNull()
-	{
-		//Arrange
-		var value = "One";
-		var parameters = new RStringParameter(value);
-		var property = new RequiredEnumProperty<RStringParameter, RTestEnum>(parameters, _missingError);
-
-		//Act
-		var validatedProperty = property.Map(p => p.Value, _invalidEnumError);
-
-		//Assert
-		property.IsMissing.Should().BeFalse();
 	}
 
 	[Fact]
@@ -89,14 +62,14 @@ public class RequiredEnumTests
 		//Arrange
 		var value = "Invalid";
 		var parameters = new RStringParameter(value);
-		var property = new RequiredEnumProperty<RStringParameter, RTestEnum>(parameters, _missingError);
+		var property = new RequiredEnumProperty<RStringParameter, RTestEnum>(parameters, MissingError);
 
 		//Act
-		var validatedProperty = property.Map(p => p.Value, _invalidEnumError);
+		var validatedProperty = property.Map(p => p.Value, InvalidEnumError);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_invalidEnumError);
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(InvalidEnumError);
 	}
 
 	[Fact]
@@ -104,10 +77,10 @@ public class RequiredEnumTests
 	{
 		//Arrange
 		var parameters = new RStringParameter(null);
-		var property = new RequiredEnumProperty<RStringParameter, RTestEnum>(parameters, _missingError);
+		var property = new RequiredEnumProperty<RStringParameter, RTestEnum>(parameters, MissingError);
 
 		//Act
-		var validatedProperty = property.Map(p => p.Value, _invalidEnumError);
+		var validatedProperty = property.Map(p => p.Value, InvalidEnumError);
 
 		//Assert
 		validatedProperty.Should().Be(default);
@@ -118,28 +91,14 @@ public class RequiredEnumTests
 	{
 		//Arrange
 		var parameters = new RStringParameter(null);
-		var property = new RequiredEnumProperty<RStringParameter, RTestEnum>(parameters, _missingError);
+		var property = new RequiredEnumProperty<RStringParameter, RTestEnum>(parameters, MissingError);
 
 		//Act
-		var validatedProperty = property.Map(p => p.Value, _invalidEnumError);
+		var validatedProperty = property.Map(p => p.Value, InvalidEnumError);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missingError);
-	}
-
-	[Fact]
-	public void Map_IsMissingShouldBeTrue_WhenStringNull()
-	{
-		//Arrange
-		var parameters = new RStringParameter(null);
-		var property = new RequiredEnumProperty<RStringParameter, RTestEnum>(parameters, _missingError);
-
-		//Act
-		var validatedProperty = property.Map(p => p.Value, _invalidEnumError);
-
-		//Assert
-		property.IsMissing.Should().BeTrue();
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(MissingError);
 	}
 
 	#endregion
@@ -152,10 +111,10 @@ public class RequiredEnumTests
 		//Arrange
 		var value = 0;
 		var parameters = new RIntParameter(value);
-		var property = new RequiredEnumProperty<RIntParameter, RTestEnum>(parameters, _missingError);
+		var property = new RequiredEnumProperty<RIntParameter, RTestEnum>(parameters, MissingError);
 
 		//Act
-		var validatedProperty = property.Map(p => p.Value, _invalidEnumError);
+		var validatedProperty = property.Map(p => p.Value, InvalidEnumError);
 
 		//Assert
 		validatedProperty.Should().Be(RTestEnum.One);
@@ -167,28 +126,13 @@ public class RequiredEnumTests
 		//Arrange
 		var value = 0;
 		var parameters = new RIntParameter(value);
-		var property = new RequiredEnumProperty<RIntParameter, RTestEnum>(parameters, _missingError);
+		var property = new RequiredEnumProperty<RIntParameter, RTestEnum>(parameters, MissingError);
 
 		//Act
-		var validatedProperty = property.Map(p => p.Value, _invalidEnumError);
+		var validatedProperty = property.Map(p => p.Value, InvalidEnumError);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeFalse();
-	}
-
-	[Fact]
-	public void Map_IsMissingShouldBeFalse_WhenIntNotNull()
-	{
-		//Arrange
-		var value = 0;
-		var parameters = new RIntParameter(value);
-		var property = new RequiredEnumProperty<RIntParameter, RTestEnum>(parameters, _missingError);
-
-		//Act
-		var validatedProperty = property.Map(p => p.Value, _invalidEnumError);
-
-		//Assert
-		property.IsMissing.Should().BeFalse();
 	}
 
 	[Fact]
@@ -197,14 +141,14 @@ public class RequiredEnumTests
 		//Arrange
 		var value = 1;
 		var parameters = new RIntParameter(value);
-		var property = new RequiredEnumProperty<RIntParameter, RTestEnum>(parameters, _missingError);
+		var property = new RequiredEnumProperty<RIntParameter, RTestEnum>(parameters, MissingError);
 
 		//Act
-		var validatedProperty = property.Map(p => p.Value, _invalidEnumError);
+		var validatedProperty = property.Map(p => p.Value, InvalidEnumError);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_invalidEnumError);
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(InvalidEnumError);
 	}
 
 	[Fact]
@@ -212,10 +156,10 @@ public class RequiredEnumTests
 	{
 		//Arrange
 		var parameters = new RIntParameter(null);
-		var property = new RequiredEnumProperty<RIntParameter, RTestEnum>(parameters, _missingError);
+		var property = new RequiredEnumProperty<RIntParameter, RTestEnum>(parameters, MissingError);
 
 		//Act
-		var validatedProperty = property.Map(p => p.Value, _invalidEnumError);
+		var validatedProperty = property.Map(p => p.Value, InvalidEnumError);
 
 		//Assert
 		validatedProperty.Should().Be(default);
@@ -226,28 +170,14 @@ public class RequiredEnumTests
 	{
 		//Arrange
 		var parameters = new RIntParameter(null);
-		var property = new RequiredEnumProperty<RIntParameter, RTestEnum>(parameters, _missingError);
+		var property = new RequiredEnumProperty<RIntParameter, RTestEnum>(parameters, MissingError);
 
 		//Act
-		var validatedProperty = property.Map(p => p.Value, _invalidEnumError);
+		var validatedProperty = property.Map(p => p.Value, InvalidEnumError);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missingError);
-	}
-
-	[Fact]
-	public void Map_IsMissingShouldBeTrue_WhenIntNull()
-	{
-		//Arrange
-		var parameters = new RIntParameter(null);
-		var property = new RequiredEnumProperty<RIntParameter, RTestEnum>(parameters, _missingError);
-
-		//Act
-		var validatedProperty = property.Map(p => p.Value, _invalidEnumError);
-
-		//Assert
-		property.IsMissing.Should().BeTrue();
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(MissingError);
 	}
 
 	#endregion

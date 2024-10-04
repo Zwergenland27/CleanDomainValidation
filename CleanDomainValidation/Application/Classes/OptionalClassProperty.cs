@@ -2,20 +2,15 @@
 
 namespace CleanDomainValidation.Application.Classes;
 
-public sealed class OptionalClassProperty<TParameters, TProperty> : IValidatableProperty
+public sealed class OptionalClassProperty<TParameters, TProperty> : ValidatableProperty
 	where TParameters : notnull
 	where TProperty : class
 {
-	public bool IsRequired => false;
-
-	public bool IsMissing { get; set; }
-
-	public TParameters Parameters { get; }
-	public CanFail ValidationResult { get; } = new();
+	internal TParameters Parameters { get; }
+	internal override CanFail ValidationResult { get; } = new();
 
 	internal OptionalClassProperty(TParameters parameters)
 	{
-		IsMissing = false;
 		Parameters = parameters;
 	}
 }

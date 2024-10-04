@@ -3,19 +3,15 @@ using System.Linq.Expressions;
 
 namespace CleanDomainValidation.Application.Structs;
 
-public sealed class OptionalStructProperty<TParameters, TProperty> : IValidatableProperty
+public sealed class OptionalStructProperty<TParameters, TProperty> : ValidatableProperty
 	where TParameters : notnull
 	where TProperty : struct
 {
-	public bool IsRequired => false;
-
-	public bool IsMissing { get; set; }
-	public TParameters Parameters { get; }
-	public CanFail ValidationResult { get; } = new();
+	internal TParameters Parameters { get; }
+	internal override CanFail ValidationResult { get; } = new();
 
 	internal OptionalStructProperty(TParameters parameters)
 	{
-		IsMissing = false;
 		Parameters = parameters;
 	}
 }

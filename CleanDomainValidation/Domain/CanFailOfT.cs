@@ -11,11 +11,6 @@ public sealed class CanFail<TResult> : AbstractCanFail, ICanFail<TResult>
 	private bool _valueSet = false;
 
 	/// <summary>
-	/// Error that occurs when the value is accessed but not set yet
-	/// </summary>
-	public static InvalidOperationException ValueNotSet => new ("The value of the result object has not been set yet");
-
-	/// <summary>
 	/// Access the value that should be returned normally
 	/// </summary>
 	/// <remarks>

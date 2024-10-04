@@ -17,7 +17,6 @@ public static class EnumMapExtensions
 		string? rawEnum = value.Invoke(property.Parameters);
 		if(rawEnum is null)
 		{
-			property.IsMissing = true;
 			return null;
 		}
 
@@ -40,7 +39,6 @@ public static class EnumMapExtensions
 		string? rawEnum = value.Invoke(property.Parameters);
 		if (rawEnum is null)
 		{
-			property.IsMissing = true;
 			property.ValidationResult.Failed(property.MissingError);
 			return default;
 		}
@@ -64,7 +62,6 @@ public static class EnumMapExtensions
 		int? rawEnum = value.Invoke(property.Parameters);
 		if (rawEnum is null)
 		{
-			property.IsMissing = true;
 			return null;
 		}
 
@@ -87,7 +84,6 @@ public static class EnumMapExtensions
 		int? rawEnum = value.Invoke(property.Parameters);
 		if (rawEnum is null)
 		{
-			property.IsMissing = true;
 			property.ValidationResult.Failed(property.MissingError);
 			return default;
 		}
@@ -115,7 +111,6 @@ public static class EnumMapExtensions
 		IEnumerable<string>? rawEnums = values.Invoke(property.Parameters);
 		if (rawEnums is null)
 		{
-			property.IsMissing = true;
 			return null;
 		}
 
@@ -145,7 +140,6 @@ public static class EnumMapExtensions
 		IEnumerable<string>? rawEnums = values.Invoke(property.Parameters);
 		if (rawEnums is null)
 		{
-			property.IsMissing = true;
 			property.ValidationResult.Failed(property.MissingError);
 			return null!;
 		}
@@ -176,7 +170,6 @@ public static class EnumMapExtensions
 		IEnumerable<int>? rawEnums = values.Invoke(property.Parameters);
 		if (rawEnums is null)
 		{
-			property.IsMissing = true;
 			return null;
 		}
 
@@ -206,7 +199,6 @@ public static class EnumMapExtensions
 		IEnumerable<int>? rawEnums = values.Invoke(property.Parameters);
 		if (rawEnums is null)
 		{
-			property.IsMissing = true;
 			property.ValidationResult.Failed(property.MissingError);
 			return null!;
 		}

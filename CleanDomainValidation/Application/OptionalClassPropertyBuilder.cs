@@ -12,24 +12,12 @@ public sealed class OptionalClassPropertyBuilder<TParameters, TResult> : Propert
 	{
 		CanFail<TResult?> result = new();
 
-		bool requiredPropertyMissing = false;
-
 		foreach (var property in Properties)
 		{
-			if(property.IsRequired && property.IsMissing)
-			{
-				requiredPropertyMissing = true;
-				continue;
-			}
 			result.InheritFailure(property.ValidationResult);
 		}
 
-		if(!result.HasFailed && requiredPropertyMissing)
-		{
-			result.Succeeded(null);
-		}
-
-		if (!result.HasFailed && !requiredPropertyMissing)
+		if (!result.HasFailed)
 		{
 			result.Succeeded(creationMethod.Invoke());
 		}
@@ -41,27 +29,14 @@ public sealed class OptionalClassPropertyBuilder<TParameters, TResult> : Propert
 	{
 		CanFail<TResult?> result = new();
 
-		bool requiredPropertyMissing = false;
-
 		foreach (var property in Properties)
 		{
-			if (property.IsRequired && property.IsMissing)
-			{
-				requiredPropertyMissing = true;
-				continue;
-			}
 			result.InheritFailure(property.ValidationResult);
 		}
 
 		//Ensure the factory method wont get called if any errors occured to the parameters
 		if (result.HasFailed)
 		{
-			return new ValidatedOptionalClassProperty<TResult>(result);
-		}
-
-		if (requiredPropertyMissing)
-		{
-			result.Succeeded(null);
 			return new ValidatedOptionalClassProperty<TResult>(result);
 		}
 

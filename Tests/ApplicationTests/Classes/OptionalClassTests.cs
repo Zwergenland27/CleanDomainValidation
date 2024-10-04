@@ -30,17 +30,6 @@ public record OStructValueObject(int Value)
 
 public class OptionalClassTests
 {
-    [Fact]
-    public void IsRequired_Should_BeFalse()
-    {
-        //Arrange
-        var value = "value";
-        var parameters = new OClassParameter(value);
-        var property = new OptionalClassProperty<OClassParameter, string>(parameters);
-
-        //Assert
-        property.IsRequired.Should().BeFalse();
-    }
 
     #region Direct Mapped
 
@@ -75,21 +64,6 @@ public class OptionalClassTests
     }
 
     [Fact]
-    public void DirectMap_IsMissingShouldBeFalse_WhenValueNotNull()
-    {
-        //Arrange
-        var value = "value";
-        var parameters = new OClassParameter(value);
-        var property = new OptionalClassProperty<OClassParameter, string>(parameters);
-
-        //Act
-        _ = property.Map(p => p.Value);
-
-        //Assert
-        property.IsMissing.Should().BeFalse();
-    }
-
-    [Fact]
     public void DirectMap_ShouldReturnNull_WhenValueNull()
     {
         //Arrange
@@ -115,20 +89,6 @@ public class OptionalClassTests
 
         //Assert
         property.ValidationResult.HasFailed.Should().BeFalse();
-    }
-
-    [Fact]
-    public void DirectMap_IsMissingShouldBeTrue_WhenValueNull()
-    {
-        //Arrange
-        var parameters = new OClassParameter(null);
-        var property = new OptionalClassProperty<OClassParameter, string>(parameters);
-
-        //Act
-        _ = property.Map(p => p.Value);
-
-        //Assert
-        property.IsMissing.Should().BeTrue();
     }
 
     #endregion
@@ -193,36 +153,6 @@ public class OptionalClassTests
 
         //Assert
         property.ValidationResult.HasFailed.Should().BeFalse();
-    }
-
-    [Fact]
-    public void FactoryMapClass_IsMissingShouldBeFalse_WhenValueNotNull()
-    {
-        //Arrange
-        var value = "value";
-        var parameters = new OClassParameter(value);
-        var property = new OptionalClassProperty<OClassParameter, OClassValueObject>(parameters);
-
-        //Act
-        _ = property.Map(p => p.Value, OClassValueObject.Create);
-
-        //Assert
-        property.IsMissing.Should().BeFalse();
-    }
-
-    [Fact]
-    public void FactoryMapStruct_IsMissingShouldBeFalse_WhenValueNotNull()
-    {
-        //Arrange
-        var value = 1;
-        var parameters = new OStructParameter(value);
-        var property = new OptionalClassProperty<OStructParameter, OStructValueObject>(parameters);
-
-        //Act
-        _ = property.Map(p => p.Value, OStructValueObject.Create);
-
-        //Assert
-        property.IsMissing.Should().BeFalse();
     }
 
     [Fact]
@@ -345,34 +275,6 @@ public class OptionalClassTests
         property.ValidationResult.HasFailed.Should().BeFalse();
     }
 
-    [Fact]
-    public void FactoryMapClass_IsMissingShouldBeTrue_WhenValueNull()
-    {
-        //Arrange
-        var parameters = new OClassParameter(null);
-        var property = new OptionalClassProperty<OClassParameter, OClassValueObject>(parameters);
-
-        //Act
-        _ = property.Map(p => p.Value, OClassValueObject.Create);
-
-        //Assert
-        property.IsMissing.Should().BeTrue();
-    }
-
-    [Fact]
-    public void FactoryMapStruct_IsMissingShouldBeTrue_WhenValueNull()
-    {
-        //Arrange
-        var parameters = new OStructParameter(null);
-        var property = new OptionalClassProperty<OStructParameter, OStructValueObject>(parameters);
-
-        //Act
-        _ = property.Map(p => p.Value, OStructValueObject.Create);
-
-        //Assert
-        property.IsMissing.Should().BeTrue();
-    }
-
     #endregion
 
     #region Constructor Mapped
@@ -438,36 +340,6 @@ public class OptionalClassTests
 	}
 
     [Fact]
-	public void ConstructorMapClass_IsMissingShouldBeFalse_WhenValueNotNull()
-    {
-		//Arrange
-		var value = "value";
-		var parameters = new OClassParameter(value);
-		var property = new OptionalClassProperty<OClassParameter, OClassValueObject>(parameters);
-
-		//Act
-		_ = property.Map(p => p.Value, v => new OClassValueObject(v));
-
-		//Assert
-		property.IsMissing.Should().BeFalse();
-	}
-
-    [Fact]
-	public void ConstructorMapStruct_IsMissingShouldBeFalse_WhenValueNotNull()
-    {
-		//Arrange
-		var value = 1;
-		var parameters = new OStructParameter(value);
-		var property = new OptionalClassProperty<OStructParameter, OStructValueObject>(parameters);
-
-		//Act
-		_ = property.Map(p => p.Value, v => new OStructValueObject(v));
-
-		//Assert
-		property.IsMissing.Should().BeFalse();
-	}
-
-    [Fact]
     public void ConstructorMapClass_ShouldReturnNull_WhenValueNull()
     {
         //Arrange
@@ -521,34 +393,6 @@ public class OptionalClassTests
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeFalse();
-	}
-
-    [Fact]
-	public void ConstructorMapClass_IsMissingShouldBeTrue_WhenValueNull()
-    {
-		//Arrange
-		var parameters = new OClassParameter(null);
-		var property = new OptionalClassProperty<OClassParameter, OClassValueObject>(parameters);
-
-		//Act
-		_ = property.Map(p => p.Value, v => new OClassValueObject(v));
-
-		//Assert
-		property.IsMissing.Should().BeTrue();
-	}
-
-    [Fact]
-	public void ConstructorMapStruct_IsMissingShouldBeTrue_WhenValueNull()
-    {
-		//Arrange
-		var parameters = new OStructParameter(null);
-		var property = new OptionalClassProperty<OStructParameter, OStructValueObject>(parameters);
-
-		//Act
-		_ = property.Map(p => p.Value, v => new OStructValueObject(v));
-
-		//Assert
-		property.IsMissing.Should().BeTrue();
 	}
 
 	#endregion
@@ -626,42 +470,6 @@ public class OptionalClassTests
 
         //Assert
         property.ValidationResult.HasFailed.Should().BeFalse();
-    }
-
-    [Fact]
-    public void ComplexMapClass_IsMissingShouldBeFalse_WhenValueNotNull()
-    {
-        //Arrange
-        var value = "value";
-        var parameters = new OClassParameter(value);
-        var property = new OptionalClassProperty<OClassParameter, OClassValueObject>(parameters);
-
-        //Act
-        _ = property.MapComplex(p => p.Value, builder =>
-            {
-                return new ValidatedOptionalClassProperty<OClassValueObject>(new OClassValueObject(value));
-            });
-
-        //Assert
-        property.IsMissing.Should().BeFalse();
-    }
-
-    [Fact]
-    public void ComplexMapStruct_IsMissingShouldBeFalse_WhenValueNotNull()
-    {
-        //Arrange
-        var value = 1;
-        var parameters = new OStructParameter(value);
-        var property = new OptionalClassProperty<OStructParameter, OStructValueObject>(parameters);
-
-        //Act
-        _ = property.MapComplex(p => p.Value, builder =>
-        {
-            return new ValidatedOptionalClassProperty<OStructValueObject>(new OStructValueObject(value));
-        });
-
-        //Assert
-        property.IsMissing.Should().BeFalse();
     }
 
     [Fact]
@@ -804,40 +612,6 @@ public class OptionalClassTests
 
         //Assert
         property.ValidationResult.HasFailed.Should().BeFalse();
-    }
-
-    [Fact]
-    public void ComplexMapClass_IsMissingShouldBeTrue_WhenValueNull()
-    {
-        //Arrange
-        var parameters = new OClassParameter(null);
-        var property = new OptionalClassProperty<OClassParameter, OClassValueObject>(parameters);
-
-        //Act
-        _ = property.MapComplex(p => p.Value, builder =>
-        {
-            return new ValidatedOptionalClassProperty<OClassValueObject>((OClassValueObject?)null);
-        });
-
-        //Assert
-        property.IsMissing.Should().BeTrue();
-    }
-
-    [Fact]
-    public void ComplexMapStruct_IsMissingShouldBeTrue_WhenValueNull()
-    {
-        //Arrange
-        var parameters = new OStructParameter(null);
-        var property = new OptionalClassProperty<OStructParameter, OStructValueObject>(parameters);
-
-        //Act
-        _ = property.MapComplex(p => p.Value, builder =>
-        {
-            return new ValidatedOptionalClassProperty<OStructValueObject>((OStructValueObject?)null);
-        });
-
-        //Assert
-        property.IsMissing.Should().BeTrue();
     }
 
     #endregion

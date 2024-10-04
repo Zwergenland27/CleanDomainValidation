@@ -5,7 +5,7 @@ namespace Tests.DomainTests;
 
 public class CanFailOfTTests
 {
-	private readonly Error _exampleError = Error.Unexpected("Code", "Message");
+	private readonly Error _exampleError = Error.Conflict("Code", "Message");
 
 	#region AbstractCanFail
 
@@ -78,7 +78,7 @@ public class CanFailOfTTests
 	{
 		//Arrange
 		CanFail<string> result = new();
-		Error differentError = Error.Conflict("Code", "Message");
+		Error differentError = Error.Validation("Code", "Message");
 
 		//Act
 		result.Failed(_exampleError);

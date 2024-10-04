@@ -2,19 +2,16 @@
 
 namespace CleanDomainValidation.Application.Lists;
 
-public sealed class RequiredListProperty<TParameters, TProperty> : IValidatableProperty
+public sealed class RequiredListProperty<TParameters, TProperty> : ValidatableProperty
 	where TParameters : notnull
 	where TProperty : notnull
 {
-	public bool IsRequired => true;
-	public bool IsMissing { get; set; }
-	public Error MissingError { get; }
-	public TParameters Parameters { get; }
-	public CanFail ValidationResult { get; } = new();
+	internal Error MissingError { get; }
+	internal TParameters Parameters { get; }
+	internal override CanFail ValidationResult { get; } = new();
 
 	internal RequiredListProperty(TParameters parameters, Error missingError)
 	{
-		IsMissing = false;
 		Parameters = parameters;
 		MissingError = missingError;
 	}

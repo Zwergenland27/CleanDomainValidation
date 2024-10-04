@@ -1,7 +1,7 @@
 ﻿namespace CleanDomainValidation.Domain;
 
 /// <summary>
-/// Can be used instead of returning <typeparamref name="T"/> if an error can occur in the method execution
+/// Can be used instead of returning <typeparamref name="TResult"/> if an error can occur in the method execution
 /// </summary>
 internal interface ICanFail<out TResult> : ICanFail
 {
