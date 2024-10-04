@@ -2,12 +2,12 @@
 
 namespace CleanDomainValidation.Application.Enums;
 
-public sealed class OptionalEnumProperty<TParameters, TProperty> : IValidatableProperty
+public sealed class OptionalEnumProperty<TParameters, TProperty> : ValidatableProperty
 	where TParameters : notnull
 	where TProperty : struct
 {
-	public TParameters Parameters { get; }
-	public CanFail ValidationResult { get; } = new();
+	internal TParameters Parameters { get; }
+	internal override CanFail ValidationResult { get; } = new();
 
 	internal OptionalEnumProperty(TParameters parameters)
 	{

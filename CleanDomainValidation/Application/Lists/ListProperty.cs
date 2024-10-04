@@ -2,13 +2,11 @@
 
 namespace CleanDomainValidation.Application.Lists;
 
-public sealed class ListProperty<TParameters, TProperty> : IValidatableProperty
+public sealed class ListProperty<TParameters, TProperty> : ValidatableBaseProperty
 	where TParameters : notnull
 	where TProperty : notnull
 {
-	private IValidatableProperty _property;
-	private TParameters _parameters;
-	public CanFail ValidationResult => _property.ValidationResult;
+	private readonly TParameters _parameters;
 
 	internal ListProperty(TParameters parameters)
 	{
@@ -18,14 +16,14 @@ public sealed class ListProperty<TParameters, TProperty> : IValidatableProperty
 	public RequiredListProperty<TParameters, TProperty> Required(Error missingError)
 	{
 		var required = new RequiredListProperty<TParameters, TProperty>(_parameters, missingError);
-		_property = required;
+		Property = required;
 		return required;
 	}
 
 	public OptionalListProperty<TParameters, TProperty> Optional()
 	{
 		var optional = new OptionalListProperty<TParameters, TProperty>(_parameters);
-		_property = optional;
+		Property = optional;
 		return optional;
 	}
 }

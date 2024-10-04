@@ -9,8 +9,8 @@ public abstract class PropertyBuilder<TParameters, TResult>
 	where TResult : notnull
 {
 	private readonly TParameters _parameters;
-	private readonly List<IValidatableProperty> _properties = [];
-	protected IReadOnlyList<IValidatableProperty> Properties => _properties.AsReadOnly();
+	private readonly List<ValidatableProperty> _properties = [];
+	protected IReadOnlyList<ValidatableProperty> Properties => _properties.AsReadOnly();
 
 	internal PropertyBuilder(TParameters parameters)
 	{

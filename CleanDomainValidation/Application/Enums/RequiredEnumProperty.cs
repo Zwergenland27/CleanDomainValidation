@@ -2,13 +2,13 @@
 
 namespace CleanDomainValidation.Application.Enums;
 
-public sealed class RequiredEnumProperty<TParameters, TProperty> : IValidatableProperty
+public sealed class RequiredEnumProperty<TParameters, TProperty> : ValidatableProperty
 	where TParameters : notnull
 	where TProperty : struct
 {
-	public Error MissingError { get; }
-	public TParameters Parameters { get; }
-	public CanFail ValidationResult { get; } = new();
+	internal Error MissingError { get; }
+	internal TParameters Parameters { get; }
+	internal override CanFail ValidationResult { get; } = new();
 
 	internal RequiredEnumProperty(TParameters parameters, Error missingError)
 	{

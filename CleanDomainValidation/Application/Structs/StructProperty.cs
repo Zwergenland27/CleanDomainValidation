@@ -2,13 +2,11 @@
 
 namespace CleanDomainValidation.Application.Structs;
 
-public sealed class StructProperty<TParameters, TProperty> : IValidatableProperty
+public sealed class StructProperty<TParameters, TProperty> : ValidatableBaseProperty
 	where TParameters : notnull
 	where TProperty : struct
 {
-	private IValidatableProperty _property;
-	private TParameters _parameters;
-	public CanFail ValidationResult => _property.ValidationResult;
+	private readonly TParameters _parameters;
 
 	internal StructProperty(TParameters parameters)
 	{
@@ -18,14 +16,14 @@ public sealed class StructProperty<TParameters, TProperty> : IValidatablePropert
 	public RequiredStructProperty<TParameters, TProperty> Required(Error missingError)
 	{
 		var required = new RequiredStructProperty<TParameters, TProperty>(_parameters, missingError);
-		_property = required;
+		Property = required;
 		return required;
 	}
 
 	public OptionalStructProperty<TParameters, TProperty> Optional()
 	{
 		var optional = new OptionalStructProperty<TParameters, TProperty>(_parameters);
-		_property = optional;
+		Property = optional;
 		return optional;
 	}
 }
