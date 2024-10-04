@@ -23,7 +23,7 @@ public class OptionalClassPropertyBuilderTests
 {
     public static Error ExampleError => Error.Validation("Validation.Error", "An error occured");
 
-    private static Error _missingError => Error.Validation("Error.Missing", "Value is missing");
+    private static Error MissingError => Error.Validation("Error.Missing", "Value is missing");
 
     [Fact]
     public void MethodBuild_ShouldReturnValidatedRequiredPropertyWithoutErrors_WhenNoErrorsOccured()
@@ -32,7 +32,7 @@ public class OptionalClassPropertyBuilderTests
         var parameters = new OCPParameter("value");
         var builder = new OptionalClassPropertyBuilder<OCPParameter, OCPResult>(parameters);
         var value = builder.ClassProperty(x => x.Value)
-            .Required(_missingError)
+            .Required(MissingError)
             .Map(x => x.Value);
 
         //Act
@@ -49,7 +49,7 @@ public class OptionalClassPropertyBuilderTests
         var parameters = new OCPParameter("value");
         var builder = new OptionalClassPropertyBuilder<OCPParameter, OCPResult>(parameters);
         var value = builder.ClassProperty(x => x.Value)
-            .Required(_missingError)
+            .Required(MissingError)
             .Map(x => x.Value);
 
         //Act
@@ -66,14 +66,14 @@ public class OptionalClassPropertyBuilderTests
         var parameters = new OCPParameter(null);
         var builder = new OptionalClassPropertyBuilder<OCPParameter, OCPResult>(parameters);
         var value = builder.ClassProperty(x => x.Value)
-            .Required(_missingError)
+            .Required(MissingError)
             .Map(x => x.Value);
 
         //Act
         var result = builder.Build(() => new OCPResult(value)).Build();
 
         //Assert
-        result.Errors.Should().Contain(_missingError);
+        result.Errors.Should().Contain(MissingError);
     }
 
     [Fact]
@@ -83,7 +83,7 @@ public class OptionalClassPropertyBuilderTests
         var parameters = new OCPParameter("value");
         var builder = new OptionalClassPropertyBuilder<OCPParameter, OCPResult>(parameters);
         var value = builder.ClassProperty(x => x.Value)
-            .Required(_missingError)
+            .Required(MissingError)
             .Map(x => x.Value);
 
         //Act
@@ -100,7 +100,7 @@ public class OptionalClassPropertyBuilderTests
         var parameters = new OCPParameter("value");
         var builder = new OptionalClassPropertyBuilder<OCPParameter, OCPResult>(parameters);
         var value = builder.ClassProperty(x => x.Value)
-            .Required(_missingError)
+            .Required(MissingError)
             .Map(x => x.Value);
 
         //Act
@@ -117,14 +117,14 @@ public class OptionalClassPropertyBuilderTests
         var parameters = new OCPParameter(null);
         var builder = new OptionalClassPropertyBuilder<OCPParameter, OCPResult>(parameters);
         var value = builder.ClassProperty(x => x.Value)
-            .Required(_missingError)
+            .Required(MissingError)
             .Map(x => x.Value);
 
         //Act
         var result = builder.Build(() => OCPResult.Create(value)).Build();
 
         //Assert
-        result.Errors.Should().Contain(_missingError);
+        result.Errors.Should().Contain(MissingError);
     }
 
     [Fact]
@@ -134,7 +134,7 @@ public class OptionalClassPropertyBuilderTests
         var parameters = new OCPParameter("error");
         var builder = new OptionalClassPropertyBuilder<OCPParameter, OCPResult>(parameters);
         var value = builder.ClassProperty(x => x.Value)
-            .Required(_missingError)
+            .Required(MissingError)
             .Map(x => x.Value);
 
         //Act

@@ -24,7 +24,7 @@ public class OptionalStructPropertyBuilderTests
 {
     public static Error ExampleError => Error.Validation("Validation.Error", "An error occured");
 
-    private static Error _missingError => Error.Validation("Error.Missing", "Value is missing");
+    private static Error MissingError => Error.Validation("Error.Missing", "Value is missing");
 
     [Fact]
     public void MethodBuild_ShouldReturnValidatedRequiredPropertyWithoutErrors_WhenNoErrorsOccured()
@@ -33,7 +33,7 @@ public class OptionalStructPropertyBuilderTests
         var parameters = new OSPParameter("value");
         var builder = new OptionalStructPropertyBuilder<OSPParameter, OSPResult>(parameters);
         var value = builder.ClassProperty(x => x.Value)
-            .Required(_missingError)
+            .Required(MissingError)
             .Map(x => x.Value);
 
         //Act
@@ -50,7 +50,7 @@ public class OptionalStructPropertyBuilderTests
         var parameters = new OSPParameter("value");
         var builder = new OptionalStructPropertyBuilder<OSPParameter, OSPResult>(parameters);
         var value = builder.ClassProperty(x => x.Value)
-            .Required(_missingError)
+            .Required(MissingError)
             .Map(x => x.Value);
 
         //Act
@@ -67,14 +67,14 @@ public class OptionalStructPropertyBuilderTests
         var parameters = new OSPParameter(null);
         var builder = new OptionalStructPropertyBuilder<OSPParameter, OSPResult>(parameters);
         var value = builder.ClassProperty(x => x.Value)
-            .Required(_missingError)
+            .Required(MissingError)
             .Map(x => x.Value);
 
         //Act
         var result = builder.Build(() => new OSPResult(value)).Build();
 
         //Assert
-        result.Errors.Should().Contain(_missingError);
+        result.Errors.Should().Contain(MissingError);
     }
 
     [Fact]
@@ -84,7 +84,7 @@ public class OptionalStructPropertyBuilderTests
         var parameters = new OSPParameter("value");
         var builder = new OptionalStructPropertyBuilder<OSPParameter, OSPResult>(parameters);
         var value = builder.ClassProperty(x => x.Value)
-            .Required(_missingError)
+            .Required(MissingError)
             .Map(x => x.Value);
 
         //Act
@@ -101,7 +101,7 @@ public class OptionalStructPropertyBuilderTests
         var parameters = new OSPParameter("value");
         var builder = new OptionalStructPropertyBuilder<OSPParameter, OSPResult>(parameters);
         var value = builder.ClassProperty(x => x.Value)
-            .Required(_missingError)
+            .Required(MissingError)
             .Map(x => x.Value);
 
         //Act
@@ -118,14 +118,14 @@ public class OptionalStructPropertyBuilderTests
         var parameters = new OSPParameter(null);
         var builder = new OptionalStructPropertyBuilder<OSPParameter, OSPResult>(parameters);
         var value = builder.ClassProperty(x => x.Value)
-            .Required(_missingError)
+            .Required(MissingError)
             .Map(x => x.Value);
 
         //Act
         var result = builder.Build(() => OSPResult.Create(value)).Build();
 
         //Assert
-        result.Errors.Should().Contain(_missingError);
+        result.Errors.Should().Contain(MissingError);
     }
 
     [Fact]
@@ -135,7 +135,7 @@ public class OptionalStructPropertyBuilderTests
         var parameters = new OSPParameter("error");
         var builder = new OptionalStructPropertyBuilder<OSPParameter, OSPResult>(parameters);
         var value = builder.ClassProperty(x => x.Value)
-            .Required(_missingError)
+            .Required(MissingError)
             .Map(x => x.Value);
 
         //Act

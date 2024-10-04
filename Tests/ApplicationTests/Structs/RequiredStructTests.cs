@@ -30,7 +30,7 @@ public record struct RStructValueObject(int Value)
 
 public class RequiredStructTests
 {
-	private static Error _missing => Error.Validation("Error.Missing", "The value is missing");
+	private static Error Missing => Error.Validation("Error.Missing", "The value is missing");
 
 	#region Direct Mapped
 
@@ -40,7 +40,7 @@ public class RequiredStructTests
 		//Arrange
 		var value = 1;
 		var parameters = new RStructParameter(value);
-		var property = new RequiredStructProperty<RStructParameter, int>(parameters, _missing);
+		var property = new RequiredStructProperty<RStructParameter, int>(parameters, Missing);
 
 		//Act
 		var validatedProperty = property.Map(p => p.Value);
@@ -55,7 +55,7 @@ public class RequiredStructTests
 		//Arrange
 		var value = 1;
 		var parameters = new RStructParameter(value);
-		var property = new RequiredStructProperty<RStructParameter, int>(parameters, _missing);
+		var property = new RequiredStructProperty<RStructParameter, int>(parameters, Missing);
 
 		//Act
 		_ = property.Map(p => p.Value);
@@ -69,7 +69,7 @@ public class RequiredStructTests
 	{
 		//Arrange
 		var parameters = new RStructParameter(null);
-		var property = new RequiredStructProperty<RStructParameter, int>(parameters, _missing);
+		var property = new RequiredStructProperty<RStructParameter, int>(parameters, Missing);
 
 		//Act
 		var validatedProperty = property.Map(p => p.Value);
@@ -83,14 +83,14 @@ public class RequiredStructTests
 	{
 		//Arrange
 		var parameters = new RStructParameter(null);
-		var property = new RequiredStructProperty<RStructParameter, int>(parameters, _missing);
+		var property = new RequiredStructProperty<RStructParameter, int>(parameters, Missing);
 
 		//Act
 		_ = property.Map(p => p.Value);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missing);
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(Missing);
 	}
 
 	#endregion
@@ -103,7 +103,7 @@ public class RequiredStructTests
 		//Arrange
 		var value = "value";
 		var parameters = new RClassParameter(value);
-		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, Missing);
 
 		//Act
 		var validatedValue = property.Map(p => p.Value, RClassValueObject.Create);
@@ -118,7 +118,7 @@ public class RequiredStructTests
 		//Arrange
 		var value = 1;
 		var parameters = new RStructParameter(value);
-		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, Missing);
 
 		//Act
 		var validatedValue = property.Map(p => p.Value, RStructValueObject.Create);
@@ -133,7 +133,7 @@ public class RequiredStructTests
 		//Arrange
 		var value = "value";
 		var parameters = new RClassParameter(value);
-		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, Missing);
 
 		//Act
 		_ = property.Map(p => p.Value, RClassValueObject.Create);
@@ -148,7 +148,7 @@ public class RequiredStructTests
 		//Arrange
 		var value = 1;
 		var parameters = new RStructParameter(value);
-		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, Missing);
 
 		//Act
 		_ = property.Map(p => p.Value, RStructValueObject.Create);
@@ -163,7 +163,7 @@ public class RequiredStructTests
 		//Arrange
 		var value = "error";
 		var parameters = new RClassParameter(value);
-		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, Missing);
 
 		//Act
 		var validatedProperty = property.Map(p => p.Value, RClassValueObject.Create);
@@ -178,7 +178,7 @@ public class RequiredStructTests
 		//Arrange
 		var value = 9;
 		var parameters = new RStructParameter(value);
-		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, Missing);
 
 		//Act
 		var validatedProperty = property.Map(p => p.Value, RStructValueObject.Create);
@@ -193,7 +193,7 @@ public class RequiredStructTests
 		//Arrange
 		var value = "error";
 		var parameters = new RClassParameter(value);
-		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, Missing);
 
 		//Act
 		_ = property.Map(p => p.Value, RClassValueObject.Create);
@@ -209,7 +209,7 @@ public class RequiredStructTests
 		//Arrange
 		var value = 9;
 		var parameters = new RStructParameter(value);
-		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, Missing);
 
 		//Act
 		_ = property.Map(p => p.Value, RStructValueObject.Create);
@@ -224,7 +224,7 @@ public class RequiredStructTests
 	{
 		//Arrange
 		var parameters = new RClassParameter(null);
-		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, Missing);
 
 		//Act
 		var validatedProperty = property.Map(p => p.Value, RClassValueObject.Create);
@@ -239,7 +239,7 @@ public class RequiredStructTests
 	{
 		//Arrange
 		var parameters = new RStructParameter(null);
-		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, Missing);
 
 		//Act
 		var validatedProperty = property.Map(p => p.Value, RStructValueObject.Create);
@@ -254,14 +254,14 @@ public class RequiredStructTests
 	{
 		//Arrange
 		var parameters = new RClassParameter(null);
-		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, Missing);
 
 		//Act
 		_ = property.Map(p => p.Value, RClassValueObject.Create);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missing);
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(Missing);
 	}
 
 	[Fact]
@@ -269,14 +269,14 @@ public class RequiredStructTests
 	{
 		//Arrange
 		var parameters = new RStructParameter(null);
-		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, Missing);
 
 		//Act
 		_ = property.Map(p => p.Value, RStructValueObject.Create);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missing);
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(Missing);
 	}
 
 	#endregion
@@ -289,7 +289,7 @@ public class RequiredStructTests
 		//Arrange
 		var value = "value";
 		var parameters = new RClassParameter(value);
-		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, Missing);
 
 		//Act
 		var validatedProperty = property.Map(p => p.Value, v => new RClassValueObject(v));
@@ -304,7 +304,7 @@ public class RequiredStructTests
 		//Arrange
 		var value = 1;
 		var parameters = new RStructParameter(value);
-		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, Missing);
 
 		//Act
 		var validatedProperty = property.Map(p => p.Value, v => new RStructValueObject(v));
@@ -319,7 +319,7 @@ public class RequiredStructTests
 		//Arrange
 		var value = "value";
 		var parameters = new RClassParameter(value);
-		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, Missing);
 
 		//Act
 		_ = property.Map(p => p.Value, v => new RClassValueObject(v));
@@ -334,7 +334,7 @@ public class RequiredStructTests
 		//Arrange
 		var value = 1;
 		var parameters = new RStructParameter(value);
-		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, Missing);
 
 		//Act
 		_ = property.Map(p => p.Value, v => new RStructValueObject(v));
@@ -348,7 +348,7 @@ public class RequiredStructTests
 	{
 		//Arrange
 		var parameters = new RClassParameter(null);
-		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, Missing);
 
 		//Act
 		var validatedProperty = property.Map(p => p.Value, v => new RClassValueObject(v));
@@ -362,7 +362,7 @@ public class RequiredStructTests
 	{
 		//Arrange
 		var parameters = new RStructParameter(null);
-		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, Missing);
 
 		//Act
 		var validatedProperty = property.Map(p => p.Value, v => new RStructValueObject(v));
@@ -376,14 +376,14 @@ public class RequiredStructTests
 	{
 		//Arrange
 		var parameters = new RClassParameter(null);
-		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, Missing);
 
 		//Act
 		_ = property.Map(p => p.Value, v => new RClassValueObject(v));
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missing);
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(Missing);
 	}
 
 	[Fact]
@@ -391,14 +391,14 @@ public class RequiredStructTests
 	{
 		//Arrange
 		var parameters = new RStructParameter(null);
-		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, Missing);
 
 		//Act
 		_ = property.Map(p => p.Value, v => new RStructValueObject(v));
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missing);
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(Missing);
 	}
 
 
@@ -412,7 +412,7 @@ public class RequiredStructTests
 		//Arrange
 		var value = "value";
 		var parameters = new RClassParameter(value);
-		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, Missing);
 
 		//Act
 		var validatedProperty = property.MapComplex(p => p.Value, builder =>
@@ -431,7 +431,7 @@ public class RequiredStructTests
 		//Arrange
 		var value = 1;
 		var parameters = new RStructParameter(value);
-		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, Missing);
 
 		//Act
 		var validatedProperty = property.MapComplex(p => p.Value, builder =>
@@ -449,7 +449,7 @@ public class RequiredStructTests
 		//Arrange
 		var value = "value";
 		var parameters = new RClassParameter(value);
-		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, Missing);
 
 		//Act
 		_ = property.MapComplex(p => p.Value, builder =>
@@ -467,7 +467,7 @@ public class RequiredStructTests
 		//Arrange
 		var value = 1;
 		var parameters = new RStructParameter(value);
-		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, Missing);
 
 		//Act
 		_ = property.MapComplex(p => p.Value, builder =>
@@ -485,7 +485,7 @@ public class RequiredStructTests
 		//Arrange
 		var value = "error";
 		var parameters = new RClassParameter(value);
-		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, Missing);
 
 		//Act
 		var validatedProperty = property.MapComplex(p => p.Value, builder =>
@@ -503,7 +503,7 @@ public class RequiredStructTests
 		//Arrange
 		var value = 9;
 		var parameters = new RStructParameter(value);
-		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, Missing);
 
 		//Act
 		var validatedProperty = property.MapComplex(p => p.Value, builder =>
@@ -521,7 +521,7 @@ public class RequiredStructTests
 		//Arrange
 		var value = "error";
 		var parameters = new RClassParameter(value);
-		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, Missing);
 
 		//Act
 		var validatedProperty = property.MapComplex(p => p.Value, builder =>
@@ -540,7 +540,7 @@ public class RequiredStructTests
 		//Arrange
 		var value = 9;
 		var parameters = new RStructParameter(value);
-		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, Missing);
 
 		//Act
 		var validatedProperty = property.MapComplex(p => p.Value, builder =>
@@ -558,12 +558,12 @@ public class RequiredStructTests
 	{
 		//Arrange
 		var parameters = new RClassParameter(null);
-		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, Missing);
 
 		//Act
 		var validatedProperty = property.MapComplex(p => p.Value, builder =>
 		{
-			return new ValidatedRequiredProperty<RClassValueObject>(_missing);
+			return new ValidatedRequiredProperty<RClassValueObject>(Missing);
 		});
 
 		//Assert
@@ -575,12 +575,12 @@ public class RequiredStructTests
 	{
 		//Arrange
 		var parameters = new RStructParameter(null);
-		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, Missing);
 
 		//Act
 		var validatedProperty = property.MapComplex(p => p.Value, builder =>
 		{
-			return new ValidatedRequiredProperty<RStructValueObject>(_missing);
+			return new ValidatedRequiredProperty<RStructValueObject>(Missing);
 		});
 
 		//Assert
@@ -592,17 +592,17 @@ public class RequiredStructTests
 	{
 		//Arrange
 		var parameters = new RClassParameter(null);
-		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, Missing);
 
 		//Act
 		_ = property.MapComplex(p => p.Value, builder =>
 		{
-			return new ValidatedRequiredProperty<RClassValueObject>(_missing);
+			return new ValidatedRequiredProperty<RClassValueObject>(Missing);
 		});
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missing);
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(Missing);
 	}
 
 	[Fact]
@@ -610,17 +610,17 @@ public class RequiredStructTests
 	{
 		//Arrange
 		var parameters = new RStructParameter(null);
-		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, Missing);
 
 		//Act
 		_ = property.MapComplex(p => p.Value, builder =>
 		{
-			return new ValidatedRequiredProperty<RStructValueObject>(_missing);
+			return new ValidatedRequiredProperty<RStructValueObject>(Missing);
 		});
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missing);
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(Missing);
 	}
 
 	#endregion

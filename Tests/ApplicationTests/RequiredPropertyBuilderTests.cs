@@ -25,7 +25,7 @@ public class RequiredPropertyBuilderTests
 {
     public static Error ExampleError => Error.Validation("Validation.Error", "An error occured");
 
-    private static Error _missingError => Error.Validation("Error.Missing", "Value is missing");
+    private static Error MissingError => Error.Validation("Error.Missing", "Value is missing");
 
     [Fact]
     public void MethodBuild_ShouldReturnValidatedRequiredPropertyWithoutErrors_WhenNoErrorsOccured()
@@ -34,7 +34,7 @@ public class RequiredPropertyBuilderTests
         var parameters = new RPParameter("value");
         var builder = new RequiredPropertyBuilder<RPParameter, RPResult>(parameters);
         var value = builder.ClassProperty(x => x.Value)
-            .Required(_missingError)
+            .Required(MissingError)
             .Map(x => x.Value);
 
         //Act
@@ -51,7 +51,7 @@ public class RequiredPropertyBuilderTests
         var parameters = new RPParameter("value");
         var builder = new RequiredPropertyBuilder<RPParameter, RPResult>(parameters);
         var value = builder.ClassProperty(x => x.Value)
-            .Required(_missingError)
+            .Required(MissingError)
             .Map(x => x.Value);
 
         //Act
@@ -68,14 +68,14 @@ public class RequiredPropertyBuilderTests
         var parameters = new RPParameter(null);
         var builder = new RequiredPropertyBuilder<RPParameter, RPResult>(parameters);
         var value = builder.ClassProperty(x => x.Value)
-            .Required(_missingError)
+            .Required(MissingError)
             .Map(x => x.Value);
 
         //Act
         var result = builder.Build(() => new RPResult(value)).Build();
 
         //Assert
-        result.Errors.Should().Contain(_missingError);
+        result.Errors.Should().Contain(MissingError);
     }
 
     [Fact]
@@ -85,7 +85,7 @@ public class RequiredPropertyBuilderTests
         var parameters = new RPParameter("value");
         var builder = new RequiredPropertyBuilder<RPParameter, RPResult>(parameters);
         var value = builder.ClassProperty(x => x.Value)
-            .Required(_missingError)
+            .Required(MissingError)
             .Map(x => x.Value);
 
         //Act
@@ -102,7 +102,7 @@ public class RequiredPropertyBuilderTests
         var parameters = new RPParameter("value");
         var builder = new RequiredPropertyBuilder<RPParameter, RPResult>(parameters);
         var value = builder.ClassProperty(x => x.Value)
-            .Required(_missingError)
+            .Required(MissingError)
             .Map(x => x.Value);
 
         //Act
@@ -119,14 +119,14 @@ public class RequiredPropertyBuilderTests
         var parameters = new RPParameter(null);
         var builder = new RequiredPropertyBuilder<RPParameter, RPResult>(parameters);
         var value = builder.ClassProperty(x => x.Value)
-            .Required(_missingError)
+            .Required(MissingError)
             .Map(x => x.Value);
 
         //Act
         var result = builder.Build(() => RPResult.Create(value)).Build();
 
         //Assert
-        result.Errors.Should().Contain(_missingError);
+        result.Errors.Should().Contain(MissingError);
     }
 
     [Fact]
@@ -136,7 +136,7 @@ public class RequiredPropertyBuilderTests
         var parameters = new RPParameter("error");
         var builder = new RequiredPropertyBuilder<RPParameter, RPResult>(parameters);
         var value = builder.ClassProperty(x => x.Value)
-            .Required(_missingError)
+            .Required(MissingError)
             .Map(x => x.Value);
 
         //Act

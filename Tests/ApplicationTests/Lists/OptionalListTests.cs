@@ -41,7 +41,7 @@ public record OIntListParameter(List<int>? Value) : IParameters;
 
 public class OptionalListTests
 {
-	private static Error _invalidEnumError => Error.Validation("Enum.Invalid", "The enum is invalid");
+	private static Error InvalidEnumError => Error.Validation("Enum.Invalid", "The enum is invalid");
 
 	#region Direct Mapped
 
@@ -658,7 +658,7 @@ public class OptionalListTests
 		var property = new OptionalListProperty<OClassListParameter, OTestEnum>(parameters);
 
 		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
+		var result = property.MapEach(p => p.Value, InvalidEnumError);
 
 		//Assert
 		result.Should().BeEquivalentTo([OTestEnum.One, OTestEnum.Two]);
@@ -673,7 +673,7 @@ public class OptionalListTests
 		var property = new OptionalListProperty<OStructListParameter, OTestEnum>(parameters);
 
 		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
+		var result = property.MapEach(p => p.Value, InvalidEnumError);
 
 		//Assert
 		result.Should().BeEquivalentTo([OTestEnum.One, OTestEnum.Two]);
@@ -688,7 +688,7 @@ public class OptionalListTests
 		var property = new OptionalListProperty<OClassListParameter, OTestEnum>(parameters);
 
 		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
+		var result = property.MapEach(p => p.Value, InvalidEnumError);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeFalse();
@@ -703,7 +703,7 @@ public class OptionalListTests
 		var property = new OptionalListProperty<OStructListParameter, OTestEnum>(parameters);
 
 		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
+		var result = property.MapEach(p => p.Value, InvalidEnumError);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeFalse();
@@ -718,11 +718,11 @@ public class OptionalListTests
 		var property = new OptionalListProperty<OClassListParameter, OTestEnum>(parameters);
 
 		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
+		var result = property.MapEach(p => p.Value, InvalidEnumError);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_invalidEnumError);
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(InvalidEnumError);
 	}
 
 	[Fact]
@@ -734,11 +734,11 @@ public class OptionalListTests
 		var property = new OptionalListProperty<OStructListParameter, OTestEnum>(parameters);
 
 		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
+		var result = property.MapEach(p => p.Value, InvalidEnumError);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_invalidEnumError);
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(InvalidEnumError);
 	}
 
 	[Fact]
@@ -749,7 +749,7 @@ public class OptionalListTests
 		var property = new OptionalListProperty<OClassListParameter, OTestEnum>(parameters);
 
 		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
+		var result = property.MapEach(p => p.Value, InvalidEnumError);
 
 		//Assert
 		result.Should().BeNull();
@@ -763,7 +763,7 @@ public class OptionalListTests
 		var property = new OptionalListProperty<OStructListParameter, OTestEnum>(parameters);
 
 		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
+		var result = property.MapEach(p => p.Value, InvalidEnumError);
 
 		//Assert
 		result.Should().BeNull();
@@ -777,7 +777,7 @@ public class OptionalListTests
 		var property = new OptionalListProperty<OClassListParameter, OTestEnum>(parameters);
 
 		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
+		var result = property.MapEach(p => p.Value, InvalidEnumError);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeFalse();
@@ -791,7 +791,7 @@ public class OptionalListTests
 		var property = new OptionalListProperty<OStructListParameter, OTestEnum>(parameters);
 
 		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
+		var result = property.MapEach(p => p.Value, InvalidEnumError);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeFalse();

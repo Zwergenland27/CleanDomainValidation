@@ -24,12 +24,9 @@ public enum TestEnum
     One
 }
 
-public class TestablePropertyBuilder : PropertyBuilder<Parameters, Result>
+public class TestablePropertyBuilder(Parameters parameters) : PropertyBuilder<Parameters, Result>(parameters)
 {
-    public new IReadOnlyList<IValidatableProperty> Properties => base.Properties;
-    public TestablePropertyBuilder(Parameters parameters) : base(parameters)
-    {
-    }
+    public new IReadOnlyList<ValidatableProperty> Properties => base.Properties;
 }
 
 public class PropertyBuilderTests

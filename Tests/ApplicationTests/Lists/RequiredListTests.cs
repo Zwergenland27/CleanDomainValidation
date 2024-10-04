@@ -42,7 +42,7 @@ public record RIntListParameter(List<int>? Value) : IParameters;
 
 public class RequiredListTests
 {
-	private static Error _missingError = Error.Validation("Error.Missing", "The value is missing");
+	private static Error _missingError => Error.Validation("Error.Missing", "The value is missing");
 	private static Error _invalidEnumError => Error.Validation("Enum.Invalid", "The enum is invalid");
 
 	#region Direct Mapped
