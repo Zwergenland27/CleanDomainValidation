@@ -2,6 +2,9 @@
 
 namespace CleanDomainValidation.Application.Lists;
 
+/// <summary>
+/// The property is a list that cannot be null
+/// </summary>
 public sealed class RequiredListProperty<TParameters, TProperty> : ValidatableProperty
 	where TParameters : notnull
 	where TProperty : notnull

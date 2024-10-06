@@ -2,6 +2,9 @@
 
 namespace CleanDomainValidation.Application.Enums;
 
+/// <summary>
+/// The property is an enum
+/// </summary>
 public sealed class EnumProperty<TParameters, TProperty> : ValidatableBaseProperty
 	where TParameters : notnull
 	where TProperty : struct
@@ -13,14 +16,22 @@ public sealed class EnumProperty<TParameters, TProperty> : ValidatableBaseProper
 		_parameters = parameters;
 	}
 
-	public RequiredEnumProperty<TParameters, TProperty> Required(Error missingError)
+    /// <summary>
+    /// The property cannot be null
+    /// </summary>
+    /// <param name="missingError">Error that occurs if the property is not set in the request</param>
+    public RequiredEnumProperty<TParameters, TProperty> Required(Error missingError)
 	{
 		var required = new RequiredEnumProperty<TParameters, TProperty>(_parameters, missingError);
 		Property = required;
 		return required;
 	}
 
-	public OptionalEnumProperty<TParameters, TProperty> Optional()
+    /// <summary>
+    /// The property can be null
+    /// </summary>
+    /// <returns></returns>
+    public OptionalEnumProperty<TParameters, TProperty> Optional()
 	{
 		var optional = new OptionalEnumProperty<TParameters, TProperty>(_parameters);
 		Property = optional;

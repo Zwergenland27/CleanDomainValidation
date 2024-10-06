@@ -4,10 +4,20 @@ using CleanDomainValidation.Domain;
 
 namespace CleanDomainValidation.Application.Extensions;
 
+/// <summary>
+/// Extension methods for mapping enum properties
+/// </summary>
 public static class EnumMapExtensions
 {
-	#region Enum Property
-	public static TProperty? Map<TParameters, TProperty>(
+    #region Enum Property
+
+    /// <summary>
+    /// Create the nullable enum property <typeparamref name="TProperty"/> from the string specified in <paramref name="value"/>
+    /// </summary>
+	/// <param name="property"></param>
+	/// <param name="value">String parameter that should be converted to <typeparamref name="TProperty"/></param>
+	/// <param name="invalidEnumError">Error that should occur if the enum is invalid</param>
+    public static TProperty? Map<TParameters, TProperty>(
 		this OptionalEnumProperty<TParameters, TProperty> property,
 		Func<TParameters, string?> value,
 		Error invalidEnumError)
@@ -29,7 +39,13 @@ public static class EnumMapExtensions
 		return enumResult;
 	}
 
-	public static TProperty Map<TParameters, TProperty>(
+    /// <summary>
+    /// Create the non nullable enum property <typeparamref name="TProperty"/> from the string specified in <paramref name="value"/>
+    /// </summary>
+    /// <param name="property"></param>
+    /// <param name="value">String parameter that should be converted to <typeparamref name="TProperty"/></param>
+    /// <param name="invalidEnumError">Error that should occur if the enum is invalid</param>
+    public static TProperty Map<TParameters, TProperty>(
 		this RequiredEnumProperty<TParameters, TProperty> property,
 		Func<TParameters, string?> value,
 		Error invalidEnumError)
@@ -52,7 +68,13 @@ public static class EnumMapExtensions
 		return enumResult;
 	}
 
-	public static TProperty? Map<TParameters, TProperty>(
+    /// <summary>
+    /// Create the nullable enum property <typeparamref name="TProperty"/> from the integer specified in <paramref name="value"/>
+    /// </summary>
+    /// <param name="property"></param>
+    /// <param name="value">Integer parameter that should be converted to <typeparamref name="TProperty"/></param>
+    /// <param name="invalidEnumError">Error that should occur if the enum is invalid</param>
+    public static TProperty? Map<TParameters, TProperty>(
 		this OptionalEnumProperty<TParameters, TProperty> property,
 		Func<TParameters, int?> value,
 		Error invalidEnumError)
@@ -74,7 +96,13 @@ public static class EnumMapExtensions
 		return (TProperty) Enum.ToObject(typeof(TProperty), rawEnum.Value);
 	}
 
-	public static TProperty Map<TParameters, TProperty>(
+    /// <summary>
+    /// Create the non nullable enum property <typeparamref name="TProperty"/> from the integer specified in <paramref name="value"/>
+    /// </summary>
+    /// <param name="property"></param>
+    /// <param name="value">Integer parameter that should be converted to <typeparamref name="TProperty"/></param>
+    /// <param name="invalidEnumError">Error that should occur if the enum is invalid</param>
+    public static TProperty Map<TParameters, TProperty>(
 		this RequiredEnumProperty<TParameters, TProperty> property,
 		Func<TParameters, int?> value,
 		Error invalidEnumError)
@@ -97,11 +125,17 @@ public static class EnumMapExtensions
 		return (TProperty)Enum.ToObject(typeof(TProperty), rawEnum.Value);
 	}
 
-	#endregion
+    #endregion
 
-	#region List Property
+    #region List Property
 
-	public static IEnumerable<TProperty>? MapEach<TParameters, TProperty>(
+    /// <summary>
+    /// Create each element of type <typeparamref name="TProperty"/>> of the nullable enum list <typeparamref name="TProperty"/> from the strings specified in <paramref name="values"/>
+    /// </summary>
+    /// <param name="property"></param>
+    /// <param name="values">List of strings parameter that should be converted to <typeparamref name="TProperty"/></param>
+    /// <param name="invalidEnumError">Error that should occur if the enum is invalid</param>
+    public static IEnumerable<TProperty>? MapEach<TParameters, TProperty>(
 		this OptionalListProperty<TParameters, TProperty> property,
 		Func<TParameters, IEnumerable<string>?> values,
 		Error invalidEnumError)
@@ -130,7 +164,13 @@ public static class EnumMapExtensions
 		return resultEnums;
 	}
 
-	public static IEnumerable<TProperty> MapEach<TParameters, TProperty>(
+    /// <summary>
+    /// Create each element of type <typeparamref name="TProperty"/>> of the non nullable enum list <typeparamref name="TProperty"/> from the strings specified in <paramref name="values"/>
+    /// </summary>
+    /// <param name="property"></param>
+    /// <param name="values">List of strings that should be converted to <typeparamref name="TProperty"/></param>
+    /// <param name="invalidEnumError">Error that should occur if the enum is invalid</param>
+    public static IEnumerable<TProperty> MapEach<TParameters, TProperty>(
 		this RequiredListProperty<TParameters, TProperty> property,
 		Func<TParameters, IEnumerable<string>?> values,
 		Error invalidEnumError)
@@ -160,7 +200,13 @@ public static class EnumMapExtensions
 		return resultEnums;
 	}
 
-	public static IEnumerable<TProperty>? MapEach<TParameters, TProperty>(
+    /// <summary>
+    /// Create each element of type <typeparamref name="TProperty"/>> of the nullable enum list <typeparamref name="TProperty"/> from the integers specified in <paramref name="values"/>
+    /// </summary>
+    /// <param name="property"></param>
+    /// <param name="values">List of integers that should be converted to <typeparamref name="TProperty"/></param>
+    /// <param name="invalidEnumError">Error that should occur if the enum is invalid</param>
+    public static IEnumerable<TProperty>? MapEach<TParameters, TProperty>(
 		this OptionalListProperty<TParameters, TProperty> property,
 		Func<TParameters, IEnumerable<int>?> values,
 		Error invalidEnumError)
@@ -189,7 +235,13 @@ public static class EnumMapExtensions
 		return resultEnums;
 	}
 
-	public static IEnumerable<TProperty> MapEach<TParameters, TProperty>(
+    /// <summary>
+    /// Create each element of type <typeparamref name="TProperty"/>> of the non nullable enum list <typeparamref name="TProperty"/> from the integers specified in <paramref name="values"/>
+    /// </summary>
+    /// <param name="property"></param>
+    /// <param name="values">List of integers that should be converted to <typeparamref name="TProperty"/></param>
+    /// <param name="invalidEnumError">Error that should occur if the enum is invalid</param>
+    public static IEnumerable<TProperty> MapEach<TParameters, TProperty>(
 		this RequiredListProperty<TParameters, TProperty> property,
 		Func<TParameters, IEnumerable<int>?> values,
 		Error invalidEnumError)

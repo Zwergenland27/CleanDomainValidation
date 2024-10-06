@@ -2,6 +2,9 @@
 
 namespace CleanDomainValidation.Application.Enums;
 
+/// <summary>
+/// The property is an enum that cannot be null
+/// </summary>
 public sealed class RequiredEnumProperty<TParameters, TProperty> : ValidatableProperty
 	where TParameters : notnull
 	where TProperty : struct

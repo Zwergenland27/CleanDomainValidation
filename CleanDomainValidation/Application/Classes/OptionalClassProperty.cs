@@ -2,6 +2,9 @@
 
 namespace CleanDomainValidation.Application.Classes;
 
+/// <summary>
+/// The property is a class that can be null
+/// </summary>
 public sealed class OptionalClassProperty<TParameters, TProperty> : ValidatableProperty
 	where TParameters : notnull
 	where TProperty : class

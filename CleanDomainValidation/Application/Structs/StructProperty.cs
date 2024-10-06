@@ -2,6 +2,10 @@
 
 namespace CleanDomainValidation.Application.Structs;
 
+/// <summary>
+/// The property is a struct
+/// </summary>
+
 public sealed class StructProperty<TParameters, TProperty> : ValidatableBaseProperty
 	where TParameters : notnull
 	where TProperty : struct
@@ -13,14 +17,22 @@ public sealed class StructProperty<TParameters, TProperty> : ValidatableBaseProp
 		_parameters = parameters;
 	}
 
-	public RequiredStructProperty<TParameters, TProperty> Required(Error missingError)
+    /// <summary>
+    /// The property cannot be null
+    /// </summary>
+    /// <param name="missingError">Error that occurs if the property is not set in the request</param>
+    public RequiredStructProperty<TParameters, TProperty> Required(Error missingError)
 	{
 		var required = new RequiredStructProperty<TParameters, TProperty>(_parameters, missingError);
 		Property = required;
 		return required;
 	}
 
-	public OptionalStructProperty<TParameters, TProperty> Optional()
+    /// <summary>
+    /// The property can be null
+    /// </summary>
+    /// <returns></returns>
+    public OptionalStructProperty<TParameters, TProperty> Optional()
 	{
 		var optional = new OptionalStructProperty<TParameters, TProperty>(_parameters);
 		Property = optional;

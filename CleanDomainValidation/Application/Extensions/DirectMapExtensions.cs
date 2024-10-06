@@ -4,10 +4,22 @@ using CleanDomainValidation.Application.Structs;
 
 namespace CleanDomainValidation.Application.Extensions;
 
+/// <summary>
+/// Extension methods for mapping properties that are the same type as in the parameter
+/// </summary>
 public static class DirectMapExtensions
 {
-	#region Class Property
-	public static TProperty? Map<TParameters, TProperty>(
+    #region Class Property
+
+    /// <summary>
+    /// Create the nullable class property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/>
+    /// </summary>
+    /// <remarks>
+    /// If more then one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// </remarks>
+    /// <param name="property"></param>
+    /// <param name="value">Parameter that is mapped to the property of type <typeparamref name="TProperty"/></param>
+    public static TProperty? Map<TParameters, TProperty>(
 		this OptionalClassProperty<TParameters, TProperty> property,
 		Func<TParameters, TProperty?> value)
 		where TParameters : notnull
@@ -17,7 +29,15 @@ public static class DirectMapExtensions
 		return rawValue;
 	}
 
-	public static TProperty Map<TParameters, TProperty>(
+    /// <summary>
+    /// Create the non nullable class property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/>
+    /// </summary>
+    /// <remarks>
+    /// If more then one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// </remarks>
+    /// <param name="property"></param>
+    /// <param name="value">Parameter that is mapped to the property of type <typeparamref name="TProperty"/></param>
+    public static TProperty Map<TParameters, TProperty>(
 		this RequiredClassProperty<TParameters, TProperty> property,
 		Func<TParameters, TProperty?> value)
 		where TParameters : notnull
@@ -33,11 +53,19 @@ public static class DirectMapExtensions
 		return rawValue;
 	}
 
-	#endregion
+    #endregion
 
-	#region Struct Property
+    #region Struct Property
 
-	public static TProperty? Map<TParameters, TProperty>(
+    /// <summary>
+    /// Create the nullable struct property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/>
+    /// </summary>
+    /// <remarks>
+    /// If more then one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// </remarks>
+    /// <param name="property"></param>
+    /// <param name="value">Parameter that is mapped to the property of type <typeparamref name="TProperty"/></param>
+    public static TProperty? Map<TParameters, TProperty>(
 		this OptionalStructProperty<TParameters, TProperty> property,
 		Func<TParameters, TProperty?> value)
 		where TParameters : notnull
@@ -47,7 +75,15 @@ public static class DirectMapExtensions
 		return rawValue;
 	}
 
-	public static TProperty Map<TParameters, TProperty>(
+    /// <summary>
+    /// Create the non nullable struct property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/>
+    /// </summary>
+    /// <remarks>
+    /// If more then one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// </remarks>
+    /// <param name="property"></param>
+    /// <param name="value">Parameter that is mapped to the property of type <typeparamref name="TProperty"/></param>
+    public static TProperty Map<TParameters, TProperty>(
 		this RequiredStructProperty<TParameters, TProperty> property,
 		Func<TParameters, TProperty?> value)
 		where TParameters : notnull
@@ -63,11 +99,19 @@ public static class DirectMapExtensions
 		return rawValue.Value;
 	}
 
-	#endregion
+    #endregion
 
-	#region List Property
+    #region List Property
 
-	public static IEnumerable<TProperty>? MapEach<TParameters, TProperty>(
+    /// <summary>
+    /// Create each element of type <typeparamref name="TProperty"/> of the nullable list property from the values specified in <paramref name="values"/>
+    /// </summary>
+    /// <remarks>
+    /// If more then one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// </remarks>
+    /// <param name="property"></param>
+    /// <param name="values">List of parameter that is mapped to the property of type <typeparamref name="TProperty"/></param>
+    public static IEnumerable<TProperty>? MapEach<TParameters, TProperty>(
 		this OptionalListProperty<TParameters, TProperty> property,
 		Func<TParameters, IEnumerable<TProperty>?> values)
 		where TParameters : notnull
@@ -78,7 +122,15 @@ public static class DirectMapExtensions
 		return rawValue;
 	}
 
-	public static IEnumerable<TProperty> MapEach<TParameters, TProperty>(
+    /// <summary>
+    /// Create each element of type <typeparamref name="TProperty"/> of the non nullable list property from the values specified in <paramref name="values"/>
+    /// </summary>
+    /// <remarks>
+    /// If more then one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// </remarks>
+    /// <param name="property"></param>
+    /// <param name="values">List of parameter that is mapped to the property of type <typeparamref name="TProperty"/></param>
+    public static IEnumerable<TProperty> MapEach<TParameters, TProperty>(
 		this RequiredListProperty<TParameters, TProperty> property,
 		Func<TParameters, IEnumerable<TProperty>?> values)
 		where TParameters : notnull

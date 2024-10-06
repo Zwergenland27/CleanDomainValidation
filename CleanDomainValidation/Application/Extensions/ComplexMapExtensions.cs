@@ -4,10 +4,20 @@ using CleanDomainValidation.Application.Structs;
 
 namespace CleanDomainValidation.Application.Extensions;
 
+/// <summary>
+/// Extension methods for mapping properties that are complex objects itself
+/// </summary>
 public static class ComplexMapExtensions
 {
-	#region Class Property
-	public static TProperty? MapComplex<TParameters, TProperty, TPropertyParameters>(
+    #region Class Property
+
+    /// <summary>
+    /// Create the nullable class property <typeparamref name="TProperty"/> from the parameters specified in <paramref name="propertyParameters"/> by using a <paramref name="propertyBuilder"/>
+    /// </summary>
+	/// <param name="property"></param>
+	/// <param name="propertyParameters">Paramaters needed to create <typeparamref name="TProperty"/></param>
+	/// <param name="propertyBuilder">Builder that creates <typeparamref name="TProperty"/> from <typeparamref name="TPropertyParameters"/></param>
+    public static TProperty? MapComplex<TParameters, TProperty, TPropertyParameters>(
 		this OptionalClassProperty<TParameters, TProperty> property,
 		Func<TParameters, TPropertyParameters?> propertyParameters,
 		Func<OptionalClassPropertyBuilder<TPropertyParameters, TProperty>, ValidatedOptionalClassProperty<TProperty>> propertyBuilder)
@@ -32,7 +42,13 @@ public static class ComplexMapExtensions
 		return buildResult.Value;
 	}
 
-	public static TProperty? MapComplex<TParameters, TProperty, TPropertyParameters>(
+    /// <summary>
+    /// Create the nullable class property <typeparamref name="TProperty"/> from the parameters specified in <paramref name="propertyParameters"/> by using a <paramref name="propertyBuilder"/>
+    /// </summary>
+    /// <param name="property"></param>
+    /// <param name="propertyParameters">Paramaters needed to create <typeparamref name="TProperty"/></param>
+    /// <param name="propertyBuilder">Builder that creates <typeparamref name="TProperty"/> from <typeparamref name="TPropertyParameters"/></param>
+    public static TProperty? MapComplex<TParameters, TProperty, TPropertyParameters>(
 		this OptionalClassProperty<TParameters, TProperty> property,
 		Func<TParameters, TPropertyParameters?> propertyParameters,
 		Func<OptionalClassPropertyBuilder<TPropertyParameters, TProperty>, ValidatedOptionalClassProperty<TProperty>> propertyBuilder)
@@ -57,7 +73,13 @@ public static class ComplexMapExtensions
 		return buildResult.Value;
 	}
 
-	public static TProperty MapComplex<TParameters, TProperty, TPropertyParameters>(
+    /// <summary>
+    /// Create the non nullable class property <typeparamref name="TProperty"/> from the parameters specified in <paramref name="propertyParameters"/> by using a <paramref name="propertyBuilder"/>
+    /// </summary>
+    /// <param name="property"></param>
+    /// <param name="propertyParameters">Paramaters needed to create <typeparamref name="TProperty"/></param>
+    /// <param name="propertyBuilder">Builder that creates <typeparamref name="TProperty"/> from <typeparamref name="TPropertyParameters"/></param>
+    public static TProperty MapComplex<TParameters, TProperty, TPropertyParameters>(
 		this RequiredClassProperty<TParameters, TProperty> property,
 		Func<TParameters, TPropertyParameters?> propertyParameters,
 		Func<RequiredPropertyBuilder<TPropertyParameters, TProperty>, ValidatedRequiredProperty<TProperty>> propertyBuilder)
@@ -83,7 +105,13 @@ public static class ComplexMapExtensions
 		return buildResult.Value;
 	}
 
-	public static TProperty MapComplex<TParameters, TProperty, TPropertyParameters>(
+    /// <summary>
+    /// Create the non nullable class property <typeparamref name="TProperty"/> from the parameters specified in <paramref name="propertyParameters"/> by using a <paramref name="propertyBuilder"/>
+    /// </summary>
+    /// <param name="property"></param>
+    /// <param name="propertyParameters">Paramaters needed to create <typeparamref name="TProperty"/></param>
+    /// <param name="propertyBuilder">Builder that creates <typeparamref name="TProperty"/> from <typeparamref name="TPropertyParameters"/></param>
+    public static TProperty MapComplex<TParameters, TProperty, TPropertyParameters>(
 		this RequiredClassProperty<TParameters, TProperty> property,
 		Func<TParameters, TPropertyParameters?> propertyParameters,
 		Func<RequiredPropertyBuilder<TPropertyParameters, TProperty>, ValidatedRequiredProperty<TProperty>> propertyBuilder)
@@ -109,11 +137,17 @@ public static class ComplexMapExtensions
 		return buildResult.Value;
 	}
 
-	#endregion
+    #endregion
 
-	#region Struct Property
+    #region Struct Property
 
-	public static TProperty? MapComplex<TParameters, TProperty, TPropertyParameters>(
+    /// <summary>
+    /// Create the nullable struct property <typeparamref name="TProperty"/> from the parameters specified in <paramref name="propertyParameters"/> by using a <paramref name="propertyBuilder"/>
+    /// </summary>
+    /// <param name="property"></param>
+    /// <param name="propertyParameters">Paramaters needed to create <typeparamref name="TProperty"/></param>
+    /// <param name="propertyBuilder">Builder that creates <typeparamref name="TProperty"/> from <typeparamref name="TPropertyParameters"/></param>
+    public static TProperty? MapComplex<TParameters, TProperty, TPropertyParameters>(
 		this OptionalStructProperty<TParameters, TProperty> property,
 		Func<TParameters, TPropertyParameters?> propertyParameters,
 		Func<OptionalStructPropertyBuilder<TPropertyParameters, TProperty>, ValidatedOptionalStructProperty<TProperty>> propertyBuilder)
@@ -138,7 +172,13 @@ public static class ComplexMapExtensions
 		return buildResult.Value;
 	}
 
-	public static TProperty? MapComplex<TParameters, TProperty, TPropertyParameters>(
+    /// <summary>
+    /// Create the nullable struct <typeparamref name="TProperty"/> property from the parameters specified in <paramref name="propertyParameters"/> by using a <paramref name="propertyBuilder"/>
+    /// </summary>
+    /// <param name="property"></param>
+    /// <param name="propertyParameters">Paramaters needed to create <typeparamref name="TProperty"/></param>
+    /// <param name="propertyBuilder">Builder that creates <typeparamref name="TProperty"/> from <typeparamref name="TPropertyParameters"/></param>
+    public static TProperty? MapComplex<TParameters, TProperty, TPropertyParameters>(
 		this OptionalStructProperty<TParameters, TProperty> property,
 		Func<TParameters, TPropertyParameters?> propertyParameters,
 		Func<OptionalStructPropertyBuilder<TPropertyParameters, TProperty>, ValidatedOptionalStructProperty<TProperty>> propertyBuilder)
@@ -163,7 +203,13 @@ public static class ComplexMapExtensions
 		return buildResult.Value;
 	}
 
-	public static TProperty MapComplex<TParameters, TProperty, TPropertyParameters>(
+    /// <summary>
+    /// Create the non nullable struct property <typeparamref name="TProperty"/> from the parameters specified in <paramref name="propertyParameters"/> by using a <paramref name="propertyBuilder"/>
+    /// </summary>
+    /// <param name="property"></param>
+    /// <param name="propertyParameters">Paramaters needed to create <typeparamref name="TProperty"/></param>
+    /// <param name="propertyBuilder">Builder that creates <typeparamref name="TProperty"/> from <typeparamref name="TPropertyParameters"/></param>
+    public static TProperty MapComplex<TParameters, TProperty, TPropertyParameters>(
 		this RequiredStructProperty<TParameters, TProperty> property,
 		Func<TParameters, TPropertyParameters?> propertyParameters,
 		Func<RequiredPropertyBuilder<TPropertyParameters, TProperty>, ValidatedRequiredProperty<TProperty>> propertyBuilder)
@@ -189,7 +235,13 @@ public static class ComplexMapExtensions
 		return buildResult.Value;
 	}
 
-	public static TProperty MapComplex<TParameters, TProperty, TPropertyParameters>(
+    /// <summary>
+    /// Create the non nullable struct property <typeparamref name="TProperty"/> from the parameters specified in <paramref name="propertyParameters"/> by using a <paramref name="propertyBuilder"/>
+    /// </summary>
+    /// <param name="property"></param>
+    /// <param name="propertyParameters">Paramaters needed to create <typeparamref name="TProperty"/></param>
+    /// <param name="propertyBuilder">Builder that creates <typeparamref name="TProperty"/> from <typeparamref name="TPropertyParameters"/></param>
+    public static TProperty MapComplex<TParameters, TProperty, TPropertyParameters>(
 		this RequiredStructProperty<TParameters, TProperty> property,
 		Func<TParameters, TPropertyParameters?> propertyParameters,
 		Func<RequiredPropertyBuilder<TPropertyParameters, TProperty>, ValidatedRequiredProperty<TProperty>> propertyBuilder)
@@ -215,11 +267,17 @@ public static class ComplexMapExtensions
 		return buildResult.Value;
 	}
 
-	#endregion
+    #endregion
 
-	#region List Property
+    #region List Property
 
-	public static IEnumerable<TProperty>? MapEachComplex<TParameters, TProperty, TPropertyParameters>(
+    /// <summary>
+    /// Create each element of type <typeparamref name="TProperty"/> of the nullable list property from the parameters specified in <paramref name="propertyParameters"/> by using a <paramref name="propertyBuilder"/>
+    /// </summary>
+    /// <param name="property"></param>
+    /// <param name="propertyParameters">List of Paramaters needed to create List of <typeparamref name="TProperty"/></param>
+    /// <param name="propertyBuilder">Builder that creates <typeparamref name="TProperty"/> from <typeparamref name="TPropertyParameters"/></param>
+    public static IEnumerable<TProperty>? MapEachComplex<TParameters, TProperty, TPropertyParameters>(
 		this OptionalListProperty<TParameters, TProperty> property,
 		Func<TParameters, IEnumerable<TPropertyParameters>?> propertyParameters,
 		Func<RequiredPropertyBuilder<TPropertyParameters, TProperty>, ValidatedRequiredProperty<TProperty>> propertyBuilder)
@@ -248,7 +306,13 @@ public static class ComplexMapExtensions
 		return resultProperties;
 	}
 
-	public static IEnumerable<TProperty> MapEachComplex<TParameters, TProperty, TPropertyParameters>(
+    /// <summary>
+    /// Create each element of type <typeparamref name="TProperty"/> of the non nullable list property from the parameters specified in <paramref name="propertyParameters"/> by using a <paramref name="propertyBuilder"/>
+    /// </summary>
+	/// <param name="property"></param>
+    /// <param name="propertyParameters">List of Paramaters needed to create List of <typeparamref name="TProperty"/></param>
+    /// <param name="propertyBuilder">Builder that creates <typeparamref name="TProperty"/> from <typeparamref name="TPropertyParameters"/></param>
+    public static IEnumerable<TProperty> MapEachComplex<TParameters, TProperty, TPropertyParameters>(
 		this RequiredListProperty<TParameters, TProperty> property,
 		Func<TParameters, IEnumerable<TPropertyParameters>?> propertyParameters,
 		Func<RequiredPropertyBuilder<TPropertyParameters, TProperty>, ValidatedRequiredProperty<TProperty>> propertyBuilder)
