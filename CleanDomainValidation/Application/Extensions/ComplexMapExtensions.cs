@@ -18,7 +18,6 @@ public static class ComplexMapExtensions
 		TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
 		if (builderParameters is null)
 		{
-			property.IsMissing = true;
 			return null;
 		}
 
@@ -44,7 +43,6 @@ public static class ComplexMapExtensions
 		TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
 		if (builderParameters is null)
 		{
-			property.IsMissing = true;
 			return null;
 		}
 
@@ -70,7 +68,6 @@ public static class ComplexMapExtensions
 		TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
 		if (builderParameters is null)
 		{
-			property.IsMissing = true;
 			property.ValidationResult.Failed(property.MissingError);
 			return null!;
 		}
@@ -97,7 +94,6 @@ public static class ComplexMapExtensions
 		TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
 		if (builderParameters is null)
 		{
-			property.IsMissing = true;
 			property.ValidationResult.Failed(property.MissingError);
 			return null!;
 		}
@@ -128,7 +124,6 @@ public static class ComplexMapExtensions
 		TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
 		if (builderParameters is null)
 		{
-			property.IsMissing = true;
 			return null;
 		}
 
@@ -154,7 +149,6 @@ public static class ComplexMapExtensions
 		TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
 		if (builderParameters is null)
 		{
-			property.IsMissing = true;
 			return null;
 		}
 
@@ -180,7 +174,6 @@ public static class ComplexMapExtensions
 		TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
 		if (builderParameters is null)
 		{
-			property.IsMissing = true;
 			property.ValidationResult.Failed(property.MissingError);
 			return default;
 		}
@@ -207,7 +200,6 @@ public static class ComplexMapExtensions
 		TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
 		if (builderParameters is null)
 		{
-			property.IsMissing = true;
 			property.ValidationResult.Failed(property.MissingError);
 			return default;
 		}
@@ -238,7 +230,6 @@ public static class ComplexMapExtensions
 		IEnumerable<TPropertyParameters>? builderParameters = propertyParameters.Invoke(property.Parameters);
 		if (builderParameters is null)
 		{
-			property.IsMissing = true;
 			return null;
 		}
 
@@ -268,7 +259,6 @@ public static class ComplexMapExtensions
 		IEnumerable<TPropertyParameters>? builderParameters = propertyParameters.Invoke(property.Parameters);
 		if (builderParameters is null)
 		{
-			property.IsMissing = true;
 			property.ValidationResult.Failed(property.MissingError);
 			return null!;
 		}

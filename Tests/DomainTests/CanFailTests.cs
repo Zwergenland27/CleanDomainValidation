@@ -5,7 +5,7 @@ namespace Tests.DomainTests;
 
 public class CanFailTests
 {
-	private readonly Error _exampleError = Error.Unexpected("Code", "Message");
+	private readonly Error _exampleError = Error.Conflict("Code", "Message");
 
 	#region AbstractCanFail
 
@@ -78,7 +78,7 @@ public class CanFailTests
 	{
 		//Arrange
 		CanFail result = new();
-		Error differentError = Error.Conflict("Code", "Message");
+		Error differentError = Error.Validation("Code", "Message");
 
 		//Act
 		result.Failed(_exampleError);
@@ -146,7 +146,7 @@ public class CanFailTests
 	public void SuccessFactory_Should_ReturnNonFail()
 	{
 		//Act
-		CanFail result = CanFail.Success();
+		CanFail result = CanFail.Success;
 
 		//Assert
 		result.HasFailed.Should().BeFalse();

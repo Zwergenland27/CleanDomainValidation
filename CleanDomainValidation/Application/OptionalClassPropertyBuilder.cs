@@ -2,43 +2,22 @@
 
 namespace CleanDomainValidation.Application;
 
-/// <summary>
-/// Builder for creating an optional validated class of type <typeparamref name="TResult"/> mapped from parameters of type <typeparamref name="TParameters"/>
-/// </summary>
 public sealed class OptionalClassPropertyBuilder<TParameters, TResult> : PropertyBuilder<TParameters, TResult>
 	where TParameters : notnull
 	where TResult : class
 {
 	internal OptionalClassPropertyBuilder(TParameters parameters) : base(parameters) { }
 
-	/// <summary>
-	/// Create an instance of <typeparamref name="TResult"/> using the provided creation method
-	/// </summary>
-	/// <remarks>
-	/// The creation method can be anything that returns an instance of <typeparamref name="TResult"/>
-	/// </remarks>
 	public ValidatedOptionalClassProperty<TResult> Build(Func<TResult> creationMethod)
 	{
 		CanFail<TResult?> result = new();
 
-		bool requiredPropertyMissing = false;
-
 		foreach (var property in Properties)
 		{
-			if (property.IsRequired && property.IsMissing)
-			{
-				requiredPropertyMissing = true;
-				continue;
-			}
 			result.InheritFailure(property.ValidationResult);
 		}
 
-		if (!result.HasFailed && requiredPropertyMissing)
-		{
-			result.Succeeded(null);
-		}
-
-		if (!result.HasFailed && !requiredPropertyMissing)
+		if (!result.HasFailed)
 		{
 			result.Succeeded(creationMethod.Invoke());
 		}
@@ -46,34 +25,18 @@ public sealed class OptionalClassPropertyBuilder<TParameters, TResult> : Propert
 		return new ValidatedOptionalClassProperty<TResult>(result);
 	}
 
-	/// <summary>
-	/// Create an instance of <typeparamref name="TResult"/> using the provided factory method which can fail
-	/// </summary>
 	public ValidatedOptionalClassProperty<TResult> Build(Func<CanFail<TResult>> factoryMethod)
 	{
 		CanFail<TResult?> result = new();
 
-		bool requiredPropertyMissing = false;
-
 		foreach (var property in Properties)
 		{
-			if (property.IsRequired && property.IsMissing)
-			{
-				requiredPropertyMissing = true;
-				continue;
-			}
 			result.InheritFailure(property.ValidationResult);
 		}
 
 		//Ensure the factory method wont get called if any errors occured to the parameters
 		if (result.HasFailed)
 		{
-			return new ValidatedOptionalClassProperty<TResult>(result);
-		}
-
-		if (requiredPropertyMissing)
-		{
-			result.Succeeded(null);
 			return new ValidatedOptionalClassProperty<TResult>(result);
 		}
 

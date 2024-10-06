@@ -14,10 +14,6 @@ public static class DirectMapExtensions
 		where TProperty : class
 	{
 		TProperty? rawValue = value.Invoke(property.Parameters);
-		if(rawValue is null)
-		{
-			property.IsMissing = true;
-		}
 		return rawValue;
 	}
 
@@ -30,7 +26,6 @@ public static class DirectMapExtensions
 		TProperty? rawValue = value.Invoke(property.Parameters);
 		if (rawValue is null)
 		{
-			property.IsMissing = true;
 			property.ValidationResult.Failed(property.MissingError);
 			return null!;
 		}
@@ -49,10 +44,6 @@ public static class DirectMapExtensions
 		where TProperty : struct
 	{
 		TProperty? rawValue = value.Invoke(property.Parameters);
-		if (rawValue is null)
-		{
-			property.IsMissing = true;
-		}
 		return rawValue;
 	}
 
@@ -65,7 +56,6 @@ public static class DirectMapExtensions
 		TProperty? rawValue = value.Invoke(property.Parameters);
 		if (rawValue is null)
 		{
-			property.IsMissing = true;
 			property.ValidationResult.Failed(property.MissingError);
 			return default;
 		}
@@ -84,10 +74,6 @@ public static class DirectMapExtensions
 		where TProperty : notnull
 	{
 		IEnumerable<TProperty>? rawValue = values.Invoke(property.Parameters);
-		if (rawValue is null)
-		{
-			property.IsMissing = true;
-		}
 
 		return rawValue;
 	}
@@ -101,7 +87,6 @@ public static class DirectMapExtensions
 		IEnumerable<TProperty>? rawValue = values.Invoke(property.Parameters);
 		if (rawValue is null)
 		{
-			property.IsMissing = true;
 			property.ValidationResult.Failed(property.MissingError);
 			return null!;
 		}

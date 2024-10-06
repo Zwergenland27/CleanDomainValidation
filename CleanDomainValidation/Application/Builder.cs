@@ -30,7 +30,7 @@ public sealed class Builder<TParameters, TRequest>
 	where TParameters : IParameters
 	where TRequest : IRequest
 {
-	private TParameters _parameters;
+	private readonly TParameters _parameters;
 	internal Builder(TParameters parameters)
 	{
 		_parameters = parameters;
@@ -42,19 +42,9 @@ public sealed class Builder<TParameters, TRequest>
 	/// <returns>The builder itself for chaining methods</returns>
 	public Builder<TParameters, TRequest> MapParameter<TProperty>(Expression<Func<TParameters, TProperty>> propertyExpression, TProperty value)
 	{
-		var memberExpression = propertyExpression.Body as MemberExpression;
-		if (memberExpression == null)
-		{
-			throw new ArgumentException($"Expression {propertyExpression} must be a member expression");
-		}
-
-		var property = memberExpression.Member as PropertyInfo;
-		if (property == null)
-		{
-			throw new ArgumentException($"Expression {propertyExpression} must be a property expression");
-		}
-
-		property.SetValue(_parameters, value);
+		var memberExpression = propertyExpression.Body as MemberExpression ?? throw new ArgumentException($"Expression {propertyExpression} must be a member expression");
+        var property = memberExpression.Member as PropertyInfo ?? throw new ArgumentException($"Expression {propertyExpression} must be a property expression");
+        property.SetValue(_parameters, value);
 		return this;
 	}
 

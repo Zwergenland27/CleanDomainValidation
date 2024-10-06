@@ -24,9 +24,5 @@ public enum ErrorType
 	/// The user is not authorized to perform the action
 	/// </summary>
 	/// <example>A non admin user tries to change the permission of other users</example>
-	Forbidden,
-	/// <summary>
-	/// An unexpected error occured
-	/// </summary>
-	Unexpected
+	Forbidden
 }

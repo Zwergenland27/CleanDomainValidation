@@ -64,12 +64,4 @@ public sealed record Error
 	{
 		return new Error(ErrorType.Forbidden, code, message);
 	}
-
-	/// <summary>
-	/// Creates new Error of type Unexpected
-	/// </summary>
-	public static Error Unexpected(string code, string message)
-	{
-		return new Error(ErrorType.Unexpected, code, message);
-	}
 }

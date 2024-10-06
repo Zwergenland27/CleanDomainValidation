@@ -94,24 +94,4 @@ public class ErrorTests
 		//Assert
 		ValidateError(error);
 	}
-
-	[Fact]
-	public void UnexpectedFactory_Should_SetConflictType()
-	{
-		//Act
-		Error error = Error.Unexpected(_exampleCode, _exampleMessage);
-
-		//Assert
-		error.Type.Should().Be(ErrorType.Unexpected);
-	}
-
-	[Fact]
-	public void UnexpectedFactory_Should_SetCodeAndMessage()
-	{
-		//Act
-		Error error = Error.Unexpected(_exampleCode, _exampleMessage);
-
-		//Assert
-		ValidateError(error);
-	}
 }

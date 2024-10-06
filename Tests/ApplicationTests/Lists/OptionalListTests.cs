@@ -41,19 +41,7 @@ public record OIntListParameter(List<int>? Value) : IParameters;
 
 public class OptionalListTests
 {
-	private static Error _invalidEnumError => Error.Validation("Enum.Invalid", "The enum is invalid");
-
-	[Fact]
-	public void IsRequired_Should_BeFalse()
-	{
-		//Arrange
-		List<string> value = ["value1"];
-		var parameters = new OClassListParameter(value);
-		var property = new OptionalListProperty<OClassListParameter, string>(parameters);
-
-		//Assert
-		property.IsRequired.Should().BeFalse();
-	}
+	private static Error InvalidEnumError => Error.Validation("Enum.Invalid", "The enum is invalid");
 
 	#region Direct Mapped
 
@@ -118,36 +106,6 @@ public class OptionalListTests
 	}
 
 	[Fact]
-	public void DirectMapEachClass_IsMissingShouldBeFalse_WhenParameterListIsNotNull()
-	{
-		//Arrange
-		List<string> value = ["value1", "value2"];
-		var parameters = new OClassListParameter(value);
-		var property = new OptionalListProperty<OClassListParameter, string>(parameters);
-
-		//Act
-		var result = property.MapEach(p => p.Value);
-
-		//Assert
-		property.IsMissing.Should().BeFalse();
-	}
-
-	[Fact]
-	public void DirectMapEachStruct_IsMissingShouldBeFalse_WhenParameterListIsNotNull()
-	{
-		//Arrange
-		List<int> value = [1, 2];
-		var parameters = new OStructListParameter(value);
-		var property = new OptionalListProperty<OStructListParameter, int>(parameters);
-
-		//Act
-		var result = property.MapEach(p => p.Value);
-
-		//Assert
-		property.IsMissing.Should().BeFalse();
-	}
-
-	[Fact]
 	public void DirectMapEachClass_ShouldReturnNull_WhenParameterListIsNull()
 	{
 		//Arrange
@@ -201,34 +159,6 @@ public class OptionalListTests
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeFalse();
-	}
-
-	[Fact]
-	public void DirectMapEachClass_IsMissingShouldBeTrue_WhenParameterListIsNull()
-	{
-		//Arrange
-		var parameters = new OClassListParameter(null);
-		var property = new OptionalListProperty<OClassListParameter, string>(parameters);
-
-		//Act
-		var result = property.MapEach(p => p.Value);
-
-		//Assert
-		property.IsMissing.Should().BeTrue();
-	}
-
-	[Fact]
-	public void DirectMapEachStruct_IsMissingShouldBeTrue_WhenParameterListIsNull()
-	{
-		//Arrange
-		var parameters = new OStructListParameter(null);
-		var property = new OptionalListProperty<OStructListParameter, int>(parameters);
-
-		//Act
-		var result = property.MapEach(p => p.Value);
-
-		//Assert
-		property.IsMissing.Should().BeTrue();
 	}
 
 	#endregion
@@ -293,36 +223,6 @@ public class OptionalListTests
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeFalse();
-	}
-
-	[Fact]
-	public void FactoryMapEachClass_IsMissingShouldBeFalse_WhenParameterListIsNotNull()
-	{
-		//Arrange
-		List<string> value = ["value1", "value2"];
-		var parameters = new OClassListParameter(value);
-		var property = new OptionalListProperty<OClassListParameter, OClassValueObject>(parameters);
-
-		//Act
-		var result = property.MapEach(p => p.Value, OClassValueObject.Create);
-
-		//Assert
-		property.IsMissing.Should().BeFalse();
-	}
-
-	[Fact]
-	public void FactoryMapEachStruct_IsMissingShouldBeFalse_WhenParameterListIsNotNull()
-	{
-		//Arrange
-		List<int> value = [1, 2];
-		var parameters = new OStructListParameter(value);
-		var property = new OptionalListProperty<OStructListParameter, OStructValueObject>(parameters);
-
-		//Act
-		var result = property.MapEach(p => p.Value, OStructValueObject.Create);
-
-		//Assert
-		property.IsMissing.Should().BeFalse();
 	}
 
 	[Fact]
@@ -413,34 +313,6 @@ public class OptionalListTests
 		property.ValidationResult.HasFailed.Should().BeFalse();
 	}
 
-	[Fact]
-	public void FactoryMapEachClass_IsMissingShouldBeTrue_WhenParameterListIsNull()
-	{
-		//Arrange
-		var parameters = new OClassListParameter(null);
-		var property = new OptionalListProperty<OClassListParameter, OClassValueObject>(parameters);
-
-		//Act
-		var result = property.MapEach(p => p.Value, OClassValueObject.Create);
-
-		//Assert
-		property.IsMissing.Should().BeTrue();
-	}
-
-	[Fact]
-	public void FactoryMapEachStruct_IsMissingShouldBeTrue_WhenParameterListIsNull()
-	{
-		//Arrange
-		var parameters = new OStructListParameter(null);
-		var property = new OptionalListProperty<OStructListParameter, OStructValueObject>(parameters);
-
-		//Act
-		var result = property.MapEach(p => p.Value, OStructValueObject.Create);
-
-		//Assert
-		property.IsMissing.Should().BeTrue();
-	}
-
 	#endregion
 
 	#region Constructor Mapped
@@ -506,36 +378,6 @@ public class OptionalListTests
 	}
 
 	[Fact]
-	public void ConstructorMapEachClass_IsMissingShouldBeFalse_WhenParameterListIsNotNull()
-	{
-		//Arrange
-		List<string> value = ["value1", "value2"];
-		var parameters = new OClassListParameter(value);
-		var property = new OptionalListProperty<OClassListParameter, OClassValueObject>(parameters);
-
-		//Act
-		var result = property.MapEach(p => p.Value, v => new OClassValueObject(v));
-
-		//Assert
-		property.IsMissing.Should().BeFalse();
-	}
-
-	[Fact]
-	public void ConstructorMapEachStruct_IsMissingShouldBeFalse_WhenParameterListIsNotNull()
-	{
-		//Arrange
-		List<int> value = [1, 2];
-		var parameters = new OStructListParameter(value);
-		var property = new OptionalListProperty<OStructListParameter, OStructValueObject>(parameters);
-
-		//Act
-		var result = property.MapEach(p => p.Value, v => new OStructValueObject(v));
-
-		//Assert
-		property.IsMissing.Should().BeFalse();
-	}
-
-	[Fact]
 	public void ConstructorMapEachClass_ShouldReturnNull_WhenParameterListIsNull()
 	{
 		//Arrange
@@ -589,34 +431,6 @@ public class OptionalListTests
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeFalse();
-	}
-
-	[Fact]
-	public void ConstructorMapEachClass_IsMissingShouldBeTrue_WhenParameterListIsNull()
-	{
-		//Arrange
-		var parameters = new OClassListParameter(null);
-		var property = new OptionalListProperty<OClassListParameter, OClassValueObject>(parameters);
-
-		//Act
-		var result = property.MapEach(p => p.Value, v => new OClassValueObject(v));
-
-		//Assert
-		property.IsMissing.Should().BeTrue();
-	}
-
-	[Fact]
-	public void ConstructorMapEachStruct_IsMissingShouldBeTrue_WhenParameterListIsNull()
-	{
-		//Arrange
-		var parameters = new OStructListParameter(null);
-		var property = new OptionalListProperty<OStructListParameter, OStructValueObject>(parameters);
-
-		//Act
-		var result = property.MapEach(p => p.Value, v => new OStructValueObject(v));
-
-		//Assert
-		property.IsMissing.Should().BeTrue();
 	}
 
 	#endregion
@@ -705,48 +519,6 @@ public class OptionalListTests
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeFalse();
-	}
-
-	[Fact]
-	public void ComplexMapEachClass_IsMissingShouldBeFalse_WhenParameterListIsNotNull()
-	{
-		//Arrange
-		List<string> value = ["value1", "value2"];
-		var parameters = new OClassListParameter(value);
-		var property = new OptionalListProperty<OClassListParameter, OClassValueObject>(parameters);
-
-		//Act
-		var result = property.MapEachComplex(p => p.Value, builder =>
-		{
-			var value = builder.ClassProperty(p => p.Value)
-				.Required(Error.Validation("Error.Missing", "missing error"))
-				.Map(r => r);
-			return builder.Build(() => OClassValueObject.Create(value));
-		});
-
-		//Assert
-		property.IsMissing.Should().BeFalse();
-	}
-
-	[Fact]
-	public void ComplexMapEachStruct_IsMissingShouldBeFalse_WhenParameterListIsNotNull()
-	{
-		//Arrange
-		List<int> value = [1, 2];
-		var parameters = new OStructListParameter(value);
-		var property = new OptionalListProperty<OStructListParameter, OStructValueObject>(parameters);
-
-		//Act
-		var result = property.MapEachComplex(p => p.Value, builder =>
-		{
-			var value = builder.StructProperty(p => p.Value)
-				.Required(Error.Validation("Error.Missing", "missing error"))
-				.Map(r => r);
-			return builder.Build(() => OStructValueObject.Create(value));
-		});
-
-		//Assert
-		property.IsMissing.Should().BeFalse();
 	}
 
 	[Fact]
@@ -873,46 +645,6 @@ public class OptionalListTests
 		property.ValidationResult.HasFailed.Should().BeFalse();
 	}
 
-	[Fact]
-	public void ComplexMapEachClass_IsMissingShouldBeTrue_WhenParameterListIsNull()
-	{
-		//Arrange
-		var parameters = new OClassListParameter(null);
-		var property = new OptionalListProperty<OClassListParameter, OClassValueObject>(parameters);
-
-		//Act
-		var result = property.MapEachComplex(p => p.Value, builder =>
-		{
-			var value = builder.ClassProperty(p => p.Value)
-				.Required(Error.Validation("Error.Missing", "missing error"))
-				.Map(r => r);
-			return builder.Build(() => OClassValueObject.Create(value));
-		});
-
-		//Assert
-		property.IsMissing.Should().BeTrue();
-	}
-
-	[Fact]
-	public void ComplexMapEachStruct_IsMissingShouldBeTrue_WhenParameterListIsNull()
-	{
-		//Arrange
-		var parameters = new OStructListParameter(null);
-		var property = new OptionalListProperty<OStructListParameter, OStructValueObject>(parameters);
-
-		//Act
-		var result = property.MapEachComplex(p => p.Value, builder =>
-		{
-			var value = builder.StructProperty(p => p.Value)
-				.Required(Error.Validation("Error.Missing", "missing error"))
-				.Map(r => r);
-			return builder.Build(() => OStructValueObject.Create(value));
-		});
-
-		//Assert
-		property.IsMissing.Should().BeTrue();
-	}
-
 	#endregion
 
 	#region Enums
@@ -926,7 +658,7 @@ public class OptionalListTests
 		var property = new OptionalListProperty<OClassListParameter, OTestEnum>(parameters);
 
 		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
+		var result = property.MapEach(p => p.Value, InvalidEnumError);
 
 		//Assert
 		result.Should().BeEquivalentTo([OTestEnum.One, OTestEnum.Two]);
@@ -941,7 +673,7 @@ public class OptionalListTests
 		var property = new OptionalListProperty<OStructListParameter, OTestEnum>(parameters);
 
 		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
+		var result = property.MapEach(p => p.Value, InvalidEnumError);
 
 		//Assert
 		result.Should().BeEquivalentTo([OTestEnum.One, OTestEnum.Two]);
@@ -956,7 +688,7 @@ public class OptionalListTests
 		var property = new OptionalListProperty<OClassListParameter, OTestEnum>(parameters);
 
 		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
+		var result = property.MapEach(p => p.Value, InvalidEnumError);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeFalse();
@@ -971,40 +703,10 @@ public class OptionalListTests
 		var property = new OptionalListProperty<OStructListParameter, OTestEnum>(parameters);
 
 		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
+		var result = property.MapEach(p => p.Value, InvalidEnumError);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeFalse();
-	}
-
-	[Fact]
-	public void MapEachEnum_IsMissingShouldBeFalse_WhenStringListIsNotNull()
-	{
-		//Arrange
-		List<string> value = ["One", "Two"];
-		var parameters = new OClassListParameter(value);
-		var property = new OptionalListProperty<OClassListParameter, OTestEnum>(parameters);
-
-		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
-
-		//Assert
-		property.IsMissing.Should().BeFalse();
-	}
-
-	[Fact]
-	public void MapEachEnum_IsMissingShouldBeFalse_WhenIntListIsNotNull()
-	{
-		//Arrange
-		List<int> value = [0, 1];
-		var parameters = new OStructListParameter(value);
-		var property = new OptionalListProperty<OStructListParameter, OTestEnum>(parameters);
-
-		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
-
-		//Assert
-		property.IsMissing.Should().BeFalse();
 	}
 
 	[Fact]
@@ -1016,11 +718,11 @@ public class OptionalListTests
 		var property = new OptionalListProperty<OClassListParameter, OTestEnum>(parameters);
 
 		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
+		var result = property.MapEach(p => p.Value, InvalidEnumError);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_invalidEnumError);
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(InvalidEnumError);
 	}
 
 	[Fact]
@@ -1032,11 +734,11 @@ public class OptionalListTests
 		var property = new OptionalListProperty<OStructListParameter, OTestEnum>(parameters);
 
 		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
+		var result = property.MapEach(p => p.Value, InvalidEnumError);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_invalidEnumError);
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(InvalidEnumError);
 	}
 
 	[Fact]
@@ -1047,7 +749,7 @@ public class OptionalListTests
 		var property = new OptionalListProperty<OClassListParameter, OTestEnum>(parameters);
 
 		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
+		var result = property.MapEach(p => p.Value, InvalidEnumError);
 
 		//Assert
 		result.Should().BeNull();
@@ -1061,7 +763,7 @@ public class OptionalListTests
 		var property = new OptionalListProperty<OStructListParameter, OTestEnum>(parameters);
 
 		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
+		var result = property.MapEach(p => p.Value, InvalidEnumError);
 
 		//Assert
 		result.Should().BeNull();
@@ -1075,7 +777,7 @@ public class OptionalListTests
 		var property = new OptionalListProperty<OClassListParameter, OTestEnum>(parameters);
 
 		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
+		var result = property.MapEach(p => p.Value, InvalidEnumError);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeFalse();
@@ -1089,38 +791,10 @@ public class OptionalListTests
 		var property = new OptionalListProperty<OStructListParameter, OTestEnum>(parameters);
 
 		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
+		var result = property.MapEach(p => p.Value, InvalidEnumError);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeFalse();
-	}
-
-	[Fact]
-	public void MapEachEnum_IsMissingShouldBeTrue_WhenStringListIsNull()
-	{
-		//Arrange
-		var parameters = new OClassListParameter(null);
-		var property = new OptionalListProperty<OClassListParameter, OTestEnum>(parameters);
-
-		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
-
-		//Assert
-		property.IsMissing.Should().BeTrue();
-	}
-
-	[Fact]
-	public void MapEachEnum_IsMissingShouldBeTrue_WhenIntListIsNull()
-	{
-		//Arrange
-		var parameters = new OStructListParameter(null);
-		var property = new OptionalListProperty<OStructListParameter, OTestEnum>(parameters);
-
-		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
-
-		//Assert
-		property.IsMissing.Should().BeTrue();
 	}
 
 	#endregion

@@ -8,10 +8,8 @@ public sealed class CanFail : AbstractCanFail
 	/// <summary>
 	/// Creates successfull <see cref="CanFail"/> instance
 	/// </summary>
-	public static CanFail Success()
-	{
-		return new CanFail();
-	}
+
+	public static CanFail Success => new();
 
 	/// <summary>
 	/// Create <see cref="CanFail"/> instance containing the <paramref name="error"/>
