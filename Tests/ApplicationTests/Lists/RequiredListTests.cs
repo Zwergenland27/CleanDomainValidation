@@ -42,8 +42,8 @@ public record RIntListParameter(List<int>? Value) : IParameters;
 
 public class RequiredListTests
 {
-	private static Error _missingError => Error.Validation("Error.Missing", "The value is missing");
-	private static Error _invalidEnumError => Error.Validation("Enum.Invalid", "The enum is invalid");
+	private static Error MissingError => Error.Validation("Error.Missing", "The value is missing");
+	private static Error InvalidEnumError => Error.Validation("Enum.Invalid", "The enum is invalid");
 
 	#region Direct Mapped
 
@@ -53,7 +53,7 @@ public class RequiredListTests
 		//Arrange
 		List<string> value = ["value1", "value2"];
 		var parameters = new RClassListParameter(value);
-		var property = new RequiredListProperty<RClassListParameter, string>(parameters, _missingError);
+		var property = new RequiredListProperty<RClassListParameter, string>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEach(p => p.Value);
@@ -68,7 +68,7 @@ public class RequiredListTests
 		//Arrange
 		List<int> value = [1, 2];
 		var parameters = new RStructListParameter(value);
-		var property = new RequiredListProperty<RStructListParameter, int>(parameters, _missingError);
+		var property = new RequiredListProperty<RStructListParameter, int>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEach(p => p.Value);
@@ -83,7 +83,7 @@ public class RequiredListTests
 		//Arrange
 		List<string> value = ["value1", "value2"];
 		var parameters = new RClassListParameter(value);
-		var property = new RequiredListProperty<RClassListParameter, string>(parameters, _missingError);
+		var property = new RequiredListProperty<RClassListParameter, string>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEach(p => p.Value);
@@ -98,7 +98,7 @@ public class RequiredListTests
 		//Arrange
 		List<int> value = [1, 2];
 		var parameters = new RStructListParameter(value);
-		var property = new RequiredListProperty<RStructListParameter, int>(parameters, _missingError);
+		var property = new RequiredListProperty<RStructListParameter, int>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEach(p => p.Value);
@@ -112,7 +112,7 @@ public class RequiredListTests
 	{
 		//Arrange
 		var parameters = new RClassListParameter(null);
-		var property = new RequiredListProperty<RClassListParameter, string>(parameters, _missingError);
+		var property = new RequiredListProperty<RClassListParameter, string>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEach(p => p.Value);
@@ -126,7 +126,7 @@ public class RequiredListTests
 	{
 		//Arrange
 		var parameters = new RStructListParameter(null);
-		var property = new RequiredListProperty<RStructListParameter, int>(parameters, _missingError);
+		var property = new RequiredListProperty<RStructListParameter, int>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEach(p => p.Value);
@@ -140,14 +140,14 @@ public class RequiredListTests
 	{
 		//Arrange
 		var parameters = new RClassListParameter(null);
-		var property = new RequiredListProperty<RClassListParameter, string>(parameters, _missingError);
+		var property = new RequiredListProperty<RClassListParameter, string>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEach(p => p.Value);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missingError);
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(MissingError);
 	}
 
 	[Fact]
@@ -155,14 +155,14 @@ public class RequiredListTests
 	{
 		//Arrange
 		var parameters = new RStructListParameter(null);
-		var property = new RequiredListProperty<RStructListParameter, int>(parameters, _missingError);
+		var property = new RequiredListProperty<RStructListParameter, int>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEach(p => p.Value);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missingError);
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(MissingError);
 	}
 
 	#endregion
@@ -175,7 +175,7 @@ public class RequiredListTests
 		//Arrange
 		List<string> value = ["value1", "value2"];
 		var parameters = new RClassListParameter(value);
-		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, _missingError);
+		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEach(p => p.Value, RClassValueObject.Create);
@@ -190,7 +190,7 @@ public class RequiredListTests
 		//Arrange
 		List<int> value = [1, 2];
 		var parameters = new RStructListParameter(value);
-		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, _missingError);
+		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEach(p => p.Value, RStructValueObject.Create);
@@ -205,7 +205,7 @@ public class RequiredListTests
 		//Arrange
 		List<string> value = ["value1", "value2"];
 		var parameters = new RClassListParameter(value);
-		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, _missingError);
+		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEach(p => p.Value, RClassValueObject.Create);
@@ -220,7 +220,7 @@ public class RequiredListTests
 		//Arrange
 		List<int> value = [1, 2];
 		var parameters = new RStructListParameter(value);
-		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, _missingError);
+		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEach(p => p.Value, RStructValueObject.Create);
@@ -235,7 +235,7 @@ public class RequiredListTests
 		//Arrange
 		List<string> value = ["value1", "error"];
 		var parameters = new RClassListParameter(value);
-		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, _missingError);
+		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEach(p => p.Value, RClassValueObject.Create);
@@ -251,7 +251,7 @@ public class RequiredListTests
 		//Arrange
 		List<int> value = [1, 9];
 		var parameters = new RStructListParameter(value);
-		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, _missingError);
+		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEach(p => p.Value, RStructValueObject.Create);
@@ -266,7 +266,7 @@ public class RequiredListTests
 	{
 		//Arrange
 		var parameters = new RClassListParameter(null);
-		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, _missingError);
+		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEach(p => p.Value, RClassValueObject.Create);
@@ -280,7 +280,7 @@ public class RequiredListTests
 	{
 		//Arrange
 		var parameters = new RStructListParameter(null);
-		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, _missingError);
+		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEach(p => p.Value, RStructValueObject.Create);
@@ -294,14 +294,14 @@ public class RequiredListTests
 	{
 		//Arrange
 		var parameters = new RClassListParameter(null);
-		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, _missingError);
+		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEach(p => p.Value, RClassValueObject.Create);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missingError);
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(MissingError);
 	}
 
 	[Fact]
@@ -309,14 +309,14 @@ public class RequiredListTests
 	{
 		//Arrange
 		var parameters = new RStructListParameter(null);
-		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, _missingError);
+		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEach(p => p.Value, RStructValueObject.Create);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missingError);
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(MissingError);
 	}
 
 	#endregion
@@ -329,7 +329,7 @@ public class RequiredListTests
 		//Arrange
 		List<string> value = ["value1", "value2"];
 		var parameters = new RClassListParameter(value);
-		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, _missingError);
+		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEach(p => p.Value, v => new RClassValueObject(v));
@@ -344,7 +344,7 @@ public class RequiredListTests
 		//Arrange
 		List<int> value = [1, 2];
 		var parameters = new RStructListParameter(value);
-		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, _missingError);
+		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEach(p => p.Value, v => new RStructValueObject(v));
@@ -359,7 +359,7 @@ public class RequiredListTests
 		//Arrange
 		List<string> value = ["value1", "value2"];
 		var parameters = new RClassListParameter(value);
-		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, _missingError);
+		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEach(p => p.Value, v => new RClassValueObject(v));
@@ -374,7 +374,7 @@ public class RequiredListTests
 		//Arrange
 		List<int> value = [1, 2];
 		var parameters = new RStructListParameter(value);
-		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, _missingError);
+		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEach(p => p.Value, v => new RStructValueObject(v));
@@ -388,7 +388,7 @@ public class RequiredListTests
 	{
 		//Arrange
 		var parameters = new RClassListParameter(null);
-		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, _missingError);
+		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEach(p => p.Value, v => new RClassValueObject(v));
@@ -402,7 +402,7 @@ public class RequiredListTests
 	{
 		//Arrange
 		var parameters = new RStructListParameter(null);
-		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, _missingError);
+		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEach(p => p.Value, v => new RStructValueObject(v));
@@ -416,14 +416,14 @@ public class RequiredListTests
 	{
 		//Arrange
 		var parameters = new RClassListParameter(null);
-		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, _missingError);
+		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEach(p => p.Value, v => new RClassValueObject(v));
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missingError);
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(MissingError);
 	}
 
 	[Fact]
@@ -431,14 +431,14 @@ public class RequiredListTests
 	{
 		//Arrange
 		var parameters = new RStructListParameter(null);
-		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, _missingError);
+		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEach(p => p.Value, v => new RStructValueObject(v));
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missingError);
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(MissingError);
 	}
 	#endregion
 
@@ -450,7 +450,7 @@ public class RequiredListTests
 		//Arrange
 		List<string> value = ["value1", "value2"];
 		var parameters = new RClassListParameter(value);
-		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, _missingError);
+		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEachComplex(p => p.Value, builder =>
@@ -471,7 +471,7 @@ public class RequiredListTests
 		//Arrange
 		List<int> value = [1, 2];
 		var parameters = new RStructListParameter(value);
-		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, _missingError);
+		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEachComplex(p => p.Value, builder =>
@@ -492,7 +492,7 @@ public class RequiredListTests
 		//Arrange
 		List<string> value = ["value1", "value2"];
 		var parameters = new RClassListParameter(value);
-		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, _missingError);
+		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEachComplex(p => p.Value, builder =>
@@ -513,7 +513,7 @@ public class RequiredListTests
 		//Arrange
 		List<int> value = [1, 2];
 		var parameters = new RStructListParameter(value);
-		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, _missingError);
+		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEachComplex(p => p.Value, builder =>
@@ -534,7 +534,7 @@ public class RequiredListTests
 		//Arrange
 		List<string> value = ["value1", "error"];
 		var parameters = new RClassListParameter(value);
-		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, _missingError);
+		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEachComplex(p => p.Value, builder =>
@@ -556,7 +556,7 @@ public class RequiredListTests
 		//Arrange
 		List<int> value = [1, 9];
 		var parameters = new RStructListParameter(value);
-		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, _missingError);
+		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEachComplex(p => p.Value, builder =>
@@ -577,7 +577,7 @@ public class RequiredListTests
 	{
 		//Arrange
 		var parameters = new RClassListParameter(null);
-		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, _missingError);
+		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEachComplex(p => p.Value, builder =>
@@ -597,7 +597,7 @@ public class RequiredListTests
 	{
 		//Arrange
 		var parameters = new RStructListParameter(null);
-		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, _missingError);
+		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEachComplex(p => p.Value, builder =>
@@ -617,7 +617,7 @@ public class RequiredListTests
 	{
 		//Arrange
 		var parameters = new RClassListParameter(null);
-		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, _missingError);
+		var property = new RequiredListProperty<RClassListParameter, RClassValueObject>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEachComplex(p => p.Value, builder =>
@@ -630,7 +630,7 @@ public class RequiredListTests
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missingError);
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(MissingError);
 	}
 
 	[Fact]
@@ -638,7 +638,7 @@ public class RequiredListTests
 	{
 		//Arrange
 		var parameters = new RStructListParameter(null);
-		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, _missingError);
+		var property = new RequiredListProperty<RStructListParameter, RStructValueObject>(parameters, MissingError);
 
 		//Act
 		var result = property.MapEachComplex(p => p.Value, builder =>
@@ -651,7 +651,7 @@ public class RequiredListTests
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missingError);
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(MissingError);
 	}
 
 	#endregion
@@ -664,10 +664,10 @@ public class RequiredListTests
 		//Arrange
 		List<string> value = ["One", "Two"];
 		var parameters = new RStringListParameter(value);
-		var property = new RequiredListProperty<RStringListParameter, RTestEnum>(parameters, _missingError);
+		var property = new RequiredListProperty<RStringListParameter, RTestEnum>(parameters, MissingError);
 
 		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
+		var result = property.MapEach(p => p.Value, InvalidEnumError);
 
 		//Assert
 		result.Should().BeEquivalentTo([OTestEnum.One, OTestEnum.Two]);
@@ -679,10 +679,10 @@ public class RequiredListTests
 		//Arrange
 		List<int> value = [0, 1];
 		var parameters = new RIntListParameter(value);
-		var property = new RequiredListProperty<RIntListParameter, RTestEnum>(parameters, _missingError);
+		var property = new RequiredListProperty<RIntListParameter, RTestEnum>(parameters, MissingError);
 
 		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
+		var result = property.MapEach(p => p.Value, InvalidEnumError);
 
 		//Assert
 		result.Should().BeEquivalentTo([OTestEnum.One, OTestEnum.Two]);
@@ -694,10 +694,10 @@ public class RequiredListTests
 		//Arrange
 		List<string> value = ["One", "Two"];
 		var parameters = new RStringListParameter(value);
-		var property = new RequiredListProperty<RStringListParameter, RTestEnum>(parameters, _missingError);
+		var property = new RequiredListProperty<RStringListParameter, RTestEnum>(parameters, MissingError);
 
 		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
+		var result = property.MapEach(p => p.Value, InvalidEnumError);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeFalse();
@@ -709,10 +709,10 @@ public class RequiredListTests
 		//Arrange
 		List<int> value = [0, 1];
 		var parameters = new RIntListParameter(value);
-		var property = new RequiredListProperty<RIntListParameter, RTestEnum>(parameters, _missingError);
+		var property = new RequiredListProperty<RIntListParameter, RTestEnum>(parameters, MissingError);
 
 		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
+		var result = property.MapEach(p => p.Value, InvalidEnumError);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeFalse();
@@ -724,14 +724,14 @@ public class RequiredListTests
 		//Arrange
 		List<string> value = ["One", "Invalid"];
 		var parameters = new RStringListParameter(value);
-		var property = new RequiredListProperty<RStringListParameter, RTestEnum>(parameters, _missingError);
+		var property = new RequiredListProperty<RStringListParameter, RTestEnum>(parameters, MissingError);
 
 		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
+		var result = property.MapEach(p => p.Value, InvalidEnumError);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_invalidEnumError);
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(InvalidEnumError);
 	}
 
 	[Fact]
@@ -740,14 +740,14 @@ public class RequiredListTests
 		//Arrange
 		List<int> value = [0, 3];
 		var parameters = new RIntListParameter(value);
-		var property = new RequiredListProperty<RIntListParameter, RTestEnum>(parameters, _missingError);
+		var property = new RequiredListProperty<RIntListParameter, RTestEnum>(parameters, MissingError);
 
 		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
+		var result = property.MapEach(p => p.Value, InvalidEnumError);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_invalidEnumError);
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(InvalidEnumError);
 	}
 
 	[Fact]
@@ -755,10 +755,10 @@ public class RequiredListTests
 	{
 		//Arrange
 		var parameters = new RStringListParameter(null);
-		var property = new RequiredListProperty<RStringListParameter, RTestEnum>(parameters, _missingError);
+		var property = new RequiredListProperty<RStringListParameter, RTestEnum>(parameters, MissingError);
 
 		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
+		var result = property.MapEach(p => p.Value, InvalidEnumError);
 
 		//Assert
 		result.Should().BeNull();
@@ -769,10 +769,10 @@ public class RequiredListTests
 	{
 		//Arrange
 		var parameters = new RIntListParameter(null);
-		var property = new RequiredListProperty<RIntListParameter, RTestEnum>(parameters, _missingError);
+		var property = new RequiredListProperty<RIntListParameter, RTestEnum>(parameters, MissingError);
 
 		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
+		var result = property.MapEach(p => p.Value, InvalidEnumError);
 
 		//Assert
 		result.Should().BeNull();
@@ -783,14 +783,14 @@ public class RequiredListTests
 	{
 		//Arrange
 		var parameters = new RStringListParameter(null);
-		var property = new RequiredListProperty<RStringListParameter, RTestEnum>(parameters, _missingError);
+		var property = new RequiredListProperty<RStringListParameter, RTestEnum>(parameters, MissingError);
 
 		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
+		var result = property.MapEach(p => p.Value, InvalidEnumError);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missingError);
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(MissingError);
 	}
 
 	[Fact]
@@ -798,14 +798,14 @@ public class RequiredListTests
 	{
 		//Arrange
 		var parameters = new RIntListParameter(null);
-		var property = new RequiredListProperty<RIntListParameter, RTestEnum>(parameters, _missingError);
+		var property = new RequiredListProperty<RIntListParameter, RTestEnum>(parameters, MissingError);
 
 		//Act
-		var result = property.MapEach(p => p.Value, _invalidEnumError);
+		var result = property.MapEach(p => p.Value, InvalidEnumError);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missingError);
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(MissingError);
 	}
 
 	#endregion
