@@ -22,7 +22,7 @@ public enum OTestEnum
 
 public class OptionalEnumTests
 {
-	private static Error _invalidEnumError => Error.Validation("Enum.Invalid", "The enum is invalid");
+	private static Error InvalidEnumError => Error.Validation("Enum.Invalid", "The enum is invalid");
 
 	#region String to enum
 
@@ -35,7 +35,7 @@ public class OptionalEnumTests
 		var property = new OptionalEnumProperty<OStringParameter, OTestEnum>(parameters);
 
 		//Act
-		var validatedProperty = property.Map(p => p.Value, _invalidEnumError);
+		var validatedProperty = property.Map(p => p.Value, InvalidEnumError);
 
 		//Assert
 		validatedProperty.Should().Be(OTestEnum.One);
@@ -50,7 +50,7 @@ public class OptionalEnumTests
 		var property = new OptionalEnumProperty<OStringParameter, OTestEnum>(parameters);
 
 		//Act
-		_ = property.Map(p => p.Value, _invalidEnumError);
+		_ = property.Map(p => p.Value, InvalidEnumError);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeFalse();
@@ -65,11 +65,11 @@ public class OptionalEnumTests
 		var property = new OptionalEnumProperty<OStringParameter, OTestEnum>(parameters);
 
 		//Act
-		_ = property.Map(p => p.Value, _invalidEnumError);
+		_ = property.Map(p => p.Value, InvalidEnumError);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_invalidEnumError);
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(InvalidEnumError);
 	}
 
 	[Fact]
@@ -80,7 +80,7 @@ public class OptionalEnumTests
 		var property = new OptionalEnumProperty<OStringParameter, OTestEnum>(parameters);
 
 		//Act
-		var validatedProperty = property.Map(p => p.Value, _invalidEnumError);
+		var validatedProperty = property.Map(p => p.Value, InvalidEnumError);
 
 		//Assert
 		validatedProperty.Should().Be(null);
@@ -94,7 +94,7 @@ public class OptionalEnumTests
 		var property = new OptionalEnumProperty<OStringParameter, OTestEnum>(parameters);
 
 		//Act
-		_ = property.Map(p => p.Value, _invalidEnumError);
+		_ = property.Map(p => p.Value, InvalidEnumError);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeFalse();
@@ -113,7 +113,7 @@ public class OptionalEnumTests
 		var property = new OptionalEnumProperty<OIntParameter, OTestEnum>(parameters);
 
 		//Act
-		var validatedProperty = property.Map(p => p.Value, _invalidEnumError);
+		var validatedProperty = property.Map(p => p.Value, InvalidEnumError);
 
 		//Assert
 		validatedProperty.Should().Be(OTestEnum.One);
@@ -128,7 +128,7 @@ public class OptionalEnumTests
 		var property = new OptionalEnumProperty<OIntParameter, OTestEnum>(parameters);
 
 		//Act
-		_ = property.Map(p => p.Value, _invalidEnumError);
+		_ = property.Map(p => p.Value, InvalidEnumError);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeFalse();
@@ -144,11 +144,11 @@ public class OptionalEnumTests
 		var property = new OptionalEnumProperty<OIntParameter, OTestEnum>(parameters);
 
 		//Act
-		_ = property.Map(p => p.Value, _invalidEnumError);
+		_ = property.Map(p => p.Value, InvalidEnumError);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_invalidEnumError);
+		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(InvalidEnumError);
 	}
 
 	[Fact]
@@ -159,7 +159,7 @@ public class OptionalEnumTests
 		var property = new OptionalEnumProperty<OIntParameter, OTestEnum>(parameters);
 
 		//Act
-		var validatedProperty = property.Map(p => p.Value, _invalidEnumError);
+		var validatedProperty = property.Map(p => p.Value, InvalidEnumError);
 
 		//Assert
 		validatedProperty.Should().Be(null);
@@ -173,7 +173,7 @@ public class OptionalEnumTests
 		var property = new OptionalEnumProperty<OIntParameter, OTestEnum>(parameters);
 
 		//Act
-		_ = property.Map(p => p.Value, _invalidEnumError);
+		_ = property.Map(p => p.Value, InvalidEnumError);
 
 		//Assert
 		property.ValidationResult.HasFailed.Should().BeFalse();

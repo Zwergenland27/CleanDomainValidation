@@ -2,8 +2,14 @@
 
 namespace CleanDomainValidation.Application;
 
+/// <summary>
+/// Property that can be validated
+/// </summary>
 public abstract class ValidatableBaseProperty : ValidatableProperty
 {
+    /// <summary>
+    /// The property that is being validated
+    /// </summary>
     protected ValidatableProperty? Property;
 
     internal override CanFail ValidationResult

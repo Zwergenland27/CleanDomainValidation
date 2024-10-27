@@ -5,10 +5,23 @@ using CleanDomainValidation.Domain;
 
 namespace CleanDomainValidation.Application.Extensions;
 
+/// <summary>
+/// Extension methods for mapping properties that can be created by using a factory method which can fail
+/// </summary>
 public static class FactoryMapExtensions
 {
-	#region Class Property
-	public static TProperty? Map<TParameters, TProperty, TValue>(
+    #region Class Property
+
+    /// <summary>
+    /// Create the nullable class property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/> and passing the factory method to <paramref name="factoryMethod"/>
+    /// </summary>
+    /// <remarks>
+    /// If more then one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// </remarks>
+    /// <param name="property"></param>
+    /// <param name="value">Parameter that is needed for the factory method of <typeparamref name="TProperty"/></param>
+    /// <param name="factoryMethod">Lambda function that calls the factory method of <typeparamref name="TProperty"/></param>
+    public static TProperty? Map<TParameters, TProperty, TValue>(
 		this OptionalClassProperty<TParameters, TProperty> property,
 		Func<TParameters, TValue?> value,
 		Func<TValue, CanFail<TProperty>> factoryMethod)
@@ -33,7 +46,16 @@ public static class FactoryMapExtensions
 		return factoryResult.Value;
 	}
 
-	public static TProperty? Map<TParameters, TProperty, TValue>(
+    /// <summary>
+    /// Create the nullable class property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/> and passing the factory method to <paramref name="factoryMethod"/>
+    /// </summary>
+    /// <remarks>
+    /// If more then one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// </remarks>
+    /// <param name="property"></param>
+    /// <param name="value">Parameter that is needed for the factory method of <typeparamref name="TProperty"/></param>
+    /// <param name="factoryMethod">Lambda function that calls the factory method of <typeparamref name="TProperty"/></param>
+    public static TProperty? Map<TParameters, TProperty, TValue>(
 		this OptionalClassProperty<TParameters, TProperty> property,
 		Func<TParameters, TValue?> value,
 		Func<TValue, CanFail<TProperty>> factoryMethod)
@@ -58,7 +80,16 @@ public static class FactoryMapExtensions
 		return factoryResult.Value;
 	}
 
-	public static TProperty Map<TParameters, TProperty, TValue>(
+    /// <summary>
+    /// Create the non nullable class property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/> and passing the factory method to <paramref name="factoryMethod"/>
+    /// </summary>
+    /// <remarks>
+    /// If more then one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// </remarks>
+    /// <param name="property"></param>
+    /// <param name="value">Parameter that is needed for the factory method of <typeparamref name="TProperty"/></param>
+    /// <param name="factoryMethod">Lambda function that calls the factory method of <typeparamref name="TProperty"/></param>
+    public static TProperty Map<TParameters, TProperty, TValue>(
 		this RequiredClassProperty<TParameters, TProperty> property,
 		Func<TParameters, TValue?> value,
 		Func<TValue, CanFail<TProperty>> factoryMethod)
@@ -83,7 +114,16 @@ public static class FactoryMapExtensions
 		return factoryResult.Value;
 	}
 
-	public static TProperty Map<TParameters, TProperty, TValue>(
+    /// <summary>
+    /// Create the non nullable class property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/> and passing the factory method to <paramref name="factoryMethod"/>
+    /// </summary>
+    /// <remarks>
+    /// If more then one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// </remarks>
+    /// <param name="property"></param>
+    /// <param name="value">Parameter that is needed for the factory method of <typeparamref name="TProperty"/></param>
+    /// <param name="factoryMethod">Lambda function that calls the factory method of <typeparamref name="TProperty"/></param>
+    public static TProperty Map<TParameters, TProperty, TValue>(
 		this RequiredClassProperty<TParameters, TProperty> property,
 		Func<TParameters, TValue?> value,
 		Func<TValue, CanFail<TProperty>> factoryMethod)
@@ -108,11 +148,20 @@ public static class FactoryMapExtensions
 		return factoryResult.Value;
 	}
 
-	#endregion
+    #endregion
 
-	#region Struct Property
+    #region Struct Property
 
-	public static TProperty? Map<TParameters, TProperty, TValue>(
+    /// <summary>
+    /// Create the nullable struct property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/> and passing the factory method to <paramref name="factoryMethod"/>
+    /// </summary>
+    /// <remarks>
+    /// If more then one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// </remarks>
+    /// <param name="property"></param>
+    /// <param name="value">Parameter that is needed for the factory method of <typeparamref name="TProperty"/></param>
+    /// <param name="factoryMethod">Lambda function that calls the factory method of <typeparamref name="TProperty"/></param>
+    public static TProperty? Map<TParameters, TProperty, TValue>(
 		this OptionalStructProperty<TParameters, TProperty> property,
 		Func<TParameters, TValue?> value,
 		Func<TValue, CanFail<TProperty>> factoryMethod)
@@ -137,7 +186,16 @@ public static class FactoryMapExtensions
 		return factoryResult.Value;
 	}
 
-	public static TProperty? Map<TParameters, TProperty, TValue>(
+    /// <summary>
+    /// Create the nullable struct property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/> and passing the factory method to <paramref name="factoryMethod"/>
+    /// </summary>
+    /// <remarks>
+    /// If more then one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// </remarks>
+    /// <param name="property"></param>
+    /// <param name="value">Parameter that is needed for the factory method of <typeparamref name="TProperty"/></param>
+    /// <param name="factoryMethod">Lambda function that calls the factory method of <typeparamref name="TProperty"/></param>
+    public static TProperty? Map<TParameters, TProperty, TValue>(
 		this OptionalStructProperty<TParameters, TProperty> property,
 		Func<TParameters, TValue?> value,
 		Func<TValue, CanFail<TProperty>> factoryMethod)
@@ -162,7 +220,16 @@ public static class FactoryMapExtensions
 		return factoryResult.Value;
 	}
 
-	public static TProperty Map<TParameters, TProperty, TValue>(
+    /// <summary>
+    /// Create the non nullable struct property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/> and passing the factory method to <paramref name="factoryMethod"/>
+    /// </summary>
+    /// <remarks>
+    /// If more then one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// </remarks>
+    /// <param name="property"></param>
+    /// <param name="value">Parameter that is needed for the factory method of <typeparamref name="TProperty"/></param>
+    /// <param name="factoryMethod">Lambda function that calls the factory method of <typeparamref name="TProperty"/></param>
+    public static TProperty Map<TParameters, TProperty, TValue>(
 		this RequiredStructProperty<TParameters, TProperty> property,
 		Func<TParameters, TValue?> value,
 		Func<TValue, CanFail<TProperty>> factoryMethod)
@@ -187,7 +254,16 @@ public static class FactoryMapExtensions
 		return factoryResult.Value;
 	}
 
-	public static TProperty Map<TParameters, TProperty, TValue>(
+    /// <summary>
+    /// Create the non nullable struct property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/> and passing the factory method to <paramref name="factoryMethod"/>
+    /// </summary>
+    /// <remarks>
+    /// If more then one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// </remarks>
+    /// <param name="property"></param>
+    /// <param name="value">Parameter that is needed for the factory method of <typeparamref name="TProperty"/></param>
+    /// <param name="factoryMethod">Lambda function that calls the factory method of <typeparamref name="TProperty"/></param>
+    public static TProperty Map<TParameters, TProperty, TValue>(
 		this RequiredStructProperty<TParameters, TProperty> property,
 		Func<TParameters, TValue?> value,
 		Func<TValue, CanFail<TProperty>> factoryMethod)
@@ -212,11 +288,21 @@ public static class FactoryMapExtensions
 		return factoryResult.Value;
 	}
 
-	#endregion
+    #endregion
 
-	#region List Property
+    #region List Property
 
-	public static IEnumerable<TProperty>? MapEach<TParameters, TProperty, TValue>(
+    /// <summary>
+    /// Create each element of type <typeparamref name="TProperty"/> of the nullable list property from the values specified in <paramref name="values"/> and passing the factory method to <paramref name="factoryMethod"/>
+    /// </summary>
+    /// <remarks>
+    /// If more then one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// If you want to use a factory method to create the property, use the methods provided by <see cref="FactoryMapExtensions"/> instead.
+    /// </remarks>
+    /// <param name="property"></param>
+    /// <param name="values">List of parameter that is needed for the factory method of <typeparamref name="TProperty"/></param>
+    /// <param name="factoryMethod">Lambda function that calls the factory method of <typeparamref name="TProperty"/></param>
+    public static IEnumerable<TProperty>? MapEach<TParameters, TProperty, TValue>(
 		this OptionalListProperty<TParameters, TProperty> property,
 		Func<TParameters, IEnumerable<TValue>?> values,
 		Func<TValue, CanFail<TProperty>> factoryMethod)
@@ -245,7 +331,17 @@ public static class FactoryMapExtensions
 		return resultProperties;
 	}
 
-	public static IEnumerable<TProperty> MapEach<TParameters, TProperty, TValue>(
+    /// <summary>
+    /// Create each element of type <typeparamref name="TProperty"/> of the non nullable list property from the values specified in <paramref name="values"/> and passing the factory method to <paramref name="factoryMethod"/>
+    /// </summary>
+    /// <remarks>
+    /// If more then one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// If you want to use a factory method to create the property, use the methods provided by <see cref="FactoryMapExtensions"/> instead.
+    /// </remarks>
+    /// <param name="property"></param>
+    /// <param name="values">List of parameter that is needed for the factory method of <typeparamref name="TProperty"/></param>
+    /// <param name="factoryMethod">Lambda function that calls the factory method of <typeparamref name="TProperty"/></param>
+    public static IEnumerable<TProperty> MapEach<TParameters, TProperty, TValue>(
 		this RequiredListProperty<TParameters, TProperty> property,
 		Func<TParameters, IEnumerable<TValue>?> values,
 		Func<TValue, CanFail<TProperty>> factoryMethod)

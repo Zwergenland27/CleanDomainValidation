@@ -2,6 +2,9 @@
 
 namespace CleanDomainValidation.Application.Structs;
 
+/// <summary>
+/// The property is a struct that cannot be null
+/// </summary>
 public sealed class RequiredStructProperty<TParameters, TProperty> : ValidatableProperty
 	where TParameters : notnull
 	where TProperty : struct
