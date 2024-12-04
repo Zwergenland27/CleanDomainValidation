@@ -28,7 +28,7 @@ public static class ComplexMapExtensions
 		TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
 		if (builderParameters is null)
 		{
-			return null;
+			return property.DefaultValue;
 		}
 
 		var builder = new OptionalClassPropertyBuilder<TPropertyParameters, TProperty>(builderParameters);
@@ -59,7 +59,7 @@ public static class ComplexMapExtensions
 		TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
 		if (builderParameters is null)
 		{
-			return null;
+			return property.DefaultValue;
 		}
 
 		var builder = new OptionalClassPropertyBuilder<TPropertyParameters, TProperty>(builderParameters.Value);

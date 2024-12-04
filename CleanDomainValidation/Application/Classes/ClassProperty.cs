@@ -37,4 +37,14 @@ public sealed class ClassProperty<TParameters, TProperty> : ValidatableBasePrope
 		Property = optional;
 		return optional;
 	}
+
+	/// <summary>
+	/// If the property is not set, <paramref name="defaultValue"/> will be set
+	/// </summary>
+	public OptionalClassProperty<TParameters, TProperty> WithDefaultValue(TProperty defaultValue)
+	{
+		var optional = new OptionalClassProperty<TParameters, TProperty>(_parameters, defaultValue);
+		Property = optional;
+		return optional;
+	}
 }

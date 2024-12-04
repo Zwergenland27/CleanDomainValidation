@@ -10,10 +10,13 @@ public sealed class OptionalClassProperty<TParameters, TProperty> : ValidatableP
 	where TProperty : class
 {
 	internal TParameters Parameters { get; }
+	
+	internal TProperty? DefaultValue { get; }
 	internal override CanFail ValidationResult { get; } = new();
 
-	internal OptionalClassProperty(TParameters parameters)
+	internal OptionalClassProperty(TParameters parameters, TProperty? defaultValue = null)
 	{
 		Parameters = parameters;
+		DefaultValue = defaultValue;
 	}
 }

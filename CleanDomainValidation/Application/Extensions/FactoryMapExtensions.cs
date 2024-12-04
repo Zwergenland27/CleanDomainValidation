@@ -33,7 +33,7 @@ public static class FactoryMapExtensions
 
 		if (rawValue is null)
 		{
-			return null;
+			return property.DefaultValue;
 		}
 
 		CanFail<TProperty> factoryResult = factoryMethod.Invoke(rawValue);
@@ -67,7 +67,7 @@ public static class FactoryMapExtensions
 
 		if (rawValue is null)
 		{
-			return null;
+			return property.DefaultValue;
 		}
 
 		CanFail<TProperty> factoryResult = factoryMethod.Invoke(rawValue.Value);

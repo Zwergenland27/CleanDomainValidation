@@ -33,7 +33,7 @@ public static class ConstructorMapExtensions
 
         if (rawValue is null)
         {
-            return null;
+            return property.DefaultValue;
         }
 
         return constructor.Invoke(rawValue);
@@ -61,7 +61,7 @@ public static class ConstructorMapExtensions
 
         if (rawValue is null)
         {
-            return null;
+            return property.DefaultValue;
         }
 
         return constructor.Invoke(rawValue.Value);

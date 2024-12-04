@@ -26,7 +26,7 @@ public static class DirectMapExtensions
 		where TProperty : class
 	{
 		TProperty? rawValue = value.Invoke(property.Parameters);
-		return rawValue;
+		return rawValue ?? property.DefaultValue;
 	}
 
     /// <summary>
