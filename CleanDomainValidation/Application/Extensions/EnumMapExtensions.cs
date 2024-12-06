@@ -27,7 +27,7 @@ public static class EnumMapExtensions
 		string? rawEnum = value.Invoke(property.Parameters);
 		if(rawEnum is null)
 		{
-			return null;
+			return property.DefaultValue;
 		}
 
 		if(!Enum.TryParse(rawEnum, out TProperty enumResult))
@@ -84,7 +84,7 @@ public static class EnumMapExtensions
 		int? rawEnum = value.Invoke(property.Parameters);
 		if (rawEnum is null)
 		{
-			return null;
+			return property.DefaultValue;
 		}
 
 		if (!Enum.IsDefined(typeof(TProperty), rawEnum.Value))

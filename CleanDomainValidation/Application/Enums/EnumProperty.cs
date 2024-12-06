@@ -37,4 +37,14 @@ public sealed class EnumProperty<TParameters, TProperty> : ValidatableBaseProper
 		Property = optional;
 		return optional;
 	}
+    
+	/// <summary>
+	/// If the property is not set, <paramref name="defaultValue"/> will be set
+	/// </summary>
+	public OptionalEnumProperty<TParameters, TProperty> WithDefaultValue(TProperty defaultValue)
+	{
+		var optional = new OptionalEnumProperty<TParameters, TProperty>(_parameters, defaultValue);
+		Property = optional;
+		return optional;
+	}
 }
