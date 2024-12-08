@@ -27,6 +27,17 @@ public sealed class StructProperty<TParameters, TProperty> : ValidatableBaseProp
 		Property = required;
 		return required;
 	}
+    
+	/// <summary>
+	/// The property will be set with the default value if the parameter is not set
+	/// </summary>
+	/// <param name="defaultValue">Default value that should be set if parameter is null</param>
+	public RequiredStructWithDefaultProperty<TParameters, TProperty> WithDefault(TProperty defaultValue)
+	{
+		var requiredWithDefault = new RequiredStructWithDefaultProperty<TParameters, TProperty>(_parameters, defaultValue);
+		Property = requiredWithDefault;
+		return requiredWithDefault;
+	}
 
     /// <summary>
     /// The property can be null

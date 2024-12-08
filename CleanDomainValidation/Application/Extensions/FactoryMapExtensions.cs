@@ -353,6 +353,72 @@ public static class FactoryMapExtensions
 
 		return factoryResult.Value;
 	}
+    
+	/// <summary>
+    /// Create the non-nullable struct property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/> and passing the factory method to <paramref name="factoryMethod"/>
+    /// </summary>
+    /// <remarks>
+    /// If more than one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// </remarks>
+    /// <param name="property"></param>
+    /// <param name="value">Parameter that is needed for the factory method of <typeparamref name="TProperty"/></param>
+    /// <param name="factoryMethod">Lambda function that calls the factory method of <typeparamref name="TProperty"/></param>
+    public static TProperty Map<TParameters, TProperty, TValue>(
+		this RequiredStructWithDefaultProperty<TParameters, TProperty> property,
+		Func<TParameters, TValue?> value,
+		Func<TValue, CanFail<TProperty>> factoryMethod)
+		where TParameters : notnull
+		where TProperty : struct
+		where TValue : class
+	{
+		TValue? rawValue = value.Invoke(property.Parameters);
+		if (rawValue is null)
+		{
+			return property.DefaultValue;
+		}
+
+		CanFail<TProperty> factoryResult = factoryMethod.Invoke(rawValue);
+		if (factoryResult.HasFailed)
+		{
+			property.ValidationResult.InheritFailure(factoryResult);
+			return default;
+		}
+
+		return factoryResult.Value;
+	}
+
+    /// <summary>
+    /// Create the non-nullable struct property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/> and passing the factory method to <paramref name="factoryMethod"/>
+    /// </summary>
+    /// <remarks>
+    /// If more than one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// </remarks>
+    /// <param name="property"></param>
+    /// <param name="value">Parameter that is needed for the factory method of <typeparamref name="TProperty"/></param>
+    /// <param name="factoryMethod">Lambda function that calls the factory method of <typeparamref name="TProperty"/></param>
+    public static TProperty Map<TParameters, TProperty, TValue>(
+		this RequiredStructWithDefaultProperty<TParameters, TProperty> property,
+		Func<TParameters, TValue?> value,
+		Func<TValue, CanFail<TProperty>> factoryMethod)
+		where TParameters : notnull
+		where TProperty : struct
+		where TValue : struct
+	{
+		TValue? rawValue = value.Invoke(property.Parameters);
+		if (rawValue is null)
+		{
+			return property.DefaultValue;
+		}
+
+		CanFail<TProperty> factoryResult = factoryMethod.Invoke(rawValue.Value);
+		if (factoryResult.HasFailed)
+		{
+			property.ValidationResult.InheritFailure(factoryResult);
+			return default;
+		}
+
+		return factoryResult.Value;
+	}
 
     #endregion
 

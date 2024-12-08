@@ -328,6 +328,68 @@ public static class ComplexMapExtensions
 
 		return buildResult.Value;
 	}
+    
+    /// <summary>
+    /// Create the non-nullable struct property <typeparamref name="TProperty"/> from the parameters specified in <paramref name="propertyParameters"/> by using a <paramref name="propertyBuilder"/>
+    /// </summary>
+    /// <param name="property"></param>
+    /// <param name="propertyParameters">Paramaters needed to create <typeparamref name="TProperty"/></param>
+    /// <param name="propertyBuilder">Builder that creates <typeparamref name="TProperty"/> from <typeparamref name="TPropertyParameters"/></param>
+    public static TProperty MapComplex<TParameters, TProperty, TPropertyParameters>(
+		this RequiredStructWithDefaultProperty<TParameters, TProperty> property,
+		Func<TParameters, TPropertyParameters?> propertyParameters,
+		Func<RequiredPropertyBuilder<TPropertyParameters, TProperty>, ValidatedRequiredProperty<TProperty>> propertyBuilder)
+		where TParameters : notnull
+		where TProperty : struct
+		where TPropertyParameters : class
+	{
+		TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
+		if (builderParameters is null)
+		{
+			return property.DefaultValue;
+		}
+
+		var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(builderParameters);
+		var buildResult = propertyBuilder.Invoke(builder).Build();
+		if (buildResult.HasFailed)
+		{
+			property.ValidationResult.InheritFailure(buildResult);
+			return default;
+		}
+
+		return buildResult.Value;
+	}
+
+    /// <summary>
+    /// Create the non-nullable struct property <typeparamref name="TProperty"/> from the parameters specified in <paramref name="propertyParameters"/> by using a <paramref name="propertyBuilder"/>
+    /// </summary>
+    /// <param name="property"></param>
+    /// <param name="propertyParameters">Paramaters needed to create <typeparamref name="TProperty"/></param>
+    /// <param name="propertyBuilder">Builder that creates <typeparamref name="TProperty"/> from <typeparamref name="TPropertyParameters"/></param>
+    public static TProperty MapComplex<TParameters, TProperty, TPropertyParameters>(
+		this RequiredStructWithDefaultProperty<TParameters, TProperty> property,
+		Func<TParameters, TPropertyParameters?> propertyParameters,
+		Func<RequiredPropertyBuilder<TPropertyParameters, TProperty>, ValidatedRequiredProperty<TProperty>> propertyBuilder)
+		where TParameters : notnull
+		where TProperty : struct
+		where TPropertyParameters : struct
+	{
+		TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
+		if (builderParameters is null)
+		{
+			return property.DefaultValue;
+		}
+
+		var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(builderParameters.Value);
+		var buildResult = propertyBuilder.Invoke(builder).Build();
+		if (buildResult.HasFailed)
+		{
+			property.ValidationResult.InheritFailure(buildResult);
+			return default;
+		}
+
+		return buildResult.Value;
+	}
 
     #endregion
 
