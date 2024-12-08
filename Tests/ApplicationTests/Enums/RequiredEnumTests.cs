@@ -140,7 +140,7 @@ public class RequiredEnumTests
 	public void Map_ShouldSetInvalidEnumError_WhenIntInvalid()
 	{
 		//Arrange
-		var value = 1;
+		var value = 2;
 		var parameters = new RIntParameter(value);
 		var property = new RequiredEnumProperty<RIntParameter, RTestEnum>(parameters, MissingError);
 
