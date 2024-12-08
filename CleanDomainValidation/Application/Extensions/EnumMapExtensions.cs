@@ -199,6 +199,41 @@ public static class EnumMapExtensions
 
 		return resultEnums;
 	}
+    
+	/// <summary>
+	/// Create each element of type <typeparamref name="TProperty"/>> of the non-nullable enum list <typeparamref name="TProperty"/> from the strings specified in <paramref name="values"/>
+	/// </summary>
+	/// <param name="property"></param>
+	/// <param name="values">List of strings that should be converted to <typeparamref name="TProperty"/></param>
+	/// <param name="invalidEnumError">Error that should occur if the enum is invalid</param>
+	public static IEnumerable<TProperty> MapEach<TParameters, TProperty>(
+		this RequiredListWithDefaultProperty<TParameters, TProperty> property,
+		Func<TParameters, IEnumerable<string>?> values,
+		Error invalidEnumError)
+		where TParameters : notnull
+		where TProperty : struct
+	{
+		IEnumerable<string>? rawEnums = values.Invoke(property.Parameters);
+		if (rawEnums is null)
+		{
+			return property.DefaultList;
+		}
+
+		List<TProperty> resultEnums = [];
+
+		foreach (string rawEnum in rawEnums)
+		{
+			if (!Enum.TryParse(rawEnum, out TProperty enumResult))
+			{
+				property.ValidationResult.Failed(invalidEnumError);
+				continue;
+			}
+
+			resultEnums.Add(enumResult);
+		}
+
+		return resultEnums;
+	}
 
     /// <summary>
     /// Create each element of type <typeparamref name="TProperty"/>> of the nullable enum list <typeparamref name="TProperty"/> from the integers specified in <paramref name="values"/>
@@ -253,6 +288,41 @@ public static class EnumMapExtensions
 		{
 			property.ValidationResult.Failed(property.MissingError);
 			return null!;
+		}
+
+		List<TProperty> resultEnums = [];
+
+		foreach (int rawEnum in rawEnums)
+		{
+			if (!Enum.IsDefined(typeof(TProperty), rawEnum))
+			{
+				property.ValidationResult.Failed(invalidEnumError);
+				continue;
+			}
+
+			resultEnums.Add((TProperty)Enum.ToObject(typeof(TProperty), rawEnum));
+		}
+
+		return resultEnums;
+	}
+    
+	/// <summary>
+	/// Create each element of type <typeparamref name="TProperty"/>> of the non-nullable enum list <typeparamref name="TProperty"/> from the integers specified in <paramref name="values"/>
+	/// </summary>
+	/// <param name="property"></param>
+	/// <param name="values">List of integers that should be converted to <typeparamref name="TProperty"/></param>
+	/// <param name="invalidEnumError">Error that should occur if the enum is invalid</param>
+	public static IEnumerable<TProperty> MapEach<TParameters, TProperty>(
+		this RequiredListWithDefaultProperty<TParameters, TProperty> property,
+		Func<TParameters, IEnumerable<int>?> values,
+		Error invalidEnumError)
+		where TParameters : notnull
+		where TProperty : struct
+	{
+		IEnumerable<int>? rawEnums = values.Invoke(property.Parameters);
+		if (rawEnums is null)
+		{
+			return property.DefaultList;
 		}
 
 		List<TProperty> resultEnums = [];

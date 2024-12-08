@@ -191,6 +191,29 @@ public static class DirectMapExtensions
 
 		return rawValue;
 	}
+    
+	/// <summary>
+	/// Create each element of type <typeparamref name="TProperty"/> of the non-nullable list property from the values specified in <paramref name="values"/>
+	/// </summary>
+	/// <remarks>
+	/// If more than one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+	/// </remarks>
+	/// <param name="property"></param>
+	/// <param name="values">List of parameter that is mapped to the property of type <typeparamref name="TProperty"/></param>
+	public static IEnumerable<TProperty> MapEach<TParameters, TProperty>(
+		this RequiredListWithDefaultProperty<TParameters, TProperty> property,
+		Func<TParameters, IEnumerable<TProperty>?> values)
+		where TParameters : notnull
+		where TProperty : notnull
+	{
+		IEnumerable<TProperty>? rawValue = values.Invoke(property.Parameters);
+		if (rawValue is null)
+		{
+			return property.DefaultList;
+		}
+
+		return rawValue;
+	}
 
 	#endregion
 }
