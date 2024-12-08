@@ -288,7 +288,7 @@ public static class ComplexMapExtensions
 		IEnumerable<TPropertyParameters>? builderParameters = propertyParameters.Invoke(property.Parameters);
 		if (builderParameters is null)
 		{
-			return null;
+			return property.DefaultList;
 		}
 
 		List<TProperty> resultProperties = [];

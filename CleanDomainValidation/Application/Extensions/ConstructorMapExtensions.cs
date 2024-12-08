@@ -263,7 +263,7 @@ public static class ConstructorMapExtensions
         IEnumerable<TValue>? rawValues = values.Invoke(property.Parameters);
         if (rawValues is null)
         {
-            return null;
+            return property.DefaultList;
         }
 
         List<TProperty> resultProperties = [];

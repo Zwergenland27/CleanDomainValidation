@@ -119,7 +119,7 @@ public static class DirectMapExtensions
 	{
 		IEnumerable<TProperty>? rawValue = values.Invoke(property.Parameters);
 
-		return rawValue;
+		return rawValue ?? property.DefaultList;
 	}
 
     /// <summary>

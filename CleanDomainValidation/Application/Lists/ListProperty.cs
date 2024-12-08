@@ -39,4 +39,14 @@ public sealed class ListProperty<TParameters, TProperty> : ValidatableBaseProper
 		Property = optional;
 		return optional;
 	}
+    
+	/// <summary>
+	/// If the property is not set, <paramref name="defaultList"/> will be set
+	/// </summary>
+	public OptionalListProperty<TParameters, TProperty> WithDefaultValue(IEnumerable<TProperty> defaultList)
+	{
+		var optional = new OptionalListProperty<TParameters, TProperty>(_parameters, defaultList);
+		Property = optional;
+		return optional;
+	}
 }

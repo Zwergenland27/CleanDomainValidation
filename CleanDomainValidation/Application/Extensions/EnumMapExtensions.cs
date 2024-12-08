@@ -145,7 +145,7 @@ public static class EnumMapExtensions
 		IEnumerable<string>? rawEnums = values.Invoke(property.Parameters);
 		if (rawEnums is null)
 		{
-			return null;
+			return property.DefaultList;
 		}
 
 		List<TProperty> resultEnums = [];
@@ -216,7 +216,7 @@ public static class EnumMapExtensions
 		IEnumerable<int>? rawEnums = values.Invoke(property.Parameters);
 		if (rawEnums is null)
 		{
-			return null;
+			return property.DefaultList;
 		}
 
 		List<TProperty> resultEnums = [];
