@@ -153,7 +153,7 @@ public class RequiredStructWithDefaultTests
         var validatedProperty = property.Map(p => p.Value, RClassValueObject.Create);
 
         //Assert
-        validatedProperty.Should().Be(default);
+        validatedProperty.Should().Be((RClassValueObject) default);
     }
 
     [Fact]
@@ -169,7 +169,7 @@ public class RequiredStructWithDefaultTests
         var validatedProperty = property.Map(p => p.Value, RStructValueObject.Create);
 
         //Assert
-        validatedProperty.Should().Be(default);
+        validatedProperty.Should().Be((RStructValueObject) default);
     }
 
     [Fact]
@@ -492,7 +492,7 @@ public class RequiredStructWithDefaultTests
         });
 
         //Assert
-        validatedProperty.Should().Be(default);
+        validatedProperty.Should().Be((RClassValueObject) default);
     }
 
     [Fact]
@@ -511,7 +511,7 @@ public class RequiredStructWithDefaultTests
             });
 
         //Assert
-        validatedProperty.Should().Be(default);
+        validatedProperty.Should().Be((RStructValueObject) default);
     }
 
     [Fact]
