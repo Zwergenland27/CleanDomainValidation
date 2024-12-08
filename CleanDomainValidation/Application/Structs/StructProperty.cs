@@ -38,4 +38,14 @@ public sealed class StructProperty<TParameters, TProperty> : ValidatableBaseProp
 		Property = optional;
 		return optional;
 	}
+    
+	/// <summary>
+	/// If the property is not set, <paramref name="defaultValue"/> will be set
+	/// </summary>
+	public OptionalStructProperty<TParameters, TProperty> WithDefaultValue(TProperty defaultValue)
+	{
+		var optional = new OptionalStructProperty<TParameters, TProperty>(_parameters, defaultValue);
+		Property = optional;
+		return optional;
+	}
 }

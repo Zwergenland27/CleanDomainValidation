@@ -72,7 +72,7 @@ public static class DirectMapExtensions
 		where TProperty : struct
 	{
 		TProperty? rawValue = value.Invoke(property.Parameters);
-		return rawValue;
+		return rawValue ?? property.DefaultValue;
 	}
 
     /// <summary>
