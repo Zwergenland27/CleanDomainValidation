@@ -52,6 +52,29 @@ public static class DirectMapExtensions
 
 		return rawValue;
 	}
+    
+	/// <summary>
+	/// Create the non-nullable class property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/>
+	/// </summary>
+	/// <remarks>
+	/// If more than one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+	/// </remarks>
+	/// <param name="property"></param>
+	/// <param name="value">Parameter that is mapped to the property of type <typeparamref name="TProperty"/></param>
+	public static TProperty Map<TParameters, TProperty>(
+		this RequiredClassWithDefaultProperty<TParameters, TProperty> property,
+		Func<TParameters, TProperty?> value)
+		where TParameters : notnull
+		where TProperty : class
+	{
+		TProperty? rawValue = value.Invoke(property.Parameters);
+		if (rawValue is null)
+		{
+			return property.DefaultValue;
+		}
+
+		return rawValue;
+	}
 
     #endregion
 

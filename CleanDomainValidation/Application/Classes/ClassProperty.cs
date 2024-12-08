@@ -26,6 +26,17 @@ public sealed class ClassProperty<TParameters, TProperty> : ValidatableBasePrope
 		Property = required;
 		return required;
 	}
+	
+	/// <summary>
+	/// The property will be set with the default value if the parameter is not set
+	/// </summary>
+	/// <param name="defaultValue">Default value that should be set if parameter is null</param>
+	public RequiredClassWithDefaultProperty<TParameters, TProperty> WithDefault(TProperty defaultValue)
+	{
+		var requiredWithDefault = new RequiredClassWithDefaultProperty<TParameters, TProperty>(_parameters, defaultValue);
+		Property = requiredWithDefault;
+		return requiredWithDefault;
+	}
 
 	/// <summary>
 	/// The property can be null
