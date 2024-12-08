@@ -26,6 +26,17 @@ public sealed class EnumProperty<TParameters, TProperty> : ValidatableBaseProper
 		Property = required;
 		return required;
 	}
+    
+	/// <summary>
+	/// The property will be set with the default value if the parameter is not set
+	/// </summary>
+	/// <param name="defaultValue">Default value that should be set if parameter is null</param>
+	public RequiredEnumWithDefaultProperty<TParameters, TProperty> Required(TProperty defaultValue)
+	{
+		var required = new RequiredEnumWithDefaultProperty<TParameters, TProperty>(_parameters, defaultValue);
+		Property = required;
+		return required;
+	}
 
     /// <summary>
     /// The property can be null

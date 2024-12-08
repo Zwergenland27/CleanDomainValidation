@@ -3,7 +3,7 @@
 namespace CleanDomainValidation.Application.Enums;
 
 /// <summary>
-/// The property is an enum that cannot be null
+/// The property is an enum that can be null
 /// </summary>
 public sealed class OptionalEnumProperty<TParameters, TProperty> : ValidatableProperty
 	where TParameters : notnull

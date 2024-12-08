@@ -67,6 +67,34 @@ public static class EnumMapExtensions
 
 		return enumResult;
 	}
+    
+	/// <summary>
+	/// Create the non-nullable enum property <typeparamref name="TProperty"/> from the string specified in <paramref name="value"/>
+	/// </summary>
+	/// <param name="property"></param>
+	/// <param name="value">String parameter that should be converted to <typeparamref name="TProperty"/></param>
+	/// <param name="invalidEnumError">Error that should occur if the enum is invalid</param>
+	public static TProperty Map<TParameters, TProperty>(
+		this RequiredEnumWithDefaultProperty<TParameters, TProperty> property,
+		Func<TParameters, string?> value,
+		Error invalidEnumError)
+		where TParameters : notnull
+		where TProperty : struct
+	{
+		string? rawEnum = value.Invoke(property.Parameters);
+		if (rawEnum is null)
+		{
+			return property.DefaultValue;
+		}
+
+		if (!Enum.TryParse(rawEnum, out TProperty enumResult))
+		{
+			property.ValidationResult.Failed(invalidEnumError);
+			return default;
+		}
+
+		return enumResult;
+	}
 
     /// <summary>
     /// Create the nullable enum property <typeparamref name="TProperty"/> from the integer specified in <paramref name="value"/>
@@ -114,6 +142,34 @@ public static class EnumMapExtensions
 		{
 			property.ValidationResult.Failed(property.MissingError);
 			return default;
+		}
+
+		if (!Enum.IsDefined(typeof(TProperty), rawEnum.Value))
+		{
+			property.ValidationResult.Failed(invalidEnumError);
+			return default;
+		}
+
+		return (TProperty)Enum.ToObject(typeof(TProperty), rawEnum.Value);
+	}
+    
+	/// <summary>
+	/// Create the non-nullable enum property <typeparamref name="TProperty"/> from the integer specified in <paramref name="value"/>
+	/// </summary>
+	/// <param name="property"></param>
+	/// <param name="value">Integer parameter that should be converted to <typeparamref name="TProperty"/></param>
+	/// <param name="invalidEnumError">Error that should occur if the enum is invalid</param>
+	public static TProperty Map<TParameters, TProperty>(
+		this RequiredEnumWithDefaultProperty<TParameters, TProperty> property,
+		Func<TParameters, int?> value,
+		Error invalidEnumError)
+		where TParameters : notnull
+		where TProperty : struct
+	{
+		int? rawEnum = value.Invoke(property.Parameters);
+		if (rawEnum is null)
+		{
+			return property.DefaultValue;
 		}
 
 		if (!Enum.IsDefined(typeof(TProperty), rawEnum.Value))
