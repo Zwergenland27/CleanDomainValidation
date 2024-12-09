@@ -28,6 +28,17 @@ public sealed class ListProperty<TParameters, TProperty> : ValidatableBaseProper
 		Property = required;
 		return required;
 	}
+    
+	/// <summary>
+	/// The property will be set with the default list if the parameter is not set
+	/// </summary>
+	/// <param name="defaultValue">Default list that should be set if parameter is null</param>
+	public RequiredListWithDefaultProperty<TParameters, TProperty> WithDefault(IEnumerable<TProperty> defaultValue)
+	{
+		var requiredWithDefault = new RequiredListWithDefaultProperty<TParameters, TProperty>(_parameters, defaultValue);
+		Property = requiredWithDefault;
+		return requiredWithDefault;
+	}
 
     /// <summary>
     /// The property can be null

@@ -305,8 +305,9 @@ You can select the fitting type using the functions from the second column. To s
 > */
 > ```
 
-#### Define if property should be optional or required
+#### Define if property should be optional, required or default
 In the next step we need to define if the property should be optional or required. This setting needs to match up with the nullability defined in the request object as it will determine the return type of the builder function. Since we want a warning if the user does not enter a required field, an error needs to be passed to the method.
+You can also set a default value for a required field that will be used when the parameter is not set in the request paramters.
 
 > Continuation of previous example:
 > ```cs
@@ -318,7 +319,7 @@ In the next step we need to define if the property should be optional or require
 > */
 > //You can safely use the var keyword instead of typing the class name
 > var validatedAge = builder.ClassProperty(request => request.Age)
->                                 .Required(Error.Validation("Request.CreateUser.Username.Missing", "The age field is missing."))
+>                                 .WithDefault(new Age(18))
 > /*
 > ...
 > */
