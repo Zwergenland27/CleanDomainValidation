@@ -36,6 +36,17 @@ public abstract class PropertyBuilder<TParameters, TResult>
 		_properties.Add(classProperty);
 		return classProperty;
 	}
+	
+	/// <summary>
+	/// Map the class property <typeparamref name="TProperty"/> of the result <typeparamref name="TResult"/>
+	/// </summary>
+	public ClassProperty<TParameters, TProperty> ClassProperty<TProperty>()
+		where TProperty : class
+	{
+		var classProperty = new ClassProperty<TParameters, TProperty>(_parameters);
+		_properties.Add(classProperty);
+		return classProperty;
+	}
 
     /// <summary>
     /// Map the struct property <typeparamref name="TProperty"/> of the result <typeparamref name="TResult"/>
@@ -54,6 +65,17 @@ public abstract class PropertyBuilder<TParameters, TResult>
     /// </summary>
     /// <param name="property">Expression to get type of the specified property of <typeparamref name="TResult"/></param>
     public StructProperty<TParameters, TProperty> StructProperty<TProperty>(Func<TResult, TProperty> property)
+		where TProperty : struct
+	{
+		var structProperty = new StructProperty<TParameters, TProperty>(_parameters);
+		_properties.Add(structProperty);
+		return structProperty;
+	}
+    
+	/// <summary>
+	/// Map the struct property <typeparamref name="TProperty"/> of the result <typeparamref name="TResult"/>
+	/// </summary>
+	public StructProperty<TParameters, TProperty> StructProperty<TProperty>()
 		where TProperty : struct
 	{
 		var structProperty = new StructProperty<TParameters, TProperty>(_parameters);
@@ -84,12 +106,34 @@ public abstract class PropertyBuilder<TParameters, TResult>
 		_properties.Add(enumProperty);
 		return enumProperty;
 	}
+    
+	/// <summary>
+	/// Map the enum property <typeparamref name="TProperty"/> of the result <typeparamref name="TResult"/>
+	/// </summary>
+	public EnumProperty<TParameters, TProperty> EnumProperty<TProperty>()
+		where TProperty : struct
+	{
+		var enumProperty = new EnumProperty<TParameters, TProperty>(_parameters);
+		_properties.Add(enumProperty);
+		return enumProperty;
+	}
 
     /// <summary>
     /// Map the list property <typeparamref name="TProperty"/> of the result <typeparamref name="TResult"/>
     /// </summary>
     /// <param name="property">Expression to get type of the specified property of <typeparamref name="TResult"/></param>
     public ListProperty<TParameters, TProperty> ListProperty<TProperty>(Func<TResult, IEnumerable<TProperty>?> property)
+		where TProperty : notnull
+	{
+		var classListProperty = new ListProperty<TParameters, TProperty>(_parameters);
+		_properties.Add(classListProperty);
+		return classListProperty;
+	}
+    
+	/// <summary>
+	/// Map the list property <typeparamref name="TProperty"/> of the result <typeparamref name="TResult"/>
+	/// </summary>
+	public ListProperty<TParameters, TProperty> ListProperty<TProperty>()
 		where TProperty : notnull
 	{
 		var classListProperty = new ListProperty<TParameters, TProperty>(_parameters);
