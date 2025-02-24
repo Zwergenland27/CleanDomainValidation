@@ -26,7 +26,7 @@ public sealed class CanFail<TResult> : AbstractCanFail, ICanFail<TResult>
 	{
 		get
 		{
-			if (HasFailed) throw new ValueInvalidException();
+			if (HasFailed) throw new ValueInvalidException(Errors);
 			if (!_valueSet) throw new ValueNotSetException();
 			return _value;
 		}

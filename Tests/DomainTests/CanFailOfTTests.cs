@@ -166,6 +166,19 @@ public class CanFailOfTTests
 	}
 
 	[Fact]
+	public void ValueGet_InvalidException_Should_Contain_ErrorCodes()
+	{
+		//Arrange
+		CanFail<string> result = new();
+		result.Failed(_exampleError);
+		
+		//Act & Assert
+		result.Invoking(r => r.Value)
+			.Should().Throw<ValueInvalidException>()
+			.Where(e => e.Message.Contains(_exampleError.Code));
+	}
+
+	[Fact]
 	public void Succeeded_Should_SetValue_When_NoErrorsOccured()
 	{
 		//Arrange

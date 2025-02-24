@@ -8,5 +8,20 @@ public class ValueInvalidException : InvalidOperationException
 	/// <summary>
 	/// Initializes a new instance of <see cref="ValueNotSetException"/>
 	/// </summary>
-	public ValueInvalidException() : base("The value of the result is invalid since more then one error occured") { }
+	public ValueInvalidException(IEnumerable<Error> occuredErrors) : base(
+		"The value of the result cannot be accessed because following error(s) occured:\n" +
+		$"{ListAllErrorCodes(occuredErrors)}\n" +
+		"") { }
+
+	private static string ListAllErrorCodes(IEnumerable<Error> errors)
+	{
+		var result = "";
+
+		foreach (var error in errors)
+		{
+			result += error.Code + "\n";
+		}
+		
+		return result;
+	}
 }
