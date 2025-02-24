@@ -28,11 +28,15 @@ public static class ComplexMapExtensions
 		TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
 		if (builderParameters is null)
 		{
+			property.NamingStack.Pop();
 			return null;
 		}
 
-		var builder = new OptionalClassPropertyBuilder<TPropertyParameters, TProperty>(builderParameters);
+		var builder = new OptionalClassPropertyBuilder<TPropertyParameters, TProperty>(builderParameters, property.NamingStack);
 		var buildResult = propertyBuilder.Invoke(builder).Build();
+		
+		property.NamingStack.Pop();
+		
 		if (buildResult.HasFailed)
 		{
 			property.ValidationResult.InheritFailure(buildResult);
@@ -59,11 +63,15 @@ public static class ComplexMapExtensions
 		TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
 		if (builderParameters is null)
 		{
+			property.NamingStack.Pop();
 			return null;
 		}
 
-		var builder = new OptionalClassPropertyBuilder<TPropertyParameters, TProperty>(builderParameters.Value);
+		var builder = new OptionalClassPropertyBuilder<TPropertyParameters, TProperty>(builderParameters.Value, property.NamingStack);
 		var buildResult = propertyBuilder.Invoke(builder).Build();
+		
+		property.NamingStack.Pop();
+		
 		if (buildResult.HasFailed)
 		{
 			property.ValidationResult.InheritFailure(buildResult);
@@ -91,17 +99,21 @@ public static class ComplexMapExtensions
 		if (builderParameters is null)
 		{
 			property.ValidationResult.Failed(property.MissingError);
+			property.NamingStack.Pop();
 			return null!;
 		}
 
-		var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(builderParameters);
+		var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(builderParameters, property.NamingStack);
 		var buildResult = propertyBuilder.Invoke(builder).Build();
+		
+		property.NamingStack.Pop();
+		
 		if (buildResult.HasFailed)
 		{
 			property.ValidationResult.InheritFailure(buildResult);
 			return null!;
 		}
-
+		
 		return buildResult.Value;
 	}
 
@@ -123,11 +135,15 @@ public static class ComplexMapExtensions
 		if (builderParameters is null)
 		{
 			property.ValidationResult.Failed(property.MissingError);
+			property.NamingStack.Pop();
 			return null!;
 		}
 
-		var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(builderParameters.Value);
+		var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(builderParameters.Value, property.NamingStack);
 		var buildResult = propertyBuilder.Invoke(builder).Build();
+		
+		property.NamingStack.Pop();
+		
 		if (buildResult.HasFailed)
 		{
 			property.ValidationResult.InheritFailure(buildResult);
@@ -150,15 +166,19 @@ public static class ComplexMapExtensions
 		where TParameters : notnull
 		where TProperty : class
 		where TPropertyParameters: class
-	{
-		TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
+    {
+	    TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
 		if (builderParameters is null)
 		{
+			property.NamingStack.Pop();
 			return property.DefaultValue;
 		}
 
-		var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(builderParameters);
+		var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(builderParameters, property.NamingStack);
 		var buildResult = propertyBuilder.Invoke(builder).Build();
+		
+		property.NamingStack.Pop();
+		
 		if (buildResult.HasFailed)
 		{
 			property.ValidationResult.InheritFailure(buildResult);
@@ -185,11 +205,15 @@ public static class ComplexMapExtensions
 		TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
 		if (builderParameters is null)
 		{
+			property.NamingStack.Pop();
 			return property.DefaultValue;
 		}
 
-		var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(builderParameters.Value);
+		var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(builderParameters.Value, property.NamingStack);
 		var buildResult = propertyBuilder.Invoke(builder).Build();
+		
+		property.NamingStack.Pop();
+		
 		if (buildResult.HasFailed)
 		{
 			property.ValidationResult.InheritFailure(buildResult);
@@ -220,11 +244,15 @@ public static class ComplexMapExtensions
 		TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
 		if (builderParameters is null)
 		{
+			property.NamingStack.Pop();
 			return null;
 		}
 
-		var builder = new OptionalStructPropertyBuilder<TPropertyParameters, TProperty>(builderParameters);
+		var builder = new OptionalStructPropertyBuilder<TPropertyParameters, TProperty>(builderParameters, property.NamingStack);
 		var buildResult = propertyBuilder.Invoke(builder).Build();
+		
+		property.NamingStack.Pop();
+		
 		if (buildResult.HasFailed)
 		{
 			property.ValidationResult.InheritFailure(buildResult);
@@ -251,11 +279,15 @@ public static class ComplexMapExtensions
 		TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
 		if (builderParameters is null)
 		{
+			property.NamingStack.Pop();
 			return null;
 		}
 
-		var builder = new OptionalStructPropertyBuilder<TPropertyParameters, TProperty>(builderParameters.Value);
+		var builder = new OptionalStructPropertyBuilder<TPropertyParameters, TProperty>(builderParameters.Value, property.NamingStack);
 		var buildResult = propertyBuilder.Invoke(builder).Build();
+		
+		property.NamingStack.Pop();
+		
 		if (buildResult.HasFailed)
 		{
 			property.ValidationResult.InheritFailure(buildResult);
@@ -283,11 +315,15 @@ public static class ComplexMapExtensions
 		if (builderParameters is null)
 		{
 			property.ValidationResult.Failed(property.MissingError);
+			property.NamingStack.Pop();
 			return default;
 		}
 
-		var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(builderParameters);
+		var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(builderParameters, property.NamingStack);
 		var buildResult = propertyBuilder.Invoke(builder).Build();
+		
+		property.NamingStack.Pop();
+		
 		if (buildResult.HasFailed)
 		{
 			property.ValidationResult.InheritFailure(buildResult);
@@ -315,11 +351,15 @@ public static class ComplexMapExtensions
 		if (builderParameters is null)
 		{
 			property.ValidationResult.Failed(property.MissingError);
+			property.NamingStack.Pop();
 			return default;
 		}
 
-		var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(builderParameters.Value);
+		var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(builderParameters.Value, property.NamingStack);
 		var buildResult = propertyBuilder.Invoke(builder).Build();
+		
+		property.NamingStack.Pop();
+		
 		if (buildResult.HasFailed)
 		{
 			property.ValidationResult.InheritFailure(buildResult);
@@ -346,11 +386,15 @@ public static class ComplexMapExtensions
 		TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
 		if (builderParameters is null)
 		{
+			property.NamingStack.Pop();
 			return property.DefaultValue;
 		}
 
-		var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(builderParameters);
+		var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(builderParameters, property.NamingStack);
 		var buildResult = propertyBuilder.Invoke(builder).Build();
+		
+		property.NamingStack.Pop();
+		
 		if (buildResult.HasFailed)
 		{
 			property.ValidationResult.InheritFailure(buildResult);
@@ -377,11 +421,15 @@ public static class ComplexMapExtensions
 		TPropertyParameters? builderParameters = propertyParameters.Invoke(property.Parameters);
 		if (builderParameters is null)
 		{
+			property.NamingStack.Pop();
 			return property.DefaultValue;
 		}
 
-		var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(builderParameters.Value);
+		var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(builderParameters.Value, property.NamingStack);
 		var buildResult = propertyBuilder.Invoke(builder).Build();
+		
+		property.NamingStack.Pop();
+		
 		if (buildResult.HasFailed)
 		{
 			property.ValidationResult.InheritFailure(buildResult);
@@ -412,14 +460,22 @@ public static class ComplexMapExtensions
 		IEnumerable<TPropertyParameters>? builderParameters = propertyParameters.Invoke(property.Parameters);
 		if (builderParameters is null)
 		{
+			property.NamingStack.Pop();
 			return null;
 		}
 
 		List<TProperty> resultProperties = [];
+		int listIndex = 0;
 		foreach(var rawProperty in builderParameters)
 		{
-			var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(rawProperty);
+			property.NamingStack.PushIndex(listIndex);
+			listIndex++;
+			
+			var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(rawProperty, property.NamingStack);
 			var buildResult = propertyBuilder.Invoke(builder).Build();
+			
+			property.NamingStack.Pop();
+			
 			if (buildResult.HasFailed)
 			{
 				property.ValidationResult.InheritFailure(buildResult);
@@ -427,6 +483,8 @@ public static class ComplexMapExtensions
 			}
 			resultProperties.Add(buildResult.Value);
 		}
+		
+		property.NamingStack.Pop();
 		return resultProperties;
 	}
 
@@ -448,14 +506,22 @@ public static class ComplexMapExtensions
 		if (builderParameters is null)
 		{
 			property.ValidationResult.Failed(property.MissingError);
+			property.NamingStack.Pop();
 			return null!;
 		}
 
 		List<TProperty> resultProperties = [];
+		int listIndex = 0;
 		foreach (var rawProperty in builderParameters)
 		{
-			var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(rawProperty);
+			property.NamingStack.PushIndex(listIndex);
+			listIndex++;
+			
+			var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(rawProperty, property.NamingStack);
 			var buildResult = propertyBuilder.Invoke(builder).Build();
+			
+			property.NamingStack.Pop();
+			
 			if (buildResult.HasFailed)
 			{
 				property.ValidationResult.InheritFailure(buildResult);
@@ -463,6 +529,8 @@ public static class ComplexMapExtensions
 			}
 			resultProperties.Add(buildResult.Value);
 		}
+		
+		property.NamingStack.Pop();
 		return resultProperties;
 	}
     
@@ -483,14 +551,22 @@ public static class ComplexMapExtensions
 		IEnumerable<TPropertyParameters>? builderParameters = propertyParameters.Invoke(property.Parameters);
 		if (builderParameters is null)
 		{
+			property.NamingStack.Pop();
 			return property.DefaultList;
 		}
 
 		List<TProperty> resultProperties = [];
+		int listIndex = 0;
 		foreach (var rawProperty in builderParameters)
 		{
-			var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(rawProperty);
+			property.NamingStack.PushIndex(listIndex);
+			listIndex++;
+			
+			var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(rawProperty, property.NamingStack);
 			var buildResult = propertyBuilder.Invoke(builder).Build();
+			
+			property.NamingStack.Pop();
+			
 			if (buildResult.HasFailed)
 			{
 				property.ValidationResult.InheritFailure(buildResult);
@@ -498,6 +574,8 @@ public static class ComplexMapExtensions
 			}
 			resultProperties.Add(buildResult.Value);
 		}
+		
+		property.NamingStack.Pop();
 		return resultProperties;
 	}
 

@@ -10,10 +10,12 @@ public sealed class OptionalStructProperty<TParameters, TProperty> : Validatable
     where TProperty : struct
 {
     internal TParameters Parameters { get; }
+    internal NamingStack NamingStack { get; }
     internal override CanFail ValidationResult { get; } = new();
 
-    internal OptionalStructProperty(TParameters parameters)
+    internal OptionalStructProperty(TParameters parameters, NamingStack namingStack)
     {
         Parameters = parameters;
+        NamingStack = namingStack;
     }
 }

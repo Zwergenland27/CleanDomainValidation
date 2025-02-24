@@ -9,7 +9,7 @@ public sealed class OptionalClassPropertyBuilder<TParameters, TResult> : Propert
 	where TParameters : notnull
 	where TResult : class
 {
-	internal OptionalClassPropertyBuilder(TParameters parameters) : base(parameters) { }
+	internal OptionalClassPropertyBuilder(TParameters parameters, NamingStack namingStack) : base(parameters, namingStack) { }
 
     /// <summary>
     /// Create an instance of <typeparamref name="TResult"/> using the provided creation method

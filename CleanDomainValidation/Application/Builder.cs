@@ -10,16 +10,31 @@ namespace CleanDomainValidation.Application;
 public class Builder<TRequest>
 	where TRequest : IRequest
 {
-	private Builder() { }
+	private readonly string _prefix;
 
+	private Builder(string prefix)
+	{
+		_prefix = prefix;
+	}
+
+	/// <summary>
+	/// Sets the name that will prefix the automatically generated error messages
+	/// </summary>
+	/// <param name="name">Unique name of the endpoint</param>
+	/// <example>User.ChangeName</example>
+	public static Builder<TRequest> WithName(string name)
+	{
+		return new Builder<TRequest>(name);
+	}
+	
 	/// <summary>
 	/// Adds the unvalidated parameter object of type <typeparamref name="TParameters"/> to the builder
 	/// </summary>
 	/// <returns>Instance for a builder that maps parameters <typeparamref name="TParameters"/> to the request <typeparamref name="TRequest"/></returns>
-	public static Builder<TParameters, TRequest> BindParameters<TParameters>(TParameters parameters)
+	public Builder<TParameters, TRequest> BindParameters<TParameters>(TParameters parameters)
 		where TParameters : IParameters
 	{
-		return new Builder<TParameters, TRequest>(parameters);
+		return new Builder<TParameters, TRequest>(parameters, _prefix);
 	}
 }
 
@@ -31,9 +46,11 @@ public sealed class Builder<TParameters, TRequest>
 	where TRequest : IRequest
 {
 	private readonly TParameters _parameters;
-	internal Builder(TParameters parameters)
+	private readonly string _prefix;
+	internal Builder(TParameters parameters, string prefix)
 	{
 		_parameters = parameters;
+		_prefix = prefix;
 	}
 
 	/// <summary>
@@ -57,6 +74,7 @@ public sealed class Builder<TParameters, TRequest>
 		where TRequestBuilder : IRequestBuilder<TParameters, TRequest>, new()
 	{
 		TRequestBuilder builder = new();
-		return builder.Configure(new RequiredPropertyBuilder<TParameters, TRequest>(_parameters)).Build();
+		var namingStack = new NamingStack(_prefix);
+		return builder.Configure(new RequiredPropertyBuilder<TParameters, TRequest>(_parameters, namingStack)).Build();
 	}
 }

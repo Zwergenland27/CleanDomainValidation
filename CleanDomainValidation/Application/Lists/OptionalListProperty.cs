@@ -10,10 +10,12 @@ public sealed class OptionalListProperty<TParameters, TProperty> : ValidatablePr
 	where TProperty : notnull
 {
 	internal TParameters Parameters { get; }
+	internal NamingStack NamingStack { get; }
 	internal override CanFail ValidationResult { get; } = new();
 
-	internal OptionalListProperty(TParameters parameters)
+	internal OptionalListProperty(TParameters parameters, NamingStack namingStack)
 	{
 		Parameters = parameters;
+		NamingStack = namingStack;
 	}
 }

@@ -9,15 +9,15 @@ public class RequiredClassWithDefaultProperty<TParameters, TProperty> : Validata
     where TParameters : notnull
     where TProperty : class
 {
-    
     internal TParameters Parameters { get; }
-    
     internal TProperty DefaultValue { get; }
+    internal NamingStack NamingStack { get; }
     internal override CanFail ValidationResult { get; } = new();
 
-    internal RequiredClassWithDefaultProperty(TParameters parameters, TProperty defaultValue)
+    internal RequiredClassWithDefaultProperty(TParameters parameters, TProperty defaultValue, NamingStack namingStack)
     {
         Parameters = parameters;
+        NamingStack = namingStack;
         DefaultValue = defaultValue;
     }
 }
