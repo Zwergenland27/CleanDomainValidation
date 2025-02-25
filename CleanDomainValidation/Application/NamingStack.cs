@@ -25,9 +25,9 @@ public class NamingStack
         _propertyNamesStack.Push(new IndexEntry(index));
     }
 
-    internal void Pop()
+    internal INameStackEntry Pop()
     {
-        _propertyNamesStack.Pop();
+        return _propertyNamesStack.Pop();
     }
 
     private string GenerateErrorCode()
