@@ -1,6 +1,5 @@
 ﻿using CleanDomainValidation.Domain;
-using FluentAssertions;
-using Xunit.Sdk;
+using Shouldly;
 
 namespace Tests.DomainTests;
 
@@ -11,8 +10,8 @@ public class ErrorTests
 
 	private static void ValidateError(Error error)
 	{
-		error.Code.Should().Be(_exampleCode);
-		error.Message.Should().Be(_exampleMessage);
+		error.Code.ShouldBe(_exampleCode);
+		error.Message.ShouldBe(_exampleMessage);
 	}
 
 	[Fact]
@@ -22,7 +21,7 @@ public class ErrorTests
 		Error error = Error.Conflict(_exampleCode, _exampleMessage);
 
 		//Assert
-		error.Type.Should().Be(ErrorType.Conflict);
+		error.Type.ShouldBe(ErrorType.Conflict);
 	}
 
 	[Fact]
@@ -42,7 +41,7 @@ public class ErrorTests
 		Error error = Error.NotFound(_exampleCode, _exampleMessage);
 
 		//Assert
-		error.Type.Should().Be(ErrorType.NotFound);
+		error.Type.ShouldBe(ErrorType.NotFound);
 	}
 
 	[Fact]
@@ -62,7 +61,7 @@ public class ErrorTests
 		Error error = Error.Validation(_exampleCode, _exampleMessage);
 
 		//Assert
-		error.Type.Should().Be(ErrorType.Validation);
+		error.Type.ShouldBe(ErrorType.Validation);
 	}
 
 	[Fact]
@@ -82,7 +81,7 @@ public class ErrorTests
 		Error error = Error.Forbidden(_exampleCode, _exampleMessage);
 
 		//Assert
-		error.Type.Should().Be(ErrorType.Forbidden);
+		error.Type.ShouldBe(ErrorType.Forbidden);
 	}
 
 	[Fact]

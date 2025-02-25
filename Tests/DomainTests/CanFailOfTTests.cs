@@ -1,5 +1,5 @@
 ﻿using CleanDomainValidation.Domain;
-using FluentAssertions;
+using Shouldly;
 
 namespace Tests.DomainTests;
 
@@ -16,8 +16,8 @@ public class CanFailOfTTests
 		CanFail<string> result = new();
 
 		//Assert
-		result.HasFailed.Should().BeFalse();
-		result.Type.Should().Be(FailureType.None);
+		result.HasFailed.ShouldBeFalse();
+		result.Type.ShouldBe(FailureType.None);
 	}
 
 	[Fact]
@@ -27,9 +27,7 @@ public class CanFailOfTTests
 		CanFail<string> result = new();
 
 		//Act & Assert
-		result.Invoking(r => r.Errors)
-			.Should()
-			.Throw<NoErrorsOccuredException>();
+		Should.Throw<NoErrorsOccuredException>(() => result.Errors);
 	}
 
 	[Fact]
@@ -42,8 +40,9 @@ public class CanFailOfTTests
 		result.Failed(_exampleError);
 
 		//Assert
-		result.Errors.Should().ContainSingle().Which.Should().Be(_exampleError);
-		result.HasFailed.Should().BeTrue();
+		result.Errors.Count.ShouldBe(1);
+		result.Errors.ShouldContain(_exampleError);
+		result.HasFailed.ShouldBeTrue();
 	}
 
 	[Fact]
@@ -56,7 +55,7 @@ public class CanFailOfTTests
 		result.Failed(_exampleError);
 
 		//Assert
-		result.Type.Should().Be(FailureType.One);
+		result.Type.ShouldBe(FailureType.One);
 	}
 
 	[Fact]
@@ -70,7 +69,7 @@ public class CanFailOfTTests
 		result.Failed(_exampleError);
 
 		//Assert
-		result.Type.Should().Be(FailureType.Many);
+		result.Type.ShouldBe(FailureType.Many);
 	}
 
 	[Fact]
@@ -85,7 +84,7 @@ public class CanFailOfTTests
 		result.Failed(differentError);
 
 		//Assert
-		result.Type.Should().Be(FailureType.ManyDifferent);
+		result.Type.ShouldBe(FailureType.ManyDifferent);
 	}
 
 	[Fact]
@@ -99,7 +98,7 @@ public class CanFailOfTTests
 		result.InheritFailure(resultOne);
 
 		//Assert
-		result.HasFailed.Should().BeFalse();
+		result.HasFailed.ShouldBeFalse();
 	}
 
 	[Fact]
@@ -115,8 +114,9 @@ public class CanFailOfTTests
 		result.InheritFailure(resultOne);
 
 		//Assert
-		result.Errors.Should().ContainSingle().Which.Should().Be(_exampleError);
-		result.HasFailed.Should().BeTrue();
+		result.Errors.Count.ShouldBe(1);
+		result.Errors.ShouldContain(_exampleError);
+		result.HasFailed.ShouldBeTrue();
 	}
 
 	[Fact]
@@ -134,10 +134,10 @@ public class CanFailOfTTests
 		result.InheritFailure(resultOne);
 
 		//Assert
-		result.Errors.Count.Should().Be(2);
-		result.Errors.Should().Contain(_exampleError);
-		result.Errors.Should().Contain(differentError);
-		result.HasFailed.Should().BeTrue();
+		result.Errors.Count.ShouldBe(2);
+		result.Errors.ShouldContain(_exampleError);
+		result.Errors.ShouldContain(differentError);
+		result.HasFailed.ShouldBeTrue();
 	}
 
 	#endregion
@@ -149,8 +149,7 @@ public class CanFailOfTTests
 		CanFail<string> result = new();
 
 		//Act & Assert
-		result.Invoking(r => r.Value)
-			.Should().Throw<ValueNotSetException>();
+		Should.Throw<ValueNotSetException>(() => result.Value);
 	}
 
 	[Fact]
@@ -161,8 +160,7 @@ public class CanFailOfTTests
 		result.Failed(_exampleError);
 
 		//Act & Assert
-		result.Invoking(r => r.Value)
-			.Should().Throw<ValueInvalidException>();
+		Should.Throw<ValueInvalidException>(() => result.Value);
 	}
 
 	[Fact]
@@ -173,9 +171,8 @@ public class CanFailOfTTests
 		result.Failed(_exampleError);
 		
 		//Act & Assert
-		result.Invoking(r => r.Value)
-			.Should().Throw<ValueInvalidException>()
-			.Where(e => e.Message.Contains(_exampleError.Code));
+		Should.Throw<ValueInvalidException>(() => result.Value)
+			.Message.ShouldContain(_exampleError.Code);
 	}
 
 	[Fact]
@@ -189,8 +186,8 @@ public class CanFailOfTTests
 		result.Succeeded(value);
 
 		//Assert
-		result.HasFailed.Should().BeFalse();
-		result.Value.Should().Be(value);
+		result.HasFailed.ShouldBeFalse();
+		result.Value.ShouldBe(value);
 
 	}
 
@@ -204,8 +201,8 @@ public class CanFailOfTTests
 		CanFail<string> result = CanFail<string>.Success(value);
 
 		//Assert
-		result.HasFailed.Should().BeFalse();
-		result.Value.Should().Be(value);
+		result.HasFailed.ShouldBeFalse();
+		result.Value.ShouldBe(value);
 	}
 
 	[Fact]
@@ -215,7 +212,8 @@ public class CanFailOfTTests
 		CanFail<string> result = CanFail<string>.FromError(_exampleError);
 
 		//Assert
-		result.Errors.Should().ContainSingle().Which.Should().Be(_exampleError);
+		result.Errors.Count.ShouldBe(1);
+		result.Errors.ShouldContain(_exampleError);
 	}
 
 	[Fact]
@@ -229,7 +227,8 @@ public class CanFailOfTTests
 		CanFail<string> result = CanFail<string>.FromErrors(resultOne.Errors);
 
 		//Assert
-		result.Errors.Should().ContainSingle().Which.Should().Be(_exampleError);
+		result.Errors.Count.ShouldBe(1);
+		result.Errors.ShouldContain(_exampleError);
 	}
 
 	[Fact]
@@ -239,7 +238,8 @@ public class CanFailOfTTests
 		CanFail<string> result = _exampleError;
 
 		//Assert
-		result.Errors.Should().ContainSingle().Which.Should().Be(_exampleError);
+		result.Errors.Count.ShouldBe(1);
+		result.Errors.ShouldContain(_exampleError);
 	}
 
 	[Fact]
@@ -252,8 +252,8 @@ public class CanFailOfTTests
 		CanFail<string> result = value;
 
 		//Assert
-		result.HasFailed.Should().BeFalse();
-		result.Value.Should().Be(value);
+		result.HasFailed.ShouldBeFalse();
+		result.Value.ShouldBe(value);
 	}
 
 	[Fact]
@@ -267,6 +267,7 @@ public class CanFailOfTTests
 		CanFail<string> result = resultOne.Errors;
 
 		//Assert
-		result.Errors.Should().ContainSingle().Which.Should().Be(_exampleError);
+		result.Errors.Count.ShouldBe(1);
+		result.Errors.ShouldContain(_exampleError);
 	}
 }
