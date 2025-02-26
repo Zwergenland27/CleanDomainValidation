@@ -2,7 +2,7 @@
 using CleanDomainValidation.Application.Classes;
 using CleanDomainValidation.Application.Extensions;
 using CleanDomainValidation.Domain;
-using FluentAssertions;
+using Shouldly;
 
 namespace Tests.ApplicationTests.Classes;
 
@@ -12,7 +12,7 @@ public record RClassValueObject(string Value)
 {
 	public static CanFail<RClassValueObject> Create(string value)
 	{
-		if (value == "error") return Error.Validation("Validation.Error", "An error occured");
+		if (value == Helpers.ErrorStringValue) return Helpers.ExampleValidationError;
 		return new RClassValueObject(value);
 	}
 }
@@ -22,45 +22,64 @@ public record RStructValueObject(int Value)
 {
 	public static CanFail<RStructValueObject> Create(int value)
 	{
-		if (value == 9) return Error.Validation("Validation.Error", "An error occured");
+		if (value == Helpers.ErrorIntValue) return Helpers.ExampleValidationError;
 		return new RStructValueObject(value);
 	}
 }
 
 public class RequiredClassTests
 {
-	private static Error _missing => Error.Validation("Error.Missing", "The value is missing");
-
 	#region Direct Mapped
 
 	[Fact]
 	public void DirectMap_ShouldReturnValue_WhenValueNotNull()
 	{
 		//Arrange
-		var value = "value";
+		var value = Helpers.ExampleStringValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RClassParameter(value);
-		var property = new RequiredClassProperty<RClassParameter, string>(parameters, _missing);
+		var property = new RequiredClassProperty<RClassParameter, string>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		var validatedProperty = property.Map(p => p.Value);
 
 		//Assert
-		validatedProperty.Should().Be(value);
+		validatedProperty.ShouldBe(value);
 	}
 
 	[Fact]
 	public void DirectMap_ShouldNotSetErrors_WhenValueNotNull()
 	{
 		//Arrange
-		var value = "value";
+		var value = Helpers.ExampleStringValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RClassParameter(value);
-		var property = new RequiredClassProperty<RClassParameter, string>(parameters, _missing);
+		var property = new RequiredClassProperty<RClassParameter, string>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		_ = property.Map(p => p.Value);
 
 		//Assert
-		property.ValidationResult.HasFailed.Should().BeFalse();
+		property.ValidationResult.HasFailed.ShouldBeFalse();
+	}
+	
+	[Fact]
+	public void DirectMap_ShouldRemoveNameFromNameStack_WhenValueNotNull()
+	{
+		//Arrange
+		var value = Helpers.ExampleStringValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var parameters = new RClassParameter(value);
+		var property = new RequiredClassProperty<RClassParameter, string>(parameters, Helpers.ExampleMissingError, nameStack);
+
+		//Act
+		_ = property.Map(p => p.Value);
+
+		//Assert
+		nameStack.ShouldNotContainPropertyName(new PropertyNameEntry(Helpers.PropertyName));
 	}
 
 	[Fact]
@@ -68,13 +87,15 @@ public class RequiredClassTests
 	{
 		//Arrange
 		var parameters = new RClassParameter(null);
-		var property = new RequiredClassProperty<RClassParameter, string>(parameters, _missing);
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var property = new RequiredClassProperty<RClassParameter, string>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		var validatedProperty = property.Map(p => p.Value);
 
 		//Assert
-		validatedProperty.Should().Be(null);
+		validatedProperty.ShouldBe(null);
 	}
 
 	[Fact]
@@ -82,14 +103,32 @@ public class RequiredClassTests
 	{
 		//Arrange
 		var parameters = new RClassParameter(null);
-		var property = new RequiredClassProperty<RClassParameter, string>(parameters, _missing);
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var property = new RequiredClassProperty<RClassParameter, string>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		_ = property.Map(p => p.Value);
 
 		//Assert
-		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missing);
+		property.ValidationResult.Errors.Count.ShouldBe(1);
+		property.ValidationResult.Errors.ShouldContain(Helpers.ExampleMissingError);
+	}
+	
+	[Fact]
+	public void DirectMap_ShouldRemoveNameFromNameStack_WhenValueNull()
+	{
+		//Arrange
+		var parameters = new RClassParameter(null);
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var property = new RequiredClassProperty<RClassParameter, string>(parameters, Helpers.ExampleMissingError, nameStack);
+
+		//Act
+		_ = property.Map(p => p.Value);
+
+		//Assert
+		nameStack.ShouldNotContainPropertyName(new PropertyNameEntry(Helpers.PropertyName));
 	}
 
 	#endregion
@@ -100,122 +139,206 @@ public class RequiredClassTests
 	public void FactoryMapClass_ShouldReturnValueObject_WhenValueNotNull()
 	{
 		//Arrange
-		var value = "value";
+		var value = Helpers.ExampleStringValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RClassParameter(value);
-		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		var validatedValue = property.Map(p => p.Value, RClassValueObject.Create);
 
 		//Assert
-		validatedValue.Should().Be(new RClassValueObject(value));
+		validatedValue.ShouldBe(new RClassValueObject(value));
 	}
 
 	[Fact]
 	public void FactoryMapStruct_ShouldReturnValueObject_WhenValueNotNull()
 	{
 		//Arrange
-		var value = 1;
+		var value = Helpers.ExampleIntValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RStructParameter(value);
-		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		var validatedValue = property.Map(p => p.Value, RStructValueObject.Create);
 
 		//Assert
-		validatedValue.Should().Be(new RStructValueObject(value));
+		validatedValue.ShouldBe(new RStructValueObject(value));
 	}
 
 	[Fact]
 	public void FactoryMapClass_ShouldNotSetErrors_WhenValueNotNull()
 	{
 		//Arrange
-		var value = "value";
+		var value = Helpers.ExampleStringValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RClassParameter(value);
-		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		_ = property.Map(p => p.Value, RClassValueObject.Create);
 
 		//Assert
-		property.ValidationResult.HasFailed.Should().BeFalse();
+		property.ValidationResult.HasFailed.ShouldBeFalse();
 	}
 
 	[Fact]
 	public void FactoryMapStruct_ShouldNotSetErrors_WhenValueNotNull()
 	{
 		//Arrange
-		var value = 1;
+		var value = Helpers.ExampleIntValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RStructParameter(value);
-		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		_ = property.Map(p => p.Value, RStructValueObject.Create);
 
 		//Assert
-		property.ValidationResult.HasFailed.Should().BeFalse();
+		property.ValidationResult.HasFailed.ShouldBeFalse();
+	}
+	
+	[Fact]
+	public void FactoryMapClass_ShouldRemoveNameFromNameStack_WhenValueNotNull()
+	{
+		//Arrange
+		var value = Helpers.ExampleStringValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var parameters = new RClassParameter(value);
+		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
+
+		//Act
+		_ = property.Map(p => p.Value, RClassValueObject.Create);
+
+		//Assert
+		nameStack.ShouldNotContainPropertyName(new PropertyNameEntry(Helpers.PropertyName));
+	}
+
+	[Fact]
+	public void FactoryMapStruct_ShouldRemoveNameFromNameStack_WhenValueNotNull()
+	{
+		//Arrange
+		var value = Helpers.ExampleIntValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var parameters = new RStructParameter(value);
+		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
+
+		//Act
+		_ = property.Map(p => p.Value, RStructValueObject.Create);
+
+		//Assert
+		nameStack.ShouldNotContainPropertyName(new PropertyNameEntry(Helpers.PropertyName));
 	}
 
 	[Fact]
 	public void FactoryMapClass_ShouldReturnNull_WhenValueNotNullAndCreationFailed()
 	{
 		//Arrange
-		var value = "error";
+		var value = Helpers.ErrorStringValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RClassParameter(value);
-		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		var validatedProperty = property.Map(p => p.Value, RClassValueObject.Create);
 
 		//Assert
-		validatedProperty.Should().Be(null);
+		validatedProperty.ShouldBe(null);
 	}
 
 	[Fact]
 	public void FactoryMapStruct_ShouldReturnNull_WhenValueNotNullAndCreationFailed()
 	{
 		//Arrange
-		var value = 9;
+		var value = Helpers.ErrorIntValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RStructParameter(value);
-		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		var validatedProperty = property.Map(p => p.Value, RStructValueObject.Create);
 
 		//Assert
-		validatedProperty.Should().Be(null);
+		validatedProperty.ShouldBe(null);
 	}
 
 	[Fact]
 	public void FactoryMapClass_ShouldSetErrors_WhenValueNotNullAndCreationFailed()
 	{
 		//Arrange
-		var value = "error";
+		var value = Helpers.ErrorStringValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RClassParameter(value);
-		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		_ = property.Map(p => p.Value, RClassValueObject.Create);
 
 		//Assert
-		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(Error.Validation("Validation.Error", "An error occured"));
+		property.ValidationResult.Errors.Count.ShouldBe(1);
+		property.ValidationResult.Errors.ShouldContain(Helpers.ExampleValidationError);
 	}
 
 	[Fact]
 	public void FactoryMapStruct_ShouldSetErrors_WhenValueNotNullAndCreationFailed()
 	{
 		//Arrange
-		var value = 9;
+		var value = Helpers.ErrorIntValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RStructParameter(value);
-		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		_ = property.Map(p => p.Value, RStructValueObject.Create);
 
 		//Assert
-		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(Error.Validation("Validation.Error", "An error occured"));
+		property.ValidationResult.Errors.Count.ShouldBe(1);
+		property.ValidationResult.Errors.ShouldContain(Helpers.ExampleValidationError);
+	}
+	
+	[Fact]
+	public void FactoryMapClass_ShouldRemoveNameFromNameStack_WhenValueNotNullAndCreationFailed()
+	{
+		//Arrange
+		var value = Helpers.ErrorStringValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var parameters = new RClassParameter(value);
+		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
+
+		//Act
+		_ = property.Map(p => p.Value, RClassValueObject.Create);
+
+		//Assert
+		nameStack.ShouldNotContainPropertyName(new PropertyNameEntry(Helpers.PropertyName));
+	}
+
+	[Fact]
+	public void FactoryMapStruct_ShouldRemoveNameFromNameStack_WhenValueNotNullAndCreationFailed()
+	{
+		//Arrange
+		var value = Helpers.ErrorIntValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var parameters = new RStructParameter(value);
+		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
+
+		//Act
+		_ = property.Map(p => p.Value, RStructValueObject.Create);
+
+		//Assert
+		nameStack.ShouldNotContainPropertyName(new PropertyNameEntry(Helpers.PropertyName));
 	}
 
 	[Fact]
@@ -223,14 +346,16 @@ public class RequiredClassTests
 	{
 		//Arrange
 		var parameters = new RClassParameter(null);
-		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		var validatedProperty = property.Map(p => p.Value, RClassValueObject.Create);
 
 
 		//Assert
-		validatedProperty.Should().Be(null);
+		validatedProperty.ShouldBe(null);
 	}
 
 	[Fact]
@@ -238,14 +363,16 @@ public class RequiredClassTests
 	{
 		//Arrange
 		var parameters = new RStructParameter(null);
-		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		var validatedProperty = property.Map(p => p.Value, RStructValueObject.Create);
 
 
 		//Assert
-		validatedProperty.Should().Be(null);
+		validatedProperty.ShouldBe(null);
 	}
 
 	[Fact]
@@ -253,14 +380,16 @@ public class RequiredClassTests
 	{
 		//Arrange
 		var parameters = new RClassParameter(null);
-		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		_ = property.Map(p => p.Value, RClassValueObject.Create);
 
 		//Assert
-		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missing);
+		property.ValidationResult.Errors.Count.ShouldBe(1);
+		property.ValidationResult.Errors.ShouldContain(Helpers.ExampleMissingError);
 	}
 
 	[Fact]
@@ -268,14 +397,48 @@ public class RequiredClassTests
 	{
 		//Arrange
 		var parameters = new RStructParameter(null);
-		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		_ = property.Map(p => p.Value, RStructValueObject.Create);
 
 		//Assert
-		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missing);
+		property.ValidationResult.Errors.Count.ShouldBe(1);
+		property.ValidationResult.Errors.ShouldContain(Helpers.ExampleMissingError);
+	}
+	
+	[Fact]
+	public void FactoryMapClass_ShouldRemoveNameFromNameStack_WhenValueNull()
+	{
+		//Arrange
+		var parameters = new RClassParameter(null);
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
+
+		//Act
+		_ = property.Map(p => p.Value, RClassValueObject.Create);
+
+		//Assert
+		nameStack.ShouldNotContainPropertyName(new PropertyNameEntry(Helpers.PropertyName));
+	}
+
+	[Fact]
+	public void FactoryMapStruct_ShouldRemoveNameFromNameStack_WhenValueNull()
+	{
+		//Arrange
+		var parameters = new RStructParameter(null);
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
+
+		//Act
+		_ = property.Map(p => p.Value, RStructValueObject.Create);
+
+		//Assert
+		nameStack.ShouldNotContainPropertyName(new PropertyNameEntry(Helpers.PropertyName));
 	}
 
 	#endregion
@@ -286,60 +449,102 @@ public class RequiredClassTests
 	public void ConstructorMapClass_ShouldReturnValueObject_WhenValueNotNull()
 	{
 		//Arrange
-		var value = "value";
+		var value = Helpers.ExampleStringValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RClassParameter(value);
-		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		var validatedValue = property.Map(p => p.Value, v => new RClassValueObject(v));
 
 		//Assert
-		validatedValue.Should().Be(new RClassValueObject(value));
+		validatedValue.ShouldBe(new RClassValueObject(value));
 	}
 
 	[Fact]
 	public void ConstructorMapStruct_ShouldReturnValueObject_WhenValueNotNull()
 	{
 		//Arrange
-		var value = 1;
+		var value = Helpers.ExampleIntValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RStructParameter(value);
-		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		var validatedValue = property.Map(p => p.Value, v => new RStructValueObject(v));
 
 		//Assert
-		validatedValue.Should().Be(new RStructValueObject(value));
+		validatedValue.ShouldBe(new RStructValueObject(value));
 	}
 
 	[Fact]
 	public void ConstructorMapClass_ShouldNotSetErrors_WhenValueNotNull()
 	{
 		//Arrange
-		var value = "value";
+		var value = Helpers.ExampleStringValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RClassParameter(value);
-		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		_ = property.Map(p => p.Value, v => new RClassValueObject(v));
 
 		//Assert
-		property.ValidationResult.HasFailed.Should().BeFalse();
+		property.ValidationResult.HasFailed.ShouldBeFalse();
 	}
 
 	[Fact]
 	public void ConstructorMapStruct_ShouldNotSetErrors_WhenValueNotNull()
 	{
 		//Arrange
-		var value = 1;
+		var value = Helpers.ExampleIntValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RStructParameter(value);
-		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		_ = property.Map(p => p.Value, v => new RStructValueObject(v));
 
 		//Assert
-		property.ValidationResult.HasFailed.Should().BeFalse();
+		property.ValidationResult.HasFailed.ShouldBeFalse();
+	}
+	
+	[Fact]
+	public void ConstructorMapClass_ShouldRemoveNameFromNameStack_WhenValueNotNull()
+	{
+		//Arrange
+		var value = Helpers.ExampleStringValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var parameters = new RClassParameter(value);
+		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
+
+		//Act
+		_ = property.Map(p => p.Value, v => new RClassValueObject(v));
+
+		//Assert
+		nameStack.ShouldNotContainPropertyName(new PropertyNameEntry(Helpers.PropertyName));
+	}
+
+	[Fact]
+	public void ConstructorMapStruct_ShouldRemoveNameFromNameStacks_WhenValueNotNull()
+	{
+		//Arrange
+		var value = Helpers.ExampleIntValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var parameters = new RStructParameter(value);
+		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
+
+		//Act
+		_ = property.Map(p => p.Value, v => new RStructValueObject(v));
+
+		//Assert
+		nameStack.ShouldNotContainPropertyName(new PropertyNameEntry(Helpers.PropertyName));
 	}
 
 	[Fact]
@@ -347,13 +552,15 @@ public class RequiredClassTests
 	{
 		//Arrange
 		var parameters = new RClassParameter(null);
-		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		var validatedProperty = property.Map(p => p.Value, v => new RClassValueObject(v));
 
 		//Assert
-		validatedProperty.Should().Be(null);
+		validatedProperty.ShouldBe(null);
 	}
 
 	[Fact]
@@ -361,13 +568,15 @@ public class RequiredClassTests
 	{
 		//Arrange
 		var parameters = new RStructParameter(null);
-		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		var validatedProperty = property.Map(p => p.Value, v => new RStructValueObject(v));
 
 		//Assert
-		validatedProperty.Should().Be(null);
+		validatedProperty.ShouldBe(null);
 	}
 
 	[Fact]
@@ -375,14 +584,16 @@ public class RequiredClassTests
 	{
 		//Arrange
 		var parameters = new RClassParameter(null);
-		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		_ = property.Map(p => p.Value, v => new RClassValueObject(v));
 
 		//Assert
-		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missing);
+		property.ValidationResult.Errors.Count.ShouldBe(1);
+		property.ValidationResult.Errors.ShouldContain(Helpers.ExampleMissingError);
 	}
 
 	[Fact]
@@ -390,14 +601,48 @@ public class RequiredClassTests
 	{
 		//Arrange
 		var parameters = new RStructParameter(null);
-		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		_ = property.Map(p => p.Value, v => new RStructValueObject(v));
 
 		//Assert
-		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missing);
+		property.ValidationResult.Errors.Count.ShouldBe(1);
+		property.ValidationResult.Errors.ShouldContain(Helpers.ExampleMissingError);
+	}
+	
+	[Fact]
+	public void ConstructorMapClass_ShouldRemoveNameFromNameStack_WhenValueNull()
+	{
+		//Arrange
+		var parameters = new RClassParameter(null);
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
+
+		//Act
+		_ = property.Map(p => p.Value, v => new RClassValueObject(v));
+
+		//Assert
+		nameStack.ShouldNotContainPropertyName(new PropertyNameEntry(Helpers.PropertyName));
+	}
+
+	[Fact]
+	public void ConstructorMapStruct_ShouldRemoveNameFromNameStack_WhenValueNull()
+	{
+		//Arrange
+		var parameters = new RStructParameter(null);
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
+
+		//Act
+		_ = property.Map(p => p.Value, v => new RStructValueObject(v));
+
+		//Assert
+		nameStack.ShouldNotContainPropertyName(new PropertyNameEntry(Helpers.PropertyName));
 	}
 
 	#endregion
@@ -408,9 +653,11 @@ public class RequiredClassTests
 	public void ComplexMapClass_ShouldReturnValueObject_WhenValueNotNull()
 	{
 		//Arrange
-		var value = "value";
+		var value = Helpers.ExampleStringValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RClassParameter(value);
-		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		var validatedProperty = property.MapComplex(p => p.Value, builder =>
@@ -420,16 +667,18 @@ public class RequiredClassTests
 
 
 		//Assert
-		validatedProperty.Should().Be(new RClassValueObject(value));
+		validatedProperty.ShouldBe(new RClassValueObject(value));
 	}
 
 	[Fact]
 	public void ComplexMapStruct_ShouldReturnValueObject_WhenValueNotNull()
 	{
 		//Arrange
-		var value = 1;
+		var value = Helpers.ExampleIntValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RStructParameter(value);
-		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		var validatedProperty = property.MapComplex(p => p.Value, builder =>
@@ -438,16 +687,18 @@ public class RequiredClassTests
 		});
 
 		//Assert
-		validatedProperty.Should().Be(new RStructValueObject(value));
+		validatedProperty.ShouldBe(new RStructValueObject(value));
 	}
 
 	[Fact]
 	public void ComplexMapClass_ShouldNotSetErrors_WhenValueNotNull()
 	{
 		//Arrange
-		var value = "value";
+		var value = Helpers.ExampleStringValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RClassParameter(value);
-		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		_ = property.MapComplex(p => p.Value, builder =>
@@ -456,16 +707,18 @@ public class RequiredClassTests
 		});
 
 		//Assert
-		property.ValidationResult.HasFailed.Should().BeFalse();
+		property.ValidationResult.HasFailed.ShouldBeFalse();
 	}
 
 	[Fact]
 	public void ComplexMapStruct_ShouldNotSetErrors_WhenValueNotNull()
 	{
 		//Arrange
-		var value = 1;
+		var value = Helpers.ExampleIntValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RStructParameter(value);
-		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		_ = property.MapComplex(p => p.Value, builder =>
@@ -474,81 +727,169 @@ public class RequiredClassTests
 		});
 
 		//Assert
-		property.ValidationResult.HasFailed.Should().BeFalse();
+		property.ValidationResult.HasFailed.ShouldBeFalse();
+	}
+	
+	[Fact]
+	public void ComplexMapClass_ShouldRemoveNameFromNameStack_WhenValueNotNull()
+	{
+		//Arrange
+		var value = Helpers.ExampleStringValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var parameters = new RClassParameter(value);
+		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
+
+		//Act
+		_ = property.MapComplex(p => p.Value, builder =>
+		{
+			return new ValidatedRequiredProperty<RClassValueObject>(new RClassValueObject(value));
+		});
+
+		//Assert
+		nameStack.ShouldNotContainPropertyName(new PropertyNameEntry(Helpers.PropertyName));
+	}
+
+	[Fact]
+	public void ComplexMapStruct_ShouldRemoveNameFromNameStack_WhenValueNotNull()
+	{
+		//Arrange
+		var value = Helpers.ExampleIntValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var parameters = new RStructParameter(value);
+		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
+
+		//Act
+		_ = property.MapComplex(p => p.Value, builder =>
+		{
+			return new ValidatedRequiredProperty<RStructValueObject>(new RStructValueObject(value));
+		});
+
+		//Assert
+		nameStack.ShouldNotContainPropertyName(new PropertyNameEntry(Helpers.PropertyName));
 	}
 
 	[Fact]
 	public void ComplexMapClass_ShouldReturnNull_WhenValueNotNullAndCreationFailed()
 	{
 		//Arrange
-		var value = "error";
+		var value = Helpers.ErrorStringValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RClassParameter(value);
-		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		var validatedProperty = property.MapComplex(p => p.Value, builder =>
 		{
-			return new ValidatedRequiredProperty<RClassValueObject>(Error.Validation("Error.Validation", "An error occured"));
+			return new ValidatedRequiredProperty<RClassValueObject>(Helpers.ExampleValidationError);
 		});
 
 		//Assert
-		validatedProperty.Should().Be(null);
+		validatedProperty.ShouldBe(null);
 	}
 
 	[Fact]
 	public void ComplexMapStruct_ShouldReturnNull_WhenValueNotNullAndCreationFailed()
 	{
 		//Arrange
-		var value = 9;
+		var value = Helpers.ErrorIntValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RStructParameter(value);
-		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		var validatedProperty = property.MapComplex(p => p.Value, builder =>
 		{
-			return new ValidatedRequiredProperty<RStructValueObject>(Error.Validation("Error.Validation", "An error occured"));
+			return new ValidatedRequiredProperty<RStructValueObject>(Helpers.ExampleValidationError);
 		});
 
 		//Assert
-		validatedProperty.Should().Be(null);
+		validatedProperty.ShouldBe(null);
 	}
 
 	[Fact]
 	public void ComplexMapClass_ShouldSetErrors_WhenValueNotNullAndCreationFailed()
 	{
 		//Arrange
-		var value = "error";
+		var value = Helpers.ErrorStringValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RClassParameter(value);
-		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
-		var validatedProperty = property.MapComplex(p => p.Value, builder =>
+		_ = property.MapComplex(p => p.Value, builder =>
 		{
-			return new ValidatedRequiredProperty<RClassValueObject>(Error.Validation("Error.Validation", "An error occured"));
+			return new ValidatedRequiredProperty<RClassValueObject>(Helpers.ExampleValidationError);
 		});
 
 		//Assert
-		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(Error.Validation("Error.Validation", "An error occured"));
+		property.ValidationResult.Errors.Count.ShouldBe(1);
+		property.ValidationResult.Errors.ShouldContain(Helpers.ExampleValidationError);
 	}
 
 	[Fact]
 	public void ComplexMapStruct_ShouldSetErrors_WhenValueNotNullAndCreationFailed()
 	{
 		//Arrange
-		var value = 9;
+		var value = Helpers.ErrorIntValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RStructParameter(value);
-		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
-		var validatedProperty = property.MapComplex(p => p.Value, builder =>
+		_ = property.MapComplex(p => p.Value, builder =>
 		{
-			return new ValidatedRequiredProperty<RStructValueObject>(Error.Validation("Error.Validation", "An error occured"));
+			return new ValidatedRequiredProperty<RStructValueObject>(Helpers.ExampleValidationError);
 		});
 
 		//Assert
-		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(Error.Validation("Error.Validation", "An error occured"));
+		property.ValidationResult.Errors.Count.ShouldBe(1);
+		property.ValidationResult.Errors.ShouldContain(Helpers.ExampleValidationError);
+	}
+	
+	[Fact]
+	public void ComplexMapClass_ShouldRemoveNameFromNameStack_WhenValueNotNullAndCreationFailed()
+	{
+		//Arrange
+		var value = Helpers.ErrorStringValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var parameters = new RClassParameter(value);
+		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
+
+		//Act
+		_ = property.MapComplex(p => p.Value, builder =>
+		{
+			return new ValidatedRequiredProperty<RClassValueObject>(Helpers.ExampleValidationError);
+		});
+
+		//Assert
+		nameStack.ShouldNotContainPropertyName(new PropertyNameEntry(Helpers.PropertyName));
+	}
+
+	[Fact]
+	public void ComplexMapStruct_ShouldRemoveNameFromNameStack_WhenValueNotNullAndCreationFailed()
+	{
+		//Arrange
+		var value = Helpers.ErrorIntValue;
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var parameters = new RStructParameter(value);
+		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
+
+		//Act
+		_ = property.MapComplex(p => p.Value, builder =>
+		{
+			return new ValidatedRequiredProperty<RStructValueObject>(Helpers.ExampleValidationError);
+		});
+
+		//Assert
+		nameStack.ShouldNotContainPropertyName(new PropertyNameEntry(Helpers.PropertyName));
 	}
 
 	[Fact]
@@ -556,16 +897,18 @@ public class RequiredClassTests
 	{
 		//Arrange
 		var parameters = new RClassParameter(null);
-		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		var validatedProperty = property.MapComplex(p => p.Value, builder =>
 		{
-			return new ValidatedRequiredProperty<RClassValueObject>(_missing);
+			return new ValidatedRequiredProperty<RClassValueObject>(Helpers.ExampleMissingError);
 		});
 
 		//Assert
-		validatedProperty.Should().Be(null);
+		validatedProperty.ShouldBe(null);
 	}
 
 	[Fact]
@@ -573,16 +916,18 @@ public class RequiredClassTests
 	{
 		//Arrange
 		var parameters = new RStructParameter(null);
-		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		var validatedProperty = property.MapComplex(p => p.Value, builder =>
 		{
-			return new ValidatedRequiredProperty<RStructValueObject>(_missing);
+			return new ValidatedRequiredProperty<RStructValueObject>(Helpers.ExampleMissingError);
 		});
 
 		//Assert
-		validatedProperty.Should().Be(null);
+		validatedProperty.ShouldBe(null);
 	}
 
 	[Fact]
@@ -590,17 +935,19 @@ public class RequiredClassTests
 	{
 		//Arrange
 		var parameters = new RClassParameter(null);
-		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, _missing);
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		_ = property.MapComplex(p => p.Value, builder =>
 		{
-			return new ValidatedRequiredProperty<RClassValueObject>(_missing);
+			return new ValidatedRequiredProperty<RClassValueObject>(Helpers.ExampleMissingError);
 		});
 
 		//Assert
-		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missing);
+		property.ValidationResult.Errors.Count.ShouldBe(1);
+		property.ValidationResult.Errors.ShouldContain(Helpers.ExampleMissingError);
 	}
 
 	[Fact]
@@ -608,17 +955,57 @@ public class RequiredClassTests
 	{
 		//Arrange
 		var parameters = new RStructParameter(null);
-		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, _missing);
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
 		_ = property.MapComplex(p => p.Value, builder =>
 		{
-			return new ValidatedRequiredProperty<RStructValueObject>(_missing);
+			return new ValidatedRequiredProperty<RStructValueObject>(Helpers.ExampleMissingError);
 		});
 
 		//Assert
-		property.ValidationResult.HasFailed.Should().BeTrue();
-		property.ValidationResult.Errors.Should().ContainSingle().Which.Should().Be(_missing);
+		property.ValidationResult.Errors.Count.ShouldBe(1);
+		property.ValidationResult.Errors.ShouldContain(Helpers.ExampleMissingError);
+	}
+	
+	[Fact]
+	public void ComplexMapClass_ShouldRemoveNameFromNameStack_WhenValueNull()
+	{
+		//Arrange
+		var parameters = new RClassParameter(null);
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
+
+		//Act
+		_ = property.MapComplex(p => p.Value, builder =>
+		{
+			return new ValidatedRequiredProperty<RClassValueObject>(Helpers.ExampleMissingError);
+		});
+
+		//Assert
+		nameStack.ShouldNotContainPropertyName(new PropertyNameEntry(Helpers.PropertyName));
+	}
+
+	[Fact]
+	public void ComplexMapStruct_ShouldRemoveNameFromNameStack_WhenValueNull()
+	{
+		//Arrange
+		var parameters = new RStructParameter(null);
+		var nameStack = new NamingStack("");
+		nameStack.PushProperty(Helpers.PropertyName);
+		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
+
+		//Act
+		_ = property.MapComplex(p => p.Value, builder =>
+		{
+			return new ValidatedRequiredProperty<RStructValueObject>(Helpers.ExampleMissingError);
+		});
+
+		//Assert
+		nameStack.ShouldNotContainPropertyName(new PropertyNameEntry(Helpers.PropertyName));
 	}
 
 	#endregion
