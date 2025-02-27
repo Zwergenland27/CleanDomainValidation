@@ -5,6 +5,12 @@ using Shouldly;
 
 namespace Tests.ApplicationTests;
 
+public enum TestEnum
+{
+    One,
+    Two
+}
+
 public static class Helpers
 {
     public static Error ExampleValidationError => Error.Validation("Error.Validation", "An error occured");
@@ -20,6 +26,14 @@ public static class Helpers
     public static int DefaultIntValue => 3;
     public static int ExampleIntValue => 1;
     public static int ErrorIntValue => 9;
+    
+    public static Error ExampleInvalidEnumError => Error.Validation("Enum.Invalid", "The enum is invalid");
+    public static TestEnum DefaultEnumValue => TestEnum.Two;
+    public static string ExampleEnumStringValue => "One";
+    public static string InvalidEnumStringValue => "Invalid";
+    
+    public static int ExampleEnumIntValue => 0;
+    public static int InvalidEnumIntValue => 9;
     
     public static void ShouldNotContainPropertyName(this NamingStack nameStack, PropertyNameEntry propertyName)
     {

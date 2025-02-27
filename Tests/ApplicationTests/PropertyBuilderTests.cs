@@ -16,8 +16,6 @@ public record Result(
     TestEnum? OptionalEnumProperty,
     List<int> RequiredListProperty);
 
-public enum TestEnum;
-
 public class TestablePropertyBuilder(Parameters parameters, NamingStack namingStack) : PropertyBuilder<Parameters, Result>(parameters, namingStack)
 {
     public new IReadOnlyList<ValidatableProperty> Properties => base.Properties;
