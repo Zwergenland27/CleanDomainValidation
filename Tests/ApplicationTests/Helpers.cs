@@ -8,7 +8,8 @@ namespace Tests.ApplicationTests;
 public enum TestEnum
 {
     One,
-    Two
+    Two,
+    Three,
 }
 
 public static class Helpers
@@ -21,19 +22,23 @@ public static class Helpers
 
     public static string DefaultStringValue => "default";
     public static string ExampleStringValue => "value";
+    public static string AlternateStringValue => "alternate";
     public static string ErrorStringValue => "error";
     
     public static int DefaultIntValue => 3;
     public static int ExampleIntValue => 1;
+    public static int AlternateIntValue => 2;
     public static int ErrorIntValue => 9;
     
     public static Error ExampleInvalidEnumError => Error.Validation("Enum.Invalid", "The enum is invalid");
-    public static TestEnum DefaultEnumValue => TestEnum.Two;
-    public static string ExampleEnumStringValue => "One";
-    public static string InvalidEnumStringValue => "Invalid";
+    public static TestEnum DefaultEnumValue => TestEnum.Three;
+    public static string EnumOneString => "One";
+    public static string EnumTwoString => "Two";
+    public static string EnumInvalidString => "Invalid";
     
-    public static int ExampleEnumIntValue => 0;
-    public static int InvalidEnumIntValue => 9;
+    public static int EnumOneInt => 0;
+    public static int EnumTwoInt => 1;
+    public static int EnumInvalidInt => 9;
     
     public static void ShouldNotContainPropertyName(this NamingStack nameStack, PropertyNameEntry propertyName)
     {

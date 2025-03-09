@@ -17,7 +17,7 @@ public class OptionalEnumTests
 	public void Map_ShouldReturnEnum_WhenStringNotNull()
 	{
 		//Arrange
-		var value = Helpers.ExampleEnumStringValue;
+		var value = Helpers.EnumOneString;
 		var nameStack = new NamingStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OStringParameter(value);
@@ -34,7 +34,7 @@ public class OptionalEnumTests
 	public void Map_ShouldNotSetErrors_WhenStringNotNull()
 	{
 		//Arrange
-		var value = Helpers.ExampleEnumStringValue;
+		var value = Helpers.EnumOneString;
 		var nameStack = new NamingStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OStringParameter(value);
@@ -51,7 +51,7 @@ public class OptionalEnumTests
 	public void Map_ShouldShouldRemoveNameFromNameStack_WhenStringNotNull()
 	{
 		//Arrange
-		var value = Helpers.ExampleEnumStringValue;
+		var value = Helpers.EnumOneString;
 		var nameStack = new NamingStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OStringParameter(value);
@@ -68,7 +68,7 @@ public class OptionalEnumTests
 	public void Map_ShouldReturnNull_WhenStringInvalid()
 	{
 		//Arrange
-		var value = Helpers.InvalidEnumStringValue;
+		var value = Helpers.EnumInvalidString;
 		var nameStack = new NamingStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OStringParameter(value);
@@ -85,7 +85,7 @@ public class OptionalEnumTests
 	public void Map_ShouldSetInvalidEnumError_WhenStringInvalid()
 	{
 		//Arrange
-		var value = Helpers.InvalidEnumStringValue;
+		var value = Helpers.EnumInvalidString;
 		var nameStack = new NamingStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OStringParameter(value);
@@ -103,7 +103,7 @@ public class OptionalEnumTests
 	public void Map_ShouldRemoveNameFromNameStack_WhenStringInvalid()
 	{
 		//Arrange
-		var value = Helpers.InvalidEnumStringValue;
+		var value = Helpers.EnumInvalidString;
 		var nameStack = new NamingStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OStringParameter(value);
@@ -172,7 +172,7 @@ public class OptionalEnumTests
 	public void Map_ShouldReturnEnum_WhenIntNotNull()
 	{
 		//Arrange
-		var value = Helpers.ExampleEnumIntValue;
+		var value = Helpers.EnumOneInt;
 		var nameStack = new NamingStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OIntParameter(value);
@@ -189,7 +189,7 @@ public class OptionalEnumTests
 	public void Map_ShouldNotSetErrors_WhenIntNotNull()
 	{
 		//Arrange
-		var value = Helpers.ExampleEnumIntValue;
+		var value = Helpers.EnumOneInt;
 		var nameStack = new NamingStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OIntParameter(value);
@@ -206,7 +206,7 @@ public class OptionalEnumTests
 	public void Map_ShouldRemoveNameFromNameStack_WhenIntNotNull()
 	{
 		//Arrange
-		var value = Helpers.ExampleEnumIntValue;
+		var value = Helpers.EnumOneInt;
 		var nameStack = new NamingStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OIntParameter(value);
@@ -223,7 +223,7 @@ public class OptionalEnumTests
 	public void Map_ShouldReturnNull_WhenIntInvalid()
 	{
 		//Arrange
-		var value = Helpers.InvalidEnumIntValue;
+		var value = Helpers.EnumInvalidInt;
 		var nameStack = new NamingStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OIntParameter(value);
@@ -240,7 +240,7 @@ public class OptionalEnumTests
 	public void Map_ShouldSetInvalidEnumError_WhenIntInvalid()
 	{
 		//Arrange
-		var value = Helpers.InvalidEnumIntValue;
+		var value = Helpers.EnumInvalidInt;
 		var nameStack = new NamingStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OIntParameter(value);
@@ -258,7 +258,7 @@ public class OptionalEnumTests
 	public void Map_ShouldRemoveNameFromNameStack_WhenIntInvalid()
 	{
 		//Arrange
-		var value = Helpers.InvalidEnumIntValue;
+		var value = Helpers.EnumInvalidInt;
 		var nameStack = new NamingStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OIntParameter(value);

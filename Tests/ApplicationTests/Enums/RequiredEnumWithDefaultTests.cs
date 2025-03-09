@@ -14,7 +14,7 @@ public class RequiredEnumWithDefaultTests
 	{
 		//Arrange
 		var defaultValue = Helpers.DefaultEnumValue;
-		var value = Helpers.ExampleEnumStringValue;
+		var value = Helpers.EnumOneString;
 		var nameStack = new NamingStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 
@@ -33,7 +33,7 @@ public class RequiredEnumWithDefaultTests
 	{
 		//Arrange
 		var defaultValue = Helpers.DefaultEnumValue;
-		var value = Helpers.ExampleEnumStringValue;
+		var value = Helpers.EnumOneString;
 		var nameStack = new NamingStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 
@@ -52,7 +52,7 @@ public class RequiredEnumWithDefaultTests
 	{
 		//Arrange
 		var defaultValue = Helpers.DefaultEnumValue;
-		var value = Helpers.ExampleEnumStringValue;
+		var value = Helpers.EnumOneString;
 		var nameStack = new NamingStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 
@@ -71,7 +71,7 @@ public class RequiredEnumWithDefaultTests
 	{
 		//Arrange
 		var defaultValue = Helpers.DefaultEnumValue;
-		var value = Helpers.InvalidEnumStringValue;
+		var value = Helpers.EnumInvalidString;
 		var nameStack = new NamingStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 
@@ -90,7 +90,7 @@ public class RequiredEnumWithDefaultTests
 	{
 		//Arrange
 		var defaultValue = Helpers.DefaultEnumValue;
-		var value = Helpers.InvalidEnumStringValue;
+		var value = Helpers.EnumInvalidString;
 		var nameStack = new NamingStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 
@@ -110,7 +110,7 @@ public class RequiredEnumWithDefaultTests
 	{
 		//Arrange
 		var defaultValue = Helpers.DefaultEnumValue;
-		var value = Helpers.InvalidEnumStringValue;
+		var value = Helpers.EnumInvalidString;
 		var nameStack = new NamingStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 
@@ -187,7 +187,7 @@ public class RequiredEnumWithDefaultTests
 	{
 		//Arrange
 		var defaultValue = Helpers.DefaultEnumValue;
-		var value = Helpers.ExampleEnumIntValue;
+		var value = Helpers.EnumOneInt;
 		var nameStack = new NamingStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 
@@ -206,7 +206,7 @@ public class RequiredEnumWithDefaultTests
 	{
 		//Arrange
 		var defaultValue = Helpers.DefaultEnumValue;
-		var value = Helpers.ExampleEnumIntValue;
+		var value = Helpers.EnumOneInt;
 		var nameStack = new NamingStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 
@@ -225,7 +225,7 @@ public class RequiredEnumWithDefaultTests
 	{
 		//Arrange
 		var defaultValue = Helpers.DefaultEnumValue;
-		var value = Helpers.ExampleEnumIntValue;
+		var value = Helpers.EnumOneInt;
 		var nameStack = new NamingStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 
@@ -244,7 +244,7 @@ public class RequiredEnumWithDefaultTests
 	{
 		//Arrange
 		var defaultValue = Helpers.DefaultEnumValue;
-		var value = Helpers.InvalidEnumIntValue;
+		var value = Helpers.EnumInvalidInt;
 		var nameStack = new NamingStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 
@@ -263,7 +263,7 @@ public class RequiredEnumWithDefaultTests
 	{
 		//Arrange
 		var defaultValue = Helpers.DefaultEnumValue;
-		var value = Helpers.InvalidEnumIntValue;
+		var value = Helpers.EnumInvalidInt;
 		var nameStack = new NamingStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 
@@ -283,7 +283,7 @@ public class RequiredEnumWithDefaultTests
 	{
 		//Arrange
 		var defaultValue = Helpers.DefaultEnumValue;
-		var value = Helpers.InvalidEnumIntValue;
+		var value = Helpers.EnumInvalidInt;
 		var nameStack = new NamingStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 
