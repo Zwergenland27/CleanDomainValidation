@@ -10,6 +10,7 @@ public enum TestEnum
     One,
     Two,
     Three,
+    Four
 }
 
 public static class Helpers
@@ -21,17 +22,20 @@ public static class Helpers
     public static string PropertyName => "PropertyName";
 
     public static string DefaultStringValue => "default";
+    public static string DefaultStringAlternateValue => "alternate-default";
     public static string ExampleStringValue => "value";
     public static string AlternateStringValue => "alternate";
     public static string ErrorStringValue => "error";
     
     public static int DefaultIntValue => 3;
+    public static int DefaultIntAlternateValue => 3;
     public static int ExampleIntValue => 1;
     public static int AlternateIntValue => 2;
     public static int ErrorIntValue => 9;
     
     public static Error ExampleInvalidEnumError => Error.Validation("Enum.Invalid", "The enum is invalid");
     public static TestEnum DefaultEnumValue => TestEnum.Three;
+    public static TestEnum DefaultEnumAlternateValue => TestEnum.Four;
     public static string EnumOneString => "One";
     public static string EnumTwoString => "Two";
     public static string EnumInvalidString => "Invalid";
