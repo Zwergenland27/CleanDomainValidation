@@ -44,7 +44,7 @@ public class FactoryMappedTests
 		var validatedProperty = property.Map(p => p.Value, OClassValueObject.Create);
 
 		//Assert
-		validatedProperty.ShouldBe(null);
+		validatedProperty.ShouldBeNull();
 		
 		property.ValidationResult.Errors.Count.ShouldBe(1);
 		property.ValidationResult.Errors.ShouldContain(Helpers.ExampleValidationError);

@@ -2,7 +2,7 @@ using CleanDomainValidation.Application;
 using CleanDomainValidation.Application.Extensions;
 using CleanDomainValidation.Application.Structs;
 using Shouldly;
-using Tests.ApplicationTests.Classes;
+using Tests.ApplicationTests.Structs.Required;
 
 namespace Tests.ApplicationTests.Structs.WithDefault;
 
