@@ -3,8 +3,8 @@ using CleanDomainValidation.Application.Extensions;
 using CleanDomainValidation.Application.Lists;
 using Shouldly;
 using Tests.ApplicationTests.Lists.Required;
-using RClassValueObject = Tests.ApplicationTests.Classes.RClassValueObject;
-using RStructValueObject = Tests.ApplicationTests.Classes.RStructValueObject;
+using RClassValueObject = Tests.ApplicationTests.Classes.Required.RClassValueObject;
+using RStructValueObject = Tests.ApplicationTests.Classes.Required.RStructValueObject;
 
 namespace Tests.ApplicationTests.Lists.WithDefault;
 
