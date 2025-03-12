@@ -20,11 +20,6 @@ public class NamingStack
         _propertyNamesStack.Push(new PropertyNameEntry(name));
     }
 
-    internal void PushIndex(int index)
-    {
-        _propertyNamesStack.Push(new IndexEntry(index));
-    }
-
     internal INameStackEntry Pop()
     {
         return _propertyNamesStack.Pop();

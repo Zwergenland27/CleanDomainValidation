@@ -101,7 +101,7 @@ public class EnumTests
 	public void MapEachEnum_ShouldReturnNullAndSetInvalidEnumErrorAndRemoveNameFromNameStack_WhenAtLeastOneIntIsInvalidEnum()
 	{
 		//Arrange
-		List<int> value = [0, 3];
+		List<int> value = [Helpers.EnumOneInt, Helpers.EnumInvalidInt];
 		var nameStack = new NamingStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OStructListParameter(value);

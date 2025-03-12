@@ -25,6 +25,9 @@ public static class EnumMapExtensions
 		where TProperty : struct
 	{
 		string? rawEnum = value.Invoke(property.Parameters);
+		
+		property.NamingStack.Pop();
+		
 		if(rawEnum is null)
 		{
 			return null;
@@ -40,7 +43,7 @@ public static class EnumMapExtensions
 	}
 
     /// <summary>
-    /// Create the non nullable enum property <typeparamref name="TProperty"/> from the string specified in <paramref name="value"/>
+    /// Create the non-nullable enum property <typeparamref name="TProperty"/> from the string specified in <paramref name="value"/>
     /// </summary>
     /// <param name="property"></param>
     /// <param name="value">String parameter that should be converted to <typeparamref name="TProperty"/></param>
@@ -53,6 +56,9 @@ public static class EnumMapExtensions
 		where TProperty : struct
 	{
 		string? rawEnum = value.Invoke(property.Parameters);
+		
+		property.NamingStack.Pop();
+		
 		if (rawEnum is null)
 		{
 			property.ValidationResult.Failed(property.MissingError);
@@ -82,6 +88,9 @@ public static class EnumMapExtensions
 		where TProperty : struct
 	{
 		string? rawEnum = value.Invoke(property.Parameters);
+		
+		property.NamingStack.Pop();
+		
 		if (rawEnum is null)
 		{
 			return property.DefaultValue;
@@ -110,6 +119,9 @@ public static class EnumMapExtensions
 		where TProperty : struct
 	{
 		int? rawEnum = value.Invoke(property.Parameters);
+		
+		property.NamingStack.Pop();
+		
 		if (rawEnum is null)
 		{
 			return null;
@@ -125,7 +137,7 @@ public static class EnumMapExtensions
 	}
 
     /// <summary>
-    /// Create the non nullable enum property <typeparamref name="TProperty"/> from the integer specified in <paramref name="value"/>
+    /// Create the non-nullable enum property <typeparamref name="TProperty"/> from the integer specified in <paramref name="value"/>
     /// </summary>
     /// <param name="property"></param>
     /// <param name="value">Integer parameter that should be converted to <typeparamref name="TProperty"/></param>
@@ -138,6 +150,9 @@ public static class EnumMapExtensions
 		where TProperty : struct
 	{
 		int? rawEnum = value.Invoke(property.Parameters);
+		
+		property.NamingStack.Pop();
+		
 		if (rawEnum is null)
 		{
 			property.ValidationResult.Failed(property.MissingError);
@@ -167,6 +182,9 @@ public static class EnumMapExtensions
 		where TProperty : struct
 	{
 		int? rawEnum = value.Invoke(property.Parameters);
+		
+		property.NamingStack.Pop();
+		
 		if (rawEnum is null)
 		{
 			return property.DefaultValue;
@@ -199,25 +217,29 @@ public static class EnumMapExtensions
 		where TProperty : struct
 	{
 		IEnumerable<string>? rawEnums = values.Invoke(property.Parameters);
+		
+		property.NamingStack.Pop();
+		
 		if (rawEnums is null)
 		{
 			return null;
 		}
 
 		List<TProperty> resultEnums = [];
-
+		var anyFailed = false;
         foreach (string rawEnum in rawEnums)
         {
 			if (!Enum.TryParse(rawEnum, out TProperty enumResult))
 			{
 				property.ValidationResult.Failed(invalidEnumError);
+				anyFailed = true;
 				continue;
 			}
 
 			resultEnums.Add(enumResult);
 		}
 
-		return resultEnums;
+        return anyFailed ? null : resultEnums;
 	}
 
     /// <summary>
@@ -234,6 +256,9 @@ public static class EnumMapExtensions
 		where TProperty : struct
 	{
 		IEnumerable<string>? rawEnums = values.Invoke(property.Parameters);
+		
+		property.NamingStack.Pop();
+		
 		if (rawEnums is null)
 		{
 			property.ValidationResult.Failed(property.MissingError);
@@ -241,19 +266,20 @@ public static class EnumMapExtensions
 		}
 
 		List<TProperty> resultEnums = [];
-
+		var anyFailed = false;
 		foreach (string rawEnum in rawEnums)
 		{
 			if (!Enum.TryParse(rawEnum, out TProperty enumResult))
 			{
 				property.ValidationResult.Failed(invalidEnumError);
+				anyFailed = true;
 				continue;
 			}
 
 			resultEnums.Add(enumResult);
 		}
 
-		return resultEnums;
+		return anyFailed ? null! : resultEnums;
 	}
     
 	/// <summary>
@@ -270,25 +296,29 @@ public static class EnumMapExtensions
 		where TProperty : struct
 	{
 		IEnumerable<string>? rawEnums = values.Invoke(property.Parameters);
+		
+		property.NamingStack.Pop();
+		
 		if (rawEnums is null)
 		{
 			return property.DefaultList;
 		}
 
 		List<TProperty> resultEnums = [];
-
+		var anyFailed = false;
 		foreach (string rawEnum in rawEnums)
 		{
 			if (!Enum.TryParse(rawEnum, out TProperty enumResult))
 			{
 				property.ValidationResult.Failed(invalidEnumError);
+				anyFailed = true;
 				continue;
 			}
 
 			resultEnums.Add(enumResult);
 		}
 
-		return resultEnums;
+		return anyFailed ? null! : resultEnums;
 	}
 
     /// <summary>
@@ -305,25 +335,29 @@ public static class EnumMapExtensions
 		where TProperty : struct
 	{
 		IEnumerable<int>? rawEnums = values.Invoke(property.Parameters);
+		
+		property.NamingStack.Pop();
+		
 		if (rawEnums is null)
 		{
 			return null;
 		}
 
 		List<TProperty> resultEnums = [];
-
+		var anyFailed = false;
 		foreach (int rawEnum in rawEnums)
 		{
 			if (!Enum.IsDefined(typeof(TProperty), rawEnum))
 			{
 				property.ValidationResult.Failed(invalidEnumError);
+				anyFailed = true;
 				continue;
 			}
 
 			resultEnums.Add((TProperty)Enum.ToObject(typeof(TProperty), rawEnum));
 		}
 
-		return resultEnums;
+		return anyFailed ? null : resultEnums;
 	}
 
     /// <summary>
@@ -340,6 +374,9 @@ public static class EnumMapExtensions
 		where TProperty : struct
 	{
 		IEnumerable<int>? rawEnums = values.Invoke(property.Parameters);
+		
+		property.NamingStack.Pop();
+		
 		if (rawEnums is null)
 		{
 			property.ValidationResult.Failed(property.MissingError);
@@ -347,19 +384,20 @@ public static class EnumMapExtensions
 		}
 
 		List<TProperty> resultEnums = [];
-
+		var anyFailed = false;
 		foreach (int rawEnum in rawEnums)
 		{
 			if (!Enum.IsDefined(typeof(TProperty), rawEnum))
 			{
 				property.ValidationResult.Failed(invalidEnumError);
+				anyFailed = true;
 				continue;
 			}
 
 			resultEnums.Add((TProperty)Enum.ToObject(typeof(TProperty), rawEnum));
 		}
 
-		return resultEnums;
+		return anyFailed ? null! : resultEnums;
 	}
     
 	/// <summary>
@@ -376,25 +414,29 @@ public static class EnumMapExtensions
 		where TProperty : struct
 	{
 		IEnumerable<int>? rawEnums = values.Invoke(property.Parameters);
+		
+		property.NamingStack.Pop();
+		
 		if (rawEnums is null)
 		{
 			return property.DefaultList;
 		}
 
 		List<TProperty> resultEnums = [];
-
+		var anyFailed = false;
 		foreach (int rawEnum in rawEnums)
 		{
 			if (!Enum.IsDefined(typeof(TProperty), rawEnum))
 			{
 				property.ValidationResult.Failed(invalidEnumError);
+				anyFailed = true;
 				continue;
 			}
 
 			resultEnums.Add((TProperty)Enum.ToObject(typeof(TProperty), rawEnum));
 		}
 
-		return resultEnums;
+		return anyFailed ? null! : resultEnums;
 	}
 
 	#endregion

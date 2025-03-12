@@ -15,7 +15,7 @@ public static class ComplexMapExtensions
     /// Create the nullable class property <typeparamref name="TProperty"/> from the parameters specified in <paramref name="propertyParameters"/> by using a <paramref name="propertyBuilder"/>
     /// </summary>
 	/// <param name="property"></param>
-	/// <param name="propertyParameters">Paramaters needed to create <typeparamref name="TProperty"/></param>
+	/// <param name="propertyParameters">Parameters needed to create <typeparamref name="TProperty"/></param>
 	/// <param name="propertyBuilder">Builder that creates <typeparamref name="TProperty"/> from <typeparamref name="TPropertyParameters"/></param>
     public static TProperty? MapComplex<TParameters, TProperty, TPropertyParameters>(
 		this OptionalClassProperty<TParameters, TProperty> property,
@@ -50,7 +50,7 @@ public static class ComplexMapExtensions
     /// Create the nullable class property <typeparamref name="TProperty"/> from the parameters specified in <paramref name="propertyParameters"/> by using a <paramref name="propertyBuilder"/>
     /// </summary>
     /// <param name="property"></param>
-    /// <param name="propertyParameters">Paramaters needed to create <typeparamref name="TProperty"/></param>
+    /// <param name="propertyParameters">Parameters needed to create <typeparamref name="TProperty"/></param>
     /// <param name="propertyBuilder">Builder that creates <typeparamref name="TProperty"/> from <typeparamref name="TPropertyParameters"/></param>
     public static TProperty? MapComplex<TParameters, TProperty, TPropertyParameters>(
 		this OptionalClassProperty<TParameters, TProperty> property,
@@ -82,10 +82,10 @@ public static class ComplexMapExtensions
 	}
 
     /// <summary>
-    /// Create the non nullable class property <typeparamref name="TProperty"/> from the parameters specified in <paramref name="propertyParameters"/> by using a <paramref name="propertyBuilder"/>
+    /// Create the non-nullable class property <typeparamref name="TProperty"/> from the parameters specified in <paramref name="propertyParameters"/> by using a <paramref name="propertyBuilder"/>
     /// </summary>
     /// <param name="property"></param>
-    /// <param name="propertyParameters">Paramaters needed to create <typeparamref name="TProperty"/></param>
+    /// <param name="propertyParameters">Parameters needed to create <typeparamref name="TProperty"/></param>
     /// <param name="propertyBuilder">Builder that creates <typeparamref name="TProperty"/> from <typeparamref name="TPropertyParameters"/></param>
     public static TProperty MapComplex<TParameters, TProperty, TPropertyParameters>(
 		this RequiredClassProperty<TParameters, TProperty> property,
@@ -118,10 +118,10 @@ public static class ComplexMapExtensions
 	}
 
     /// <summary>
-    /// Create the non nullable class property <typeparamref name="TProperty"/> from the parameters specified in <paramref name="propertyParameters"/> by using a <paramref name="propertyBuilder"/>
+    /// Create the non-nullable class property <typeparamref name="TProperty"/> from the parameters specified in <paramref name="propertyParameters"/> by using a <paramref name="propertyBuilder"/>
     /// </summary>
     /// <param name="property"></param>
-    /// <param name="propertyParameters">Paramaters needed to create <typeparamref name="TProperty"/></param>
+    /// <param name="propertyParameters">Parameters needed to create <typeparamref name="TProperty"/></param>
     /// <param name="propertyBuilder">Builder that creates <typeparamref name="TProperty"/> from <typeparamref name="TPropertyParameters"/></param>
     public static TProperty MapComplex<TParameters, TProperty, TPropertyParameters>(
 		this RequiredClassProperty<TParameters, TProperty> property,
@@ -192,7 +192,7 @@ public static class ComplexMapExtensions
     /// Create the non-nullable class property <typeparamref name="TProperty"/> from the parameters specified in <paramref name="propertyParameters"/> by using a <paramref name="propertyBuilder"/>
     /// </summary>
     /// <param name="property"></param>
-    /// <param name="propertyParameters">Paramaters needed to create <typeparamref name="TProperty"/></param>
+    /// <param name="propertyParameters">Parameters needed to create <typeparamref name="TProperty"/></param>
     /// <param name="propertyBuilder">Builder that creates <typeparamref name="TProperty"/> from <typeparamref name="TPropertyParameters"/></param>
     public static TProperty MapComplex<TParameters, TProperty, TPropertyParameters>(
 		this RequiredClassWithDefaultProperty<TParameters, TProperty> property,
@@ -447,7 +447,7 @@ public static class ComplexMapExtensions
     /// Create each element of type <typeparamref name="TProperty"/> of the nullable list property from the parameters specified in <paramref name="propertyParameters"/> by using a <paramref name="propertyBuilder"/>
     /// </summary>
     /// <param name="property"></param>
-    /// <param name="propertyParameters">List of Paramaters needed to create List of <typeparamref name="TProperty"/></param>
+    /// <param name="propertyParameters">List of Parameters needed to create List of <typeparamref name="TProperty"/></param>
     /// <param name="propertyBuilder">Builder that creates <typeparamref name="TProperty"/> from <typeparamref name="TPropertyParameters"/></param>
     public static IEnumerable<TProperty>? MapEachComplex<TParameters, TProperty, TPropertyParameters>(
 		this OptionalListProperty<TParameters, TProperty> property,
@@ -465,34 +465,30 @@ public static class ComplexMapExtensions
 		}
 
 		List<TProperty> resultProperties = [];
-		int listIndex = 0;
+		var anyFailed = false;
 		foreach(var rawProperty in builderParameters)
 		{
-			property.NamingStack.PushIndex(listIndex);
-			listIndex++;
-			
 			var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(rawProperty, property.NamingStack);
 			var buildResult = propertyBuilder.Invoke(builder).Build();
-			
-			property.NamingStack.Pop();
 			
 			if (buildResult.HasFailed)
 			{
 				property.ValidationResult.InheritFailure(buildResult);
+				anyFailed = true;
 				continue;
 			}
 			resultProperties.Add(buildResult.Value);
 		}
 		
 		property.NamingStack.Pop();
-		return resultProperties;
+		return anyFailed ? null : resultProperties;
 	}
 
     /// <summary>
-    /// Create each element of type <typeparamref name="TProperty"/> of the non nullable list property from the parameters specified in <paramref name="propertyParameters"/> by using a <paramref name="propertyBuilder"/>
+    /// Create each element of type <typeparamref name="TProperty"/> of the non-nullable list property from the parameters specified in <paramref name="propertyParameters"/> by using a <paramref name="propertyBuilder"/>
     /// </summary>
 	/// <param name="property"></param>
-    /// <param name="propertyParameters">List of Paramaters needed to create List of <typeparamref name="TProperty"/></param>
+    /// <param name="propertyParameters">List of Parameters needed to create List of <typeparamref name="TProperty"/></param>
     /// <param name="propertyBuilder">Builder that creates <typeparamref name="TProperty"/> from <typeparamref name="TPropertyParameters"/></param>
     public static IEnumerable<TProperty> MapEachComplex<TParameters, TProperty, TPropertyParameters>(
 		this RequiredListProperty<TParameters, TProperty> property,
@@ -511,34 +507,30 @@ public static class ComplexMapExtensions
 		}
 
 		List<TProperty> resultProperties = [];
-		int listIndex = 0;
+		var anyFailed = false;
 		foreach (var rawProperty in builderParameters)
 		{
-			property.NamingStack.PushIndex(listIndex);
-			listIndex++;
-			
 			var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(rawProperty, property.NamingStack);
 			var buildResult = propertyBuilder.Invoke(builder).Build();
-			
-			property.NamingStack.Pop();
 			
 			if (buildResult.HasFailed)
 			{
 				property.ValidationResult.InheritFailure(buildResult);
+				anyFailed = true;
 				continue;
 			}
 			resultProperties.Add(buildResult.Value);
 		}
 		
 		property.NamingStack.Pop();
-		return resultProperties;
+		return anyFailed ? null! : resultProperties;
 	}
     
 	/// <summary>
 	/// Create each element of type <typeparamref name="TProperty"/> of the non-nullable list property from the parameters specified in <paramref name="propertyParameters"/> by using a <paramref name="propertyBuilder"/>
 	/// </summary>
 	/// <param name="property"></param>
-	/// <param name="propertyParameters">List of Paramaters needed to create List of <typeparamref name="TProperty"/></param>
+	/// <param name="propertyParameters">List of Parameters needed to create List of <typeparamref name="TProperty"/></param>
 	/// <param name="propertyBuilder">Builder that creates <typeparamref name="TProperty"/> from <typeparamref name="TPropertyParameters"/></param>
 	public static IEnumerable<TProperty> MapEachComplex<TParameters, TProperty, TPropertyParameters>(
 		this RequiredListWithDefaultProperty<TParameters, TProperty> property,
@@ -556,27 +548,23 @@ public static class ComplexMapExtensions
 		}
 
 		List<TProperty> resultProperties = [];
-		int listIndex = 0;
+		var anyFailed = false;
 		foreach (var rawProperty in builderParameters)
 		{
-			property.NamingStack.PushIndex(listIndex);
-			listIndex++;
-			
 			var builder = new RequiredPropertyBuilder<TPropertyParameters, TProperty>(rawProperty, property.NamingStack);
 			var buildResult = propertyBuilder.Invoke(builder).Build();
-			
-			property.NamingStack.Pop();
 			
 			if (buildResult.HasFailed)
 			{
 				property.ValidationResult.InheritFailure(buildResult);
+				anyFailed = true;
 				continue;
 			}
 			resultProperties.Add(buildResult.Value);
 		}
 		
 		property.NamingStack.Pop();
-		return resultProperties;
+		return anyFailed ? null! : resultProperties;
 	}
 
 	#endregion
