@@ -11,11 +11,13 @@ public sealed class RequiredEnumProperty<TParameters, TProperty> : ValidatablePr
 {
 	internal Error MissingError { get; }
 	internal TParameters Parameters { get; }
+	internal NameStack NameStack { get; }
 	internal override CanFail ValidationResult { get; } = new();
 
-	internal RequiredEnumProperty(TParameters parameters, Error missingError)
+	internal RequiredEnumProperty(TParameters parameters, Error missingError, NameStack nameStack)
 	{
 		Parameters = parameters;
 		MissingError = missingError;
+		NameStack = nameStack;
 	}
 }

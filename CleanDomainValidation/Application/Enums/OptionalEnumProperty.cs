@@ -10,10 +10,12 @@ public sealed class OptionalEnumProperty<TParameters, TProperty> : ValidatablePr
 	where TProperty : struct
 {
 	internal TParameters Parameters { get; }
+	internal NameStack NameStack { get; }
 	internal override CanFail ValidationResult { get; } = new();
 
-	internal OptionalEnumProperty(TParameters parameters)
+	internal OptionalEnumProperty(TParameters parameters, NameStack nameStack)
 	{
 		Parameters = parameters;
+		NameStack = nameStack;
 	}
 }

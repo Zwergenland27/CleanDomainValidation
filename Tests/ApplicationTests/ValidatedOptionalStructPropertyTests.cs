@@ -1,6 +1,6 @@
 ﻿using CleanDomainValidation.Application;
 using CleanDomainValidation.Domain;
-using FluentAssertions;
+using Shouldly;
 
 namespace Tests.ApplicationTests;
 
@@ -17,6 +17,6 @@ public class ValidatedOptionalStructPropertyTests
         var returnResult = property.Build();
 
         //Assert
-        returnResult.Should().Be(result);
+        returnResult.ShouldBe(result);
     }
 }

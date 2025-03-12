@@ -9,7 +9,7 @@ public sealed class RequiredPropertyBuilder<TParameters, TResult> : PropertyBuil
 	where TParameters : notnull
 	where TResult : notnull
 {
-	internal RequiredPropertyBuilder(TParameters parameters) : base(parameters) { }
+	internal RequiredPropertyBuilder(TParameters parameters, NameStack nameStack) : base(parameters, nameStack) { }
 
 	/// <summary>
 	/// Create an instance of <typeparamref name="TResult"/> using the provided creation method

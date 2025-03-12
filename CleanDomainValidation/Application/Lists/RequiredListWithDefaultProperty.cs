@@ -11,11 +11,13 @@ public sealed class RequiredListWithDefaultProperty<TParameters, TProperty> : Va
 {
     internal TParameters Parameters { get; }
     internal IEnumerable<TProperty> DefaultList { get; }
+    internal NameStack NameStack { get; }
     internal override CanFail ValidationResult { get; } = new();
 
-    internal RequiredListWithDefaultProperty(TParameters parameters, IEnumerable<TProperty> defaultList)
+    internal RequiredListWithDefaultProperty(TParameters parameters, IEnumerable<TProperty> defaultList, NameStack nameStack)
     {
         Parameters = parameters;
         DefaultList = defaultList;
+        NameStack = nameStack;
     }
 }
