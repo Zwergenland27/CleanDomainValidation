@@ -1,25 +1,43 @@
 namespace CleanDomainValidation.Application;
 
-public class NamingStack
+/// <summary>
+/// Stack that contains the name of all nested properties
+/// </summary>
+public class NameStack
 {
-    private Stack<INameStackEntry> _propertyNamesStack;
+    private readonly Stack<INameStackEntry> _propertyNamesStack;
     private readonly string _prefix;
     
-    internal NamingStack(string prefix)
+    internal NameStack(string prefix)
     {
         _prefix = prefix;
         _propertyNamesStack = [];
     }
 
-    public string ErrorCode => GenerateErrorCode();
+    /// <summary>
+    /// Missing error code based on the current name stack
+    /// </summary>
+    /// <example>Users.Get.Username.Missing</example>
+    public string MissingErrorCode => GenerateErrorCode();
 
-    public string ErrorMessage => GenerateErrorMessage();
+    /// <summary>
+    /// Missing error message
+    /// </summary>
+    /// <example>Property Username is required but missing or null in the request.</example>
+    public string MissingErrorMessage => GenerateErrorMessage();
 
+    /// <summary>
+    /// Push property with name <paramref name="name"/> on the stack
+    /// </summary>
     internal void PushProperty(string name)
     {
         _propertyNamesStack.Push(new PropertyNameEntry(name));
     }
 
+    /// <summary>
+    /// Get and remove stack's top element
+    /// </summary>
+    /// <returns>Top element</returns>
     internal INameStackEntry Pop()
     {
         return _propertyNamesStack.Pop();

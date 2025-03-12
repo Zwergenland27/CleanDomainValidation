@@ -10,12 +10,12 @@ public sealed class ClassProperty<TParameters, TProperty> : ValidatableBasePrope
 	where TProperty : class
 {
 	private readonly TParameters _parameters;
-	private readonly NamingStack _namingStack;
+	private readonly NameStack _nameStack;
 
-    internal ClassProperty(TParameters parameters, NamingStack namingStack)
+    internal ClassProperty(TParameters parameters, NameStack nameStack)
 	{
 		_parameters = parameters;
-		_namingStack = namingStack;
+		_nameStack = nameStack;
 	}
 
 	/// <summary>
@@ -24,7 +24,7 @@ public sealed class ClassProperty<TParameters, TProperty> : ValidatableBasePrope
 	/// <param name="missingError">Error that will be set if the property is not set in the request</param>
 	public RequiredClassProperty<TParameters, TProperty> Required(Error missingError)
 	{
-		var required = new RequiredClassProperty<TParameters, TProperty>(_parameters, missingError, _namingStack);
+		var required = new RequiredClassProperty<TParameters, TProperty>(_parameters, missingError, _nameStack);
 		Property = required;
 		return required;
 	}
@@ -35,8 +35,8 @@ public sealed class ClassProperty<TParameters, TProperty> : ValidatableBasePrope
 	/// <param name="customErrorMessage">Custom error message for the missing parameter error</param>
 	public RequiredClassProperty<TParameters, TProperty> Required(string? customErrorMessage = null)
 	{
-		var error = Error.Validation(_namingStack.ErrorCode, customErrorMessage ?? _namingStack.ErrorMessage);
-		var required = new RequiredClassProperty<TParameters, TProperty>(_parameters, error, _namingStack);
+		var error = Error.Validation(_nameStack.MissingErrorCode, customErrorMessage ?? _nameStack.MissingErrorMessage);
+		var required = new RequiredClassProperty<TParameters, TProperty>(_parameters, error, _nameStack);
 		Property = required;
 		return required;
 	}
@@ -47,7 +47,7 @@ public sealed class ClassProperty<TParameters, TProperty> : ValidatableBasePrope
 	/// <param name="defaultValue">Default value that should be set if parameter is null</param>
 	public RequiredClassWithDefaultProperty<TParameters, TProperty> WithDefault(TProperty defaultValue)
 	{
-		var requiredWithDefault = new RequiredClassWithDefaultProperty<TParameters, TProperty>(_parameters, defaultValue, _namingStack);
+		var requiredWithDefault = new RequiredClassWithDefaultProperty<TParameters, TProperty>(_parameters, defaultValue, _nameStack);
 		Property = requiredWithDefault;
 		return requiredWithDefault;
 	}
@@ -58,7 +58,7 @@ public sealed class ClassProperty<TParameters, TProperty> : ValidatableBasePrope
 	/// <returns></returns>
 	public OptionalClassProperty<TParameters, TProperty> Optional()
 	{
-		var optional = new OptionalClassProperty<TParameters, TProperty>(_parameters, _namingStack);
+		var optional = new OptionalClassProperty<TParameters, TProperty>(_parameters, _nameStack);
 		Property = optional;
 		return optional;
 	}

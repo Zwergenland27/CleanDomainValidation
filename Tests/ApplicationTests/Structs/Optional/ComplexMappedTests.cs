@@ -14,7 +14,7 @@ public class ComplexMappedTests
 	{
 		//Arrange
 		var value = Helpers.ExampleStringValue;
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OClassParameter(value);
 		var property = new OptionalStructProperty<OClassParameter, OClassValueObject>(parameters, nameStack);
@@ -39,7 +39,7 @@ public class ComplexMappedTests
 	{
 		//Arrange
 		var value = Helpers.ErrorStringValue;
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OClassParameter(value);
 		var property = new OptionalStructProperty<OClassParameter, OClassValueObject>(parameters, nameStack);
@@ -63,7 +63,7 @@ public class ComplexMappedTests
 	public void ComplexMapClass_ShouldReturnNullAndNotSetErrorsAndRemoveNameFromNameStack_WhenValueNull()
 	{
 		//Arrange
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OClassParameter(null);
 		var property = new OptionalStructProperty<OClassParameter, OClassValueObject>(parameters, nameStack);
@@ -92,7 +92,7 @@ public class ComplexMappedTests
 	{
 		//Arrange
 		var value = Helpers.ExampleIntValue;
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OStructParameter(value);
 		var property = new OptionalStructProperty<OStructParameter, OStructValueObject>(parameters, nameStack);
@@ -116,7 +116,7 @@ public class ComplexMappedTests
 	{
 		//Arrange
 		var value = Helpers.ErrorIntValue;
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OStructParameter(value);
 		var property = new OptionalStructProperty<OStructParameter, OStructValueObject>(parameters, nameStack);
@@ -140,7 +140,7 @@ public class ComplexMappedTests
 	public void ComplexMapStruct_ShouldReturnNullAndNotSetErrorsAndRemoveNameFromNameStack_WhenValueNull()
 	{
 		//Arrange
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OStructParameter(null);
 		var property = new OptionalStructProperty<OStructParameter, OStructValueObject>(parameters, nameStack);

@@ -14,7 +14,7 @@ public class EnumTests
 	{
 		//Arrange
 		List<string> value = [Helpers.EnumOneString, Helpers.EnumTwoString];
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OClassListParameter(value);
 		var property = new OptionalListProperty<OClassListParameter, TestEnum>(parameters, nameStack);
@@ -35,7 +35,7 @@ public class EnumTests
 	{
 		//Arrange
 		List<string> value = [Helpers.EnumOneString, Helpers.EnumInvalidString];
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OClassListParameter(value);
 		var property = new OptionalListProperty<OClassListParameter, TestEnum>(parameters, nameStack);
@@ -56,7 +56,7 @@ public class EnumTests
 	public void MapEachEnum_ShouldReturnNullAndNotSetErrorsAndRemoveNameFromNameStack_WhenStringListIsNull()
 	{
 		//Arrange
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OClassListParameter(null);
 		var property = new OptionalListProperty<OClassListParameter, TestEnum>(parameters, nameStack);
@@ -81,7 +81,7 @@ public class EnumTests
 	{
 		//Arrange
 		List<int> value = [Helpers.EnumOneInt, Helpers.EnumTwoInt];
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OStructListParameter(value);
 		var property = new OptionalListProperty<OStructListParameter, TestEnum>(parameters, nameStack);
@@ -102,7 +102,7 @@ public class EnumTests
 	{
 		//Arrange
 		List<int> value = [Helpers.EnumOneInt, Helpers.EnumInvalidInt];
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OStructListParameter(value);
 		var property = new OptionalListProperty<OStructListParameter, TestEnum>(parameters, nameStack);
@@ -123,7 +123,7 @@ public class EnumTests
 	public void MapEachEnum_ShouldReturnNullAndNotSetErrorsAndRemoveNameFromNameStack_WhenIntListIsNull()
 	{
 		//Arrange
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OStructListParameter(null);
 		var property = new OptionalListProperty<OStructListParameter, TestEnum>(parameters, nameStack);

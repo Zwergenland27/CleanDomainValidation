@@ -14,7 +14,7 @@ public class DirectMappedTests
         //Arrange
         var defaultValue = Helpers.DefaultIntValue;
         var value = Helpers.ExampleIntValue;
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         nameStack.PushProperty(Helpers.PropertyName);
         var parameters = new RStructParameter(value);
         var property = new RequiredStructWithDefaultProperty<RStructParameter, int>(parameters, defaultValue, nameStack);
@@ -35,7 +35,7 @@ public class DirectMappedTests
     {
         //Arrange
         var defaultValue = Helpers.DefaultIntValue;
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         nameStack.PushProperty(Helpers.PropertyName);
         var parameters = new RStructParameter(null);
         var property = new RequiredStructWithDefaultProperty<RStructParameter, int>(parameters, defaultValue, nameStack);

@@ -14,7 +14,7 @@ public class IntToEnumTests
 		//Arrange
 		var defaultValue = Helpers.DefaultEnumValue;
 		var value = Helpers.EnumOneInt;
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 
 		var parameters = new RIntParameter(value);
@@ -37,7 +37,7 @@ public class IntToEnumTests
 		//Arrange
 		var defaultValue = Helpers.DefaultEnumValue;
 		var value = Helpers.EnumInvalidInt;
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 
 		var parameters = new RIntParameter(value);
@@ -60,7 +60,7 @@ public class IntToEnumTests
 	{
 		//Arrange
 		var defaultValue = Helpers.DefaultEnumValue;
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 
 		var parameters = new RIntParameter(null);

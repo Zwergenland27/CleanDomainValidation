@@ -11,13 +11,13 @@ public sealed class RequiredEnumWithDefaultProperty<TParameters, TProperty> : Va
 {
     internal TParameters Parameters { get; }
     internal TProperty DefaultValue { get; }
-    internal NamingStack NamingStack { get; }
+    internal NameStack NameStack { get; }
     internal override CanFail ValidationResult { get; } = new();
 
-    internal RequiredEnumWithDefaultProperty(TParameters parameters, TProperty defaultValue, NamingStack namingStack)
+    internal RequiredEnumWithDefaultProperty(TParameters parameters, TProperty defaultValue, NameStack nameStack)
     {
         Parameters = parameters;
         DefaultValue = defaultValue;
-        NamingStack = namingStack;
+        NameStack = nameStack;
     }
 }

@@ -10,11 +10,11 @@ public sealed class EnumProperty<TParameters, TProperty> : ValidatableBaseProper
 	where TProperty : struct
 {
 	private readonly TParameters _parameters;
-	private readonly NamingStack _namingStack;
-	internal EnumProperty(TParameters parameters, NamingStack namingStack)
+	private readonly NameStack _nameStack;
+	internal EnumProperty(TParameters parameters, NameStack nameStack)
 	{
 		_parameters = parameters;
-		_namingStack = namingStack;
+		_nameStack = nameStack;
 	}
 
     /// <summary>
@@ -23,7 +23,7 @@ public sealed class EnumProperty<TParameters, TProperty> : ValidatableBaseProper
     /// <param name="missingError">Error that occurs if the property is not set in the request</param>
     public RequiredEnumProperty<TParameters, TProperty> Required(Error missingError)
 	{
-		var required = new RequiredEnumProperty<TParameters, TProperty>(_parameters, missingError, _namingStack);
+		var required = new RequiredEnumProperty<TParameters, TProperty>(_parameters, missingError, _nameStack);
 		Property = required;
 		return required;
 	}
@@ -34,8 +34,8 @@ public sealed class EnumProperty<TParameters, TProperty> : ValidatableBaseProper
 	/// <param name="customErrorMessage">Custom error message for the missing parameter error</param>
 	public RequiredEnumProperty<TParameters, TProperty> Required(string? customErrorMessage = null)
 	{
-		var error = Error.Validation(_namingStack.ErrorCode, customErrorMessage ?? _namingStack.ErrorMessage);
-		var required = new RequiredEnumProperty<TParameters, TProperty>(_parameters, error, _namingStack);
+		var error = Error.Validation(_nameStack.MissingErrorCode, customErrorMessage ?? _nameStack.MissingErrorMessage);
+		var required = new RequiredEnumProperty<TParameters, TProperty>(_parameters, error, _nameStack);
 		Property = required;
 		return required;
 	}
@@ -46,7 +46,7 @@ public sealed class EnumProperty<TParameters, TProperty> : ValidatableBaseProper
 	/// <param name="defaultValue">Default value that should be set if parameter is null</param>
 	public RequiredEnumWithDefaultProperty<TParameters, TProperty> Required(TProperty defaultValue)
 	{
-		var required = new RequiredEnumWithDefaultProperty<TParameters, TProperty>(_parameters, defaultValue, _namingStack);
+		var required = new RequiredEnumWithDefaultProperty<TParameters, TProperty>(_parameters, defaultValue, _nameStack);
 		Property = required;
 		return required;
 	}
@@ -57,7 +57,7 @@ public sealed class EnumProperty<TParameters, TProperty> : ValidatableBaseProper
     /// <returns></returns>
     public OptionalEnumProperty<TParameters, TProperty> Optional()
 	{
-		var optional = new OptionalEnumProperty<TParameters, TProperty>(_parameters, _namingStack);
+		var optional = new OptionalEnumProperty<TParameters, TProperty>(_parameters, _nameStack);
 		Property = optional;
 		return optional;
 	}

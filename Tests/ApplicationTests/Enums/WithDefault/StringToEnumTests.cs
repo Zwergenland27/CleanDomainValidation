@@ -14,7 +14,7 @@ public class StringToEnumTests
 		//Arrange
 		var defaultValue = Helpers.DefaultEnumValue;
 		var value = Helpers.EnumOneString;
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 
 		var parameters = new RStringParameter(value);
@@ -37,7 +37,7 @@ public class StringToEnumTests
 		//Arrange
 		var defaultValue = Helpers.DefaultEnumValue;
 		var value = Helpers.EnumInvalidString;
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 
 		var parameters = new RStringParameter(value);
@@ -60,7 +60,7 @@ public class StringToEnumTests
 	{
 		//Arrange
 		var defaultValue = Helpers.DefaultEnumValue;
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 
 		var parameters = new RStringParameter(null);

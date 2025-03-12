@@ -12,7 +12,7 @@ public class StringToEnumTests
 	{
 		//Arrange
 		var value = Helpers.EnumOneString;
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OStringParameter(value);
 		var property = new OptionalEnumProperty<OStringParameter, TestEnum>(parameters, nameStack);
@@ -33,7 +33,7 @@ public class StringToEnumTests
 	{
 		//Arrange
 		var value = Helpers.EnumInvalidString;
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OStringParameter(value);
 		var property = new OptionalEnumProperty<OStringParameter, TestEnum>(parameters, nameStack);
@@ -54,7 +54,7 @@ public class StringToEnumTests
 	public void Map_ShouldReturnNullAndNotSetErrorsAndRemoveNameFromNameStack_WhenStringNull()
 	{
 		//Arrange
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OStringParameter(null);
 		var property = new OptionalEnumProperty<OStringParameter, TestEnum>(parameters, nameStack);

@@ -14,7 +14,7 @@ public class DirectMappedTests
 	{
 		//Arrange
 		List<string> value = [Helpers.ExampleStringValue, Helpers.AlternateStringValue];
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RClassListParameter(value);
 		var property = new RequiredListProperty<RClassListParameter, string>(parameters, Helpers.ExampleMissingError, nameStack);
@@ -34,7 +34,7 @@ public class DirectMappedTests
 	public void DirectMapEachClass_ShouldReturnNullAndSetMissingErrorAndRemoveNameFromNameStack_WhenParameterListIsNull()
 	{
 		//Arrange
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RClassListParameter(null);
 		var property = new RequiredListProperty<RClassListParameter, string>(parameters, Helpers.ExampleMissingError, nameStack);
@@ -60,7 +60,7 @@ public class DirectMappedTests
 	{
 		//Arrange
 		List<int> value = [Helpers.ExampleIntValue, Helpers.AlternateIntValue];
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RStructListParameter(value);
 		var property = new RequiredListProperty<RStructListParameter, int>(parameters, Helpers.ExampleMissingError, nameStack);
@@ -80,7 +80,7 @@ public class DirectMappedTests
 	public void DirectMapEachStruct_ShouldReturnNullAndSetMissingErrorAndRemoveNameFromNameStack_WhenParameterListIsNull()
 	{
 		//Arrange
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RStructListParameter(null);
 		var property = new RequiredListProperty<RStructListParameter, int>(parameters, Helpers.ExampleMissingError, nameStack);

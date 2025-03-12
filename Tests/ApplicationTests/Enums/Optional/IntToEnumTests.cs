@@ -12,7 +12,7 @@ public class IntToEnumTests
 	{
 		//Arrange
 		var value = Helpers.EnumOneInt;
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OIntParameter(value);
 		var property = new OptionalEnumProperty<OIntParameter, TestEnum>(parameters, nameStack);
@@ -32,7 +32,7 @@ public class IntToEnumTests
 	{
 		//Arrange
 		var value = Helpers.EnumInvalidInt;
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OIntParameter(value);
 		var property = new OptionalEnumProperty<OIntParameter, TestEnum>(parameters, nameStack);
@@ -53,7 +53,7 @@ public class IntToEnumTests
 	public void Map_ShouldReturnNullAndNotSetErrorsAndRemoveNameFromNameStack_WhenIntNull()
 	{
 		//Arrange
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OIntParameter(null);
 		var property = new OptionalEnumProperty<OIntParameter, TestEnum>(parameters, nameStack);

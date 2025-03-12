@@ -12,13 +12,13 @@ public class RequiredStructWithDefaultProperty<TParameters, TProperty> : Validat
     
     internal TParameters Parameters { get; }
     internal TProperty DefaultValue { get; }
-    internal NamingStack NamingStack { get; }
+    internal NameStack NameStack { get; }
     internal override CanFail ValidationResult { get; } = new();
 
-    internal RequiredStructWithDefaultProperty(TParameters parameters, TProperty defaultValue, NamingStack namingStack)
+    internal RequiredStructWithDefaultProperty(TParameters parameters, TProperty defaultValue, NameStack nameStack)
     {
         Parameters = parameters;
         DefaultValue = defaultValue;
-        NamingStack = namingStack;
+        NameStack = nameStack;
     }
 }

@@ -74,7 +74,7 @@ public sealed class Builder<TParameters, TRequest>
 		where TRequestBuilder : IRequestBuilder<TParameters, TRequest>, new()
 	{
 		TRequestBuilder builder = new();
-		var namingStack = new NamingStack(_prefix);
-		return builder.Configure(new RequiredPropertyBuilder<TParameters, TRequest>(_parameters, namingStack)).Build();
+		var nameStack = new NameStack(_prefix);
+		return builder.Configure(new RequiredPropertyBuilder<TParameters, TRequest>(_parameters, nameStack)).Build();
 	}
 }

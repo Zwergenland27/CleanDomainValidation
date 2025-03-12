@@ -31,7 +31,7 @@ public class RequiredPropertyBuilderTests
     {
         //Arrange
         var parameters = new RPParameter("value");
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var builder = new RequiredPropertyBuilder<RPParameter, RPResult>(parameters, nameStack);
         var value = builder.ClassProperty(x => x.Value)
             .Required(MissingError)
@@ -49,7 +49,7 @@ public class RequiredPropertyBuilderTests
     {
         //Arrange
         var parameters = new RPParameter(null);
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var builder = new RequiredPropertyBuilder<RPParameter, RPResult>(parameters, nameStack);
         var value = builder.ClassProperty(x => x.Value)
             .Required(MissingError)
@@ -68,7 +68,7 @@ public class RequiredPropertyBuilderTests
     {
         //Arrange
         var parameters = new RPParameter("value");
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var builder = new RequiredPropertyBuilder<RPParameter, RPResult>(parameters, nameStack);
         var value = builder.ClassProperty(x => x.Value)
             .Required(MissingError)
@@ -86,7 +86,7 @@ public class RequiredPropertyBuilderTests
     {
         //Arrange
         var parameters = new RPParameter(null);
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var builder = new RequiredPropertyBuilder<RPParameter, RPResult>(parameters, nameStack);
         var value = builder.ClassProperty(x => x.Value)
             .Required(MissingError)
@@ -105,7 +105,7 @@ public class RequiredPropertyBuilderTests
     {
         //Arrange
         var parameters = new RPParameter("value");
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var builder = new RequiredPropertyBuilder<RPParameter, RPResult>(parameters, nameStack);
         var value = builder.ClassProperty(x => x.Value)
             .Required(MissingError)
@@ -123,7 +123,7 @@ public class RequiredPropertyBuilderTests
     {
         //Arrange
         var parameters = new RPParameter("error");
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var builder = new RequiredPropertyBuilder<RPParameter, RPResult>(parameters, nameStack);
         var value = builder.ClassProperty(x => x.Value)
             .Required(MissingError)

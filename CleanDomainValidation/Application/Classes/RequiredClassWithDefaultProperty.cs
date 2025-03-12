@@ -11,13 +11,13 @@ public class RequiredClassWithDefaultProperty<TParameters, TProperty> : Validata
 {
     internal TParameters Parameters { get; }
     internal TProperty DefaultValue { get; }
-    internal NamingStack NamingStack { get; }
+    internal NameStack NameStack { get; }
     internal override CanFail ValidationResult { get; } = new();
 
-    internal RequiredClassWithDefaultProperty(TParameters parameters, TProperty defaultValue, NamingStack namingStack)
+    internal RequiredClassWithDefaultProperty(TParameters parameters, TProperty defaultValue, NameStack nameStack)
     {
         Parameters = parameters;
-        NamingStack = namingStack;
+        NameStack = nameStack;
         DefaultValue = defaultValue;
     }
 }

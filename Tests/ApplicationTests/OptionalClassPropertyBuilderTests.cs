@@ -30,7 +30,7 @@ public class OptionalClassPropertyBuilderTests
     {
         //Arrange
         var parameters = new OCPParameter("value");
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var builder = new OptionalClassPropertyBuilder<OCPParameter, OCPResult>(parameters, nameStack);
         var value = builder.ClassProperty(x => x.Value)
             .Required(MissingError)
@@ -48,7 +48,7 @@ public class OptionalClassPropertyBuilderTests
     {
         //Arrange
         var parameters = new OCPParameter(null);
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var builder = new OptionalClassPropertyBuilder<OCPParameter, OCPResult>(parameters, nameStack);
         var value = builder.ClassProperty(x => x.Value)
             .Required(MissingError)
@@ -67,7 +67,7 @@ public class OptionalClassPropertyBuilderTests
     {
         //Arrange
         var parameters = new OCPParameter("value");
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var builder = new OptionalClassPropertyBuilder<OCPParameter, OCPResult>(parameters, nameStack);
         var value = builder.ClassProperty(x => x.Value)
             .Required(MissingError)
@@ -85,7 +85,7 @@ public class OptionalClassPropertyBuilderTests
     {
         //Arrange
         var parameters = new OCPParameter(null);
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var builder = new OptionalClassPropertyBuilder<OCPParameter, OCPResult>(parameters, nameStack);
         var value = builder.ClassProperty(x => x.Value)
             .Required(MissingError)
@@ -104,7 +104,7 @@ public class OptionalClassPropertyBuilderTests
     {
         //Arrange
         var parameters = new OCPParameter("value");
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var builder = new OptionalClassPropertyBuilder<OCPParameter, OCPResult>(parameters, nameStack);
         var value = builder.ClassProperty(x => x.Value)
             .Required(MissingError)
@@ -122,7 +122,7 @@ public class OptionalClassPropertyBuilderTests
     {
         //Arrange
         var parameters = new OCPParameter("error");
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var builder = new OptionalClassPropertyBuilder<OCPParameter, OCPResult>(parameters, nameStack);
         var value = builder.ClassProperty(x => x.Value)
             .Required(MissingError)

@@ -44,9 +44,9 @@ public static class Helpers
     public static int EnumTwoInt => 1;
     public static int EnumInvalidInt => 9;
     
-    public static void ShouldNotContainPropertyName(this NamingStack nameStack, PropertyNameEntry propertyName)
+    public static void ShouldNotContainPropertyName(this NameStack nameStack, PropertyNameEntry propertyName)
     {
-        var stackFieldInfo = typeof(NamingStack).GetField("_propertyNamesStack", BindingFlags.NonPublic | BindingFlags.Instance);
+        var stackFieldInfo = typeof(NameStack).GetField("_propertyNamesStack", BindingFlags.NonPublic | BindingFlags.Instance);
         var propertyNameStack = (Stack<INameStackEntry>) stackFieldInfo!.GetValue(nameStack)!;
         propertyNameStack.ShouldNotContain(propertyName);
     }

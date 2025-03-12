@@ -12,7 +12,7 @@ public class DirectMappedTests
     {
         //Arrange
         var value = Helpers.ExampleStringValue;
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         nameStack.PushProperty(Helpers.PropertyName);
         var parameters = new OClassParameter(value);
         var property = new OptionalClassProperty<OClassParameter, string>(parameters, nameStack);
@@ -33,7 +33,7 @@ public class DirectMappedTests
     {
         //Arrange
         var parameters = new OClassParameter(null);
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         nameStack.PushProperty(Helpers.PropertyName);
         var property = new OptionalClassProperty<OClassParameter, string>(parameters, nameStack);
 

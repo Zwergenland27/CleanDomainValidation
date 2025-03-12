@@ -16,7 +16,7 @@ public class ComplexMappedTests
         //Arrange
         var defaultValue = new RClassValueObject(Helpers.DefaultStringValue);
         var value = Helpers.ExampleStringValue;
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         nameStack.PushProperty(Helpers.PropertyName);
         var parameters = new RClassParameter(value);
         var property = new RequiredClassWithDefaultProperty<RClassParameter, RClassValueObject>(parameters, defaultValue, nameStack);
@@ -42,7 +42,7 @@ public class ComplexMappedTests
         //Arrange
         var defaultValue = new RClassValueObject(Helpers.DefaultStringValue);
         var value = Helpers.ErrorStringValue;
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         nameStack.PushProperty(Helpers.PropertyName);
         var parameters = new RClassParameter(value);
         var property = new RequiredClassWithDefaultProperty<RClassParameter, RClassValueObject>(parameters, defaultValue, nameStack);
@@ -67,7 +67,7 @@ public class ComplexMappedTests
     {
         //Arrange
         var defaultValue = new RClassValueObject(Helpers.DefaultStringValue);
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         nameStack.PushProperty(Helpers.PropertyName);
         var parameters = new RClassParameter(null);
         var property = new RequiredClassWithDefaultProperty<RClassParameter, RClassValueObject>(parameters, defaultValue, nameStack);
@@ -97,7 +97,7 @@ public class ComplexMappedTests
         //Arrange
         var defaultValue = new RStructValueObject(Helpers.DefaultIntValue);
         var value = Helpers.ExampleIntValue;
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         nameStack.PushProperty(Helpers.PropertyName);
         var parameters = new RStructParameter(value);
         var property = new RequiredClassWithDefaultProperty<RStructParameter, RStructValueObject>(parameters, defaultValue, nameStack);
@@ -122,7 +122,7 @@ public class ComplexMappedTests
         //Arrange
         var defaultValue = new RStructValueObject(Helpers.DefaultIntValue);
         var value = Helpers.ErrorIntValue;
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         nameStack.PushProperty(Helpers.PropertyName);
         var parameters = new RStructParameter(value);
         var property = new RequiredClassWithDefaultProperty<RStructParameter, RStructValueObject>(parameters, defaultValue, nameStack);
@@ -147,7 +147,7 @@ public class ComplexMappedTests
     {
         //Arrange
         var defaultValue = new RStructValueObject(Helpers.DefaultIntValue);
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         nameStack.PushProperty(Helpers.PropertyName);
         var parameters = new RStructParameter(null);
         var property = new RequiredClassWithDefaultProperty<RStructParameter, RStructValueObject>(parameters, defaultValue, nameStack);

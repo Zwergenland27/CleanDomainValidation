@@ -16,7 +16,7 @@ public class EnumTests
 		//Arrange
 		List<TestEnum> defaultList = [Helpers.DefaultEnumValue, Helpers.DefaultEnumAlternateValue];
 		List<string> value = [Helpers.EnumOneString, Helpers.EnumTwoString];
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RClassListParameter(value);
 		var property = new RequiredListWithDefaultProperty<RClassListParameter, TestEnum>(parameters, defaultList, nameStack);
@@ -38,7 +38,7 @@ public class EnumTests
 		//Arrange
 		List<TestEnum> defaultList = [Helpers.DefaultEnumValue, Helpers.DefaultEnumAlternateValue];
 		List<string> value = [Helpers.EnumOneString, Helpers.EnumInvalidString];
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RClassListParameter(value);
 		var property = new RequiredListWithDefaultProperty<RClassListParameter, TestEnum>(parameters, defaultList, nameStack);
@@ -60,7 +60,7 @@ public class EnumTests
 	{
 		//Arrange
 		List<TestEnum> defaultList = [Helpers.DefaultEnumValue, Helpers.DefaultEnumAlternateValue];
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RClassListParameter(null);
 		var property = new RequiredListWithDefaultProperty<RClassListParameter, TestEnum>(parameters, defaultList, nameStack);
@@ -87,7 +87,7 @@ public class EnumTests
 		//Arrange
 		List<TestEnum> defaultList = [Helpers.DefaultEnumValue, Helpers.DefaultEnumAlternateValue];
 		List<int> value = [Helpers.EnumOneInt, Helpers.EnumTwoInt];
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RStructListParameter(value);
 		var property = new RequiredListWithDefaultProperty<RStructListParameter, TestEnum>(parameters, defaultList, nameStack);
@@ -109,7 +109,7 @@ public class EnumTests
 		//Arrange
 		List<TestEnum> defaultList = [Helpers.DefaultEnumValue, Helpers.DefaultEnumAlternateValue];
 		List<int> value = [Helpers.EnumOneInt, Helpers.EnumInvalidInt];
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RStructListParameter(value);
 		var property = new RequiredListWithDefaultProperty<RStructListParameter, TestEnum>(parameters, defaultList, nameStack);
@@ -131,7 +131,7 @@ public class EnumTests
 	{
 		//Arrange
 		List<TestEnum> defaultList = [Helpers.DefaultEnumValue, Helpers.DefaultEnumAlternateValue];
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RStructListParameter(null);
 		var property = new RequiredListWithDefaultProperty<RStructListParameter, TestEnum>(parameters, defaultList, nameStack);

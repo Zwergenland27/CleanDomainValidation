@@ -31,7 +31,7 @@ public static class FactoryMapExtensions
 	{
 		TValue? rawValue = value.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 
 		if (rawValue is null)
 		{
@@ -67,7 +67,7 @@ public static class FactoryMapExtensions
 	{
 		TValue? rawValue = value.Invoke(property.Parameters);
 
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		if (rawValue is null)
 		{
@@ -103,7 +103,7 @@ public static class FactoryMapExtensions
 	{
 		TValue? rawValue = value.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		if (rawValue is null)
 		{
@@ -140,7 +140,7 @@ public static class FactoryMapExtensions
 	{
 		TValue? rawValue = value.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		if (rawValue is null)
 		{
@@ -177,7 +177,7 @@ public static class FactoryMapExtensions
 	{
 		TValue? rawValue = value.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		if (rawValue is null)
 		{
@@ -213,7 +213,7 @@ public static class FactoryMapExtensions
 	{
 		TValue? rawValue = value.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		if (rawValue is null)
 		{
@@ -253,7 +253,7 @@ public static class FactoryMapExtensions
 	{
 		TValue? rawValue = value.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 
 		if (rawValue is null)
 		{
@@ -289,7 +289,7 @@ public static class FactoryMapExtensions
 	{
 		TValue? rawValue = value.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 
 		if (rawValue is null)
 		{
@@ -325,7 +325,7 @@ public static class FactoryMapExtensions
 	{
 		TValue? rawValue = value.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		if (rawValue is null)
 		{
@@ -362,7 +362,7 @@ public static class FactoryMapExtensions
 	{
 		TValue? rawValue = value.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		if (rawValue is null)
 		{
@@ -399,7 +399,7 @@ public static class FactoryMapExtensions
 	{
 		TValue? rawValue = value.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		if (rawValue is null)
 		{
@@ -435,7 +435,7 @@ public static class FactoryMapExtensions
 	{
 		TValue? rawValue = value.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		if (rawValue is null)
 		{
@@ -475,7 +475,7 @@ public static class FactoryMapExtensions
 	{
 		IEnumerable<TValue>? rawValues = values.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		if (rawValues is null)
 		{
@@ -519,7 +519,7 @@ public static class FactoryMapExtensions
 	{
 		IEnumerable<TValue>? rawValues = values.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		if (rawValues is null)
 		{
@@ -564,7 +564,7 @@ public static class FactoryMapExtensions
 	{
 		IEnumerable<TValue>? rawValues = values.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		if (rawValues is null)
 		{

@@ -15,17 +15,17 @@ public abstract class PropertyBuilder<TParameters, TResult>
 {
 	private readonly TParameters _parameters;
 	private readonly List<ValidatableProperty> _properties = [];
-	private readonly NamingStack _namingStack;
+	private readonly NameStack _nameStack;
 
     /// <summary>
     /// List of properties that have been added to the builder and will be validated
     /// </summary>
     protected IReadOnlyList<ValidatableProperty> Properties => _properties.AsReadOnly();
 
-	internal PropertyBuilder(TParameters parameters, NamingStack namingStack)
+	internal PropertyBuilder(TParameters parameters, NameStack nameStack)
 	{
 		_parameters = parameters;
-		_namingStack = namingStack;
+		_nameStack = nameStack;
 	}
 
 	/// <summary>
@@ -37,8 +37,8 @@ public abstract class PropertyBuilder<TParameters, TResult>
 		where TProperty : class
 	{
 		if (name is null) name = GetPropertyName(property);
-		_namingStack.PushProperty(name);
-		var classProperty = new ClassProperty<TParameters, TProperty>(_parameters, _namingStack);
+		_nameStack.PushProperty(name);
+		var classProperty = new ClassProperty<TParameters, TProperty>(_parameters, _nameStack);
 		_properties.Add(classProperty);
 		return classProperty;
 	}
@@ -50,8 +50,8 @@ public abstract class PropertyBuilder<TParameters, TResult>
 	public ClassProperty<TParameters, TProperty> ClassProperty<TProperty>(string name)
 		where TProperty : class
 	{
-		_namingStack.PushProperty(name);
-		var classProperty = new ClassProperty<TParameters, TProperty>(_parameters, _namingStack);
+		_nameStack.PushProperty(name);
+		var classProperty = new ClassProperty<TParameters, TProperty>(_parameters, _nameStack);
 		_properties.Add(classProperty);
 		return classProperty;
 	}
@@ -65,8 +65,8 @@ public abstract class PropertyBuilder<TParameters, TResult>
 		where TProperty : struct
 	{
 		if (name is null) name = GetPropertyName(property);
-		_namingStack.PushProperty(name);
-		var structProperty = new StructProperty<TParameters, TProperty>(_parameters, _namingStack);
+		_nameStack.PushProperty(name);
+		var structProperty = new StructProperty<TParameters, TProperty>(_parameters, _nameStack);
 		_properties.Add(structProperty);
 		return structProperty;
 	}
@@ -80,8 +80,8 @@ public abstract class PropertyBuilder<TParameters, TResult>
 		where TProperty : struct
 	{
 		if (name is null) name = GetPropertyName(property);
-		_namingStack.PushProperty(name);
-		var structProperty = new StructProperty<TParameters, TProperty>(_parameters, _namingStack);
+		_nameStack.PushProperty(name);
+		var structProperty = new StructProperty<TParameters, TProperty>(_parameters, _nameStack);
 		_properties.Add(structProperty);
 		return structProperty;
 	}
@@ -93,8 +93,8 @@ public abstract class PropertyBuilder<TParameters, TResult>
 	public StructProperty<TParameters, TProperty> StructProperty<TProperty>(string name)
 		where TProperty : struct
 	{
-		_namingStack.PushProperty(name);
-		var structProperty = new StructProperty<TParameters, TProperty>(_parameters, _namingStack);
+		_nameStack.PushProperty(name);
+		var structProperty = new StructProperty<TParameters, TProperty>(_parameters, _nameStack);
 		_properties.Add(structProperty);
 		return structProperty;
 	}
@@ -108,8 +108,8 @@ public abstract class PropertyBuilder<TParameters, TResult>
 		where TProperty : struct
 	{
 		if (name is null) name = GetPropertyName(property);
-		_namingStack.PushProperty(name);
-		var enumProperty = new EnumProperty<TParameters, TProperty>(_parameters, _namingStack);
+		_nameStack.PushProperty(name);
+		var enumProperty = new EnumProperty<TParameters, TProperty>(_parameters, _nameStack);
 		_properties.Add(enumProperty);
 		return enumProperty;
 	}
@@ -123,8 +123,8 @@ public abstract class PropertyBuilder<TParameters, TResult>
 		where TProperty : struct
 	{
 		if (name is null) name = GetPropertyName(property);
-		_namingStack.PushProperty(name);
-		var enumProperty = new EnumProperty<TParameters, TProperty>(_parameters, _namingStack);
+		_nameStack.PushProperty(name);
+		var enumProperty = new EnumProperty<TParameters, TProperty>(_parameters, _nameStack);
 		_properties.Add(enumProperty);
 		return enumProperty;
 	}
@@ -136,8 +136,8 @@ public abstract class PropertyBuilder<TParameters, TResult>
 	public EnumProperty<TParameters, TProperty> EnumProperty<TProperty>(string name)
 		where TProperty : struct
 	{
-		_namingStack.PushProperty(name);
-		var enumProperty = new EnumProperty<TParameters, TProperty>(_parameters, _namingStack);
+		_nameStack.PushProperty(name);
+		var enumProperty = new EnumProperty<TParameters, TProperty>(_parameters, _nameStack);
 		_properties.Add(enumProperty);
 		return enumProperty;
 	}
@@ -151,8 +151,8 @@ public abstract class PropertyBuilder<TParameters, TResult>
 		where TProperty : notnull
 	{
 		if (name is null) name = GetPropertyName(property);
-		_namingStack.PushProperty(name);
-		var classListProperty = new ListProperty<TParameters, TProperty>(_parameters, _namingStack);
+		_nameStack.PushProperty(name);
+		var classListProperty = new ListProperty<TParameters, TProperty>(_parameters, _nameStack);
 		_properties.Add(classListProperty);
 		return classListProperty;
 	}
@@ -164,8 +164,8 @@ public abstract class PropertyBuilder<TParameters, TResult>
 	public ListProperty<TParameters, TProperty> ListProperty<TProperty>(string name)
 		where TProperty : notnull
 	{
-		_namingStack.PushProperty(name);
-		var classListProperty = new ListProperty<TParameters, TProperty>(_parameters, _namingStack);
+		_nameStack.PushProperty(name);
+		var classListProperty = new ListProperty<TParameters, TProperty>(_parameters, _nameStack);
 		_properties.Add(classListProperty);
 		return classListProperty;
 	}

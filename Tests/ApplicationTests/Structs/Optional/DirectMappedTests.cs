@@ -12,7 +12,7 @@ public class DirectMappedTests
     {
 	    //Arrange
 	    var value = Helpers.ExampleIntValue;
-	    var nameStack = new NamingStack("");
+	    var nameStack = new NameStack("");
 	    nameStack.PushProperty(Helpers.PropertyName);
 	    var parameters = new OStructParameter(value);
 	    var property = new OptionalStructProperty<OStructParameter, int>(parameters, nameStack);
@@ -32,7 +32,7 @@ public class DirectMappedTests
 	public void DirectMap_ShouldReturnNullAndNotSetErrorsAndRemoveNameFromNameStack_WhenValueNull()
 	{
 		//Arrange
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OStructParameter(null);
 		var property = new OptionalStructProperty<OStructParameter, int>(parameters, nameStack);

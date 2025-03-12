@@ -14,7 +14,7 @@ public class DirectMapped
         //Arrange
         var defaultValue = Helpers.DefaultStringValue;
         var value = Helpers.ExampleStringValue;
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         nameStack.PushProperty(Helpers.PropertyName);
         var parameters = new RClassParameter(value);
         var property = new RequiredClassWithDefaultProperty<RClassParameter, string>(parameters, defaultValue, nameStack);
@@ -35,7 +35,7 @@ public class DirectMapped
     {
         //Arrange
         var defaultValue = Helpers.DefaultStringValue;
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         nameStack.PushProperty(Helpers.PropertyName);
         var parameters = new RClassParameter(null);
         var property = new RequiredClassWithDefaultProperty<RClassParameter, string>(parameters, defaultValue, nameStack);

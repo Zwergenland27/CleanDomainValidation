@@ -16,7 +16,7 @@ public record Result(
     TestEnum? OptionalEnumProperty,
     List<int> RequiredListProperty);
 
-public class TestablePropertyBuilder(Parameters parameters, NamingStack namingStack) : PropertyBuilder<Parameters, Result>(parameters, namingStack)
+public class TestablePropertyBuilder(Parameters parameters, NameStack nameStack) : PropertyBuilder<Parameters, Result>(parameters, nameStack)
 {
     public new IReadOnlyList<ValidatableProperty> Properties => base.Properties;
 }
@@ -30,7 +30,7 @@ public class PropertyBuilderTests
     {
         //Arrange
         var parameters = new Parameters();
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var propertyBuilder = new TestablePropertyBuilder(parameters, nameStack);
 
         //Act
@@ -45,7 +45,7 @@ public class PropertyBuilderTests
     {
         //Arrange
         var parameters = new Parameters();
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var propertyBuilder = new TestablePropertyBuilder(parameters, nameStack);
 
         //Act
@@ -61,7 +61,7 @@ public class PropertyBuilderTests
     {
         //Arrange
         var parameters = new Parameters();
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var propertyBuilder = new TestablePropertyBuilder(parameters, nameStack);
 
         //Act
@@ -76,7 +76,7 @@ public class PropertyBuilderTests
     {
         //Arrange
         var parameters = new Parameters();
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var propertyBuilder = new TestablePropertyBuilder(parameters, nameStack);
 
         //Act
@@ -91,7 +91,7 @@ public class PropertyBuilderTests
     {
         //Arrange
         var parameters = new Parameters();
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var propertyBuilder = new TestablePropertyBuilder(parameters, nameStack);
 
         //Act
@@ -106,7 +106,7 @@ public class PropertyBuilderTests
     {
         //Arrange
         var parameters = new Parameters();
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var propertyBuilder = new TestablePropertyBuilder(parameters, nameStack);
     
         //Act
@@ -121,7 +121,7 @@ public class PropertyBuilderTests
     {
         //Arrange
         var parameters = new Parameters();
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var propertyBuilder = new TestablePropertyBuilder(parameters, nameStack);
     
         //Act
@@ -137,7 +137,7 @@ public class PropertyBuilderTests
     {
         //Arrange
         var parameters = new Parameters();
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var propertyBuilder = new TestablePropertyBuilder(parameters, nameStack);
     
         //Act
@@ -152,7 +152,7 @@ public class PropertyBuilderTests
     {
         //Arrange
         var parameters = new Parameters();
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var propertyBuilder = new TestablePropertyBuilder(parameters, nameStack);
     
         //Act
@@ -167,7 +167,7 @@ public class PropertyBuilderTests
     {
         //Arrange
         var parameters = new Parameters();
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var propertyBuilder = new TestablePropertyBuilder(parameters, nameStack);
     
         //Act
@@ -182,7 +182,7 @@ public class PropertyBuilderTests
     {
         //Arrange
         var parameters = new Parameters();
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var propertyBuilder = new TestablePropertyBuilder(parameters, nameStack);
     
         //Act
@@ -198,7 +198,7 @@ public class PropertyBuilderTests
     {
         //Arrange
         var parameters = new Parameters();
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var propertyBuilder = new TestablePropertyBuilder(parameters, nameStack);
     
         //Act
@@ -213,7 +213,7 @@ public class PropertyBuilderTests
     {
         //Arrange
         var parameters = new Parameters();
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var propertyBuilder = new TestablePropertyBuilder(parameters, nameStack);
     
         //Act
@@ -228,7 +228,7 @@ public class PropertyBuilderTests
     {
         //Arrange
         var parameters = new Parameters();
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var propertyBuilder = new TestablePropertyBuilder(parameters, nameStack);
     
         //Act
@@ -243,7 +243,7 @@ public class PropertyBuilderTests
     {
         //Arrange
         var parameters = new Parameters();
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var propertyBuilder = new TestablePropertyBuilder(parameters, nameStack);
     
         //Act
@@ -258,7 +258,7 @@ public class PropertyBuilderTests
     {
         //Arrange
         var parameters = new Parameters();
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var propertyBuilder = new TestablePropertyBuilder(parameters, nameStack);
     
         //Act
@@ -273,7 +273,7 @@ public class PropertyBuilderTests
     {
         //Arrange
         var parameters = new Parameters();
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var propertyBuilder = new TestablePropertyBuilder(parameters, nameStack);
         
         //Act
@@ -288,7 +288,7 @@ public class PropertyBuilderTests
     {
         //Arrange
         var parameters = new Parameters();
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var propertyBuilder = new TestablePropertyBuilder(parameters, nameStack);
         
         //Act
@@ -303,7 +303,7 @@ public class PropertyBuilderTests
     {
         //Arrange
         var parameters = new Parameters();
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var propertyBuilder = new TestablePropertyBuilder(parameters, nameStack);
     
         //Act
@@ -318,7 +318,7 @@ public class PropertyBuilderTests
     {
         //Arrange
         var parameters = new Parameters();
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var propertyBuilder = new TestablePropertyBuilder(parameters, nameStack);
     
         //Act
@@ -334,7 +334,7 @@ public class PropertyBuilderTests
     {
         //Arrange
         var parameters = new Parameters();
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var propertyBuilder = new TestablePropertyBuilder(parameters, nameStack);
     
         //Act
@@ -349,7 +349,7 @@ public class PropertyBuilderTests
     {
         //Arrange
         var parameters = new Parameters();
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var propertyBuilder = new TestablePropertyBuilder(parameters, nameStack);
     
         //Act
@@ -364,7 +364,7 @@ public class PropertyBuilderTests
     {
         //Arrange
         var parameters = new Parameters();
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var propertyBuilder = new TestablePropertyBuilder(parameters, nameStack);
         
         //Act
@@ -379,7 +379,7 @@ public class PropertyBuilderTests
     {
         //Arrange
         var parameters = new Parameters();
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var propertyBuilder = new TestablePropertyBuilder(parameters, nameStack);
     
         //Act
@@ -394,7 +394,7 @@ public class PropertyBuilderTests
     {
         //Arrange
         var parameters = new Parameters();
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var propertyBuilder = new TestablePropertyBuilder(parameters, nameStack);
     
         //Act
@@ -410,7 +410,7 @@ public class PropertyBuilderTests
     {
         //Arrange
         var parameters = new Parameters();
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var propertyBuilder = new TestablePropertyBuilder(parameters, nameStack);
     
         //Act
@@ -425,7 +425,7 @@ public class PropertyBuilderTests
     {
         //Arrange
         var parameters = new Parameters();
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var propertyBuilder = new TestablePropertyBuilder(parameters, nameStack);
     
         //Act
@@ -440,7 +440,7 @@ public class PropertyBuilderTests
     {
         //Arrange
         var parameters = new Parameters();
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         var propertyBuilder = new TestablePropertyBuilder(parameters, nameStack);
     
         //Act

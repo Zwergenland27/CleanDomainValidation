@@ -12,7 +12,7 @@ public class DirectMappedTests
 	{
 		//Arrange
 		var value = Helpers.ExampleStringValue;
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RClassParameter(value);
 		var property = new RequiredClassProperty<RClassParameter, string>(parameters, Helpers.ExampleMissingError, nameStack);
@@ -33,7 +33,7 @@ public class DirectMappedTests
 	{
 		//Arrange
 		var parameters = new RClassParameter(null);
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var property = new RequiredClassProperty<RClassParameter, string>(parameters, Helpers.ExampleMissingError, nameStack);
 

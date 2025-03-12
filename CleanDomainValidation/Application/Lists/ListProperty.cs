@@ -11,12 +11,12 @@ public sealed class ListProperty<TParameters, TProperty> : ValidatableBaseProper
 	where TProperty : notnull
 {
 	private readonly TParameters _parameters;
-	private readonly NamingStack _namingStack;
+	private readonly NameStack _nameStack;
 
-	internal ListProperty(TParameters parameters, NamingStack namingStack)
+	internal ListProperty(TParameters parameters, NameStack nameStack)
 	{
 		_parameters = parameters;
-		_namingStack = namingStack;
+		_nameStack = nameStack;
 	}
 
     /// <summary>
@@ -26,7 +26,7 @@ public sealed class ListProperty<TParameters, TProperty> : ValidatableBaseProper
 
     public RequiredListProperty<TParameters, TProperty> Required(Error missingError)
 	{
-		var required = new RequiredListProperty<TParameters, TProperty>(_parameters, missingError, _namingStack);
+		var required = new RequiredListProperty<TParameters, TProperty>(_parameters, missingError, _nameStack);
 		Property = required;
 		return required;
 	}
@@ -38,8 +38,8 @@ public sealed class ListProperty<TParameters, TProperty> : ValidatableBaseProper
 
 	public RequiredListProperty<TParameters, TProperty> Required(string? customErrorMessage = null)
 	{
-		var error = Error.Validation(_namingStack.ErrorCode, customErrorMessage ?? _namingStack.ErrorMessage);
-		var required = new RequiredListProperty<TParameters, TProperty>(_parameters, error, _namingStack);
+		var error = Error.Validation(_nameStack.MissingErrorCode, customErrorMessage ?? _nameStack.MissingErrorMessage);
+		var required = new RequiredListProperty<TParameters, TProperty>(_parameters, error, _nameStack);
 		Property = required;
 		return required;
 	}
@@ -50,7 +50,7 @@ public sealed class ListProperty<TParameters, TProperty> : ValidatableBaseProper
 	/// <param name="defaultValue">Default list that should be set if parameter is null</param>
 	public RequiredListWithDefaultProperty<TParameters, TProperty> WithDefault(IEnumerable<TProperty> defaultValue)
 	{
-		var requiredWithDefault = new RequiredListWithDefaultProperty<TParameters, TProperty>(_parameters, defaultValue, _namingStack);
+		var requiredWithDefault = new RequiredListWithDefaultProperty<TParameters, TProperty>(_parameters, defaultValue, _nameStack);
 		Property = requiredWithDefault;
 		return requiredWithDefault;
 	}
@@ -61,7 +61,7 @@ public sealed class ListProperty<TParameters, TProperty> : ValidatableBaseProper
     /// <returns></returns>
     public OptionalListProperty<TParameters, TProperty> Optional()
 	{
-		var optional = new OptionalListProperty<TParameters, TProperty>(_parameters, _namingStack);
+		var optional = new OptionalListProperty<TParameters, TProperty>(_parameters, _nameStack);
 		Property = optional;
 		return optional;
 	}

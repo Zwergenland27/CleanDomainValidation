@@ -16,7 +16,7 @@ public class DirectMappedTests
 		//Arrange
 		List<string> defaultList = [Helpers.DefaultStringValue, Helpers.DefaultStringAlternateValue];
 		List<string> value = [Helpers.ExampleStringValue, Helpers.AlternateStringValue];
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RClassListParameter(value);
 		var property = new RequiredListWithDefaultProperty<RClassListParameter, string>(parameters, defaultList, nameStack);
@@ -37,7 +37,7 @@ public class DirectMappedTests
 	{
 		//Arrange
 		List<string> defaultList = [Helpers.DefaultStringValue, Helpers.DefaultStringAlternateValue];
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RClassListParameter(null);
 		var property = new RequiredListWithDefaultProperty<RClassListParameter, string>(parameters, defaultList, nameStack);
@@ -63,7 +63,7 @@ public class DirectMappedTests
 		//Arrange
 		List<int> defaultList = [Helpers.DefaultIntValue, Helpers.DefaultIntAlternateValue];
 		List<int> value = [Helpers.ExampleIntValue, Helpers.AlternateIntValue];
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RStructListParameter(value);
 		var property = new RequiredListWithDefaultProperty<RStructListParameter, int>(parameters, defaultList, nameStack);
@@ -84,7 +84,7 @@ public class DirectMappedTests
 	{
 		//Arrange
 		List<int> defaultList = [Helpers.DefaultIntValue, Helpers.DefaultIntAlternateValue];
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RStructListParameter(null);
 		var property = new RequiredListWithDefaultProperty<RStructListParameter, int>(parameters, defaultList, nameStack);

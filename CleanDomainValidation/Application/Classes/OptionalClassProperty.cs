@@ -11,12 +11,12 @@ public sealed class OptionalClassProperty<TParameters, TProperty> : ValidatableP
 {
 	internal TParameters Parameters { get; }
 	
-	internal NamingStack NamingStack { get; }
+	internal NameStack NameStack { get; }
 	internal override CanFail ValidationResult { get; } = new();
 
-	internal OptionalClassProperty(TParameters parameters, NamingStack namingStack)
+	internal OptionalClassProperty(TParameters parameters, NameStack nameStack)
 	{
 		Parameters = parameters;
-		NamingStack = namingStack;
+		NameStack = nameStack;
 	}
 }

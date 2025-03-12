@@ -11,12 +11,12 @@ public sealed class StructProperty<TParameters, TProperty> : ValidatableBaseProp
 	where TProperty : struct
 {
 	private readonly TParameters _parameters;
-	private readonly NamingStack _namingStack;
+	private readonly NameStack _nameStack;
 
-	internal StructProperty(TParameters parameters, NamingStack namingStack)
+	internal StructProperty(TParameters parameters, NameStack nameStack)
 	{
 		_parameters = parameters;
-		_namingStack = namingStack;
+		_nameStack = nameStack;
 	}
 
     /// <summary>
@@ -25,7 +25,7 @@ public sealed class StructProperty<TParameters, TProperty> : ValidatableBaseProp
     /// <param name="missingError">Error that occurs if the property is not set in the request</param>
     public RequiredStructProperty<TParameters, TProperty> Required(Error missingError)
 	{
-		var required = new RequiredStructProperty<TParameters, TProperty>(_parameters, missingError, _namingStack);
+		var required = new RequiredStructProperty<TParameters, TProperty>(_parameters, missingError, _nameStack);
 		Property = required;
 		return required;
 	}
@@ -36,8 +36,8 @@ public sealed class StructProperty<TParameters, TProperty> : ValidatableBaseProp
 	/// <param name="customErrorMessage">Custom error message for the missing parameter error</param>
 	public RequiredStructProperty<TParameters, TProperty> Required(string? customErrorMessage = null)
 	{
-		var error = Error.Validation(_namingStack.ErrorCode, customErrorMessage ?? _namingStack.ErrorMessage);
-		var required = new RequiredStructProperty<TParameters, TProperty>(_parameters, error, _namingStack);
+		var error = Error.Validation(_nameStack.MissingErrorCode, customErrorMessage ?? _nameStack.MissingErrorMessage);
+		var required = new RequiredStructProperty<TParameters, TProperty>(_parameters, error, _nameStack);
 		Property = required;
 		return required;
 	}
@@ -48,7 +48,7 @@ public sealed class StructProperty<TParameters, TProperty> : ValidatableBaseProp
 	/// <param name="defaultValue">Default value that should be set if parameter is null</param>
 	public RequiredStructWithDefaultProperty<TParameters, TProperty> WithDefault(TProperty defaultValue)
 	{
-		var requiredWithDefault = new RequiredStructWithDefaultProperty<TParameters, TProperty>(_parameters, defaultValue, _namingStack);
+		var requiredWithDefault = new RequiredStructWithDefaultProperty<TParameters, TProperty>(_parameters, defaultValue, _nameStack);
 		Property = requiredWithDefault;
 		return requiredWithDefault;
 	}
@@ -59,7 +59,7 @@ public sealed class StructProperty<TParameters, TProperty> : ValidatableBaseProp
     /// <returns></returns>
     public OptionalStructProperty<TParameters, TProperty> Optional()
 	{
-		var optional = new OptionalStructProperty<TParameters, TProperty>(_parameters, _namingStack);
+		var optional = new OptionalStructProperty<TParameters, TProperty>(_parameters, _nameStack);
 		Property = optional;
 		return optional;
 	}

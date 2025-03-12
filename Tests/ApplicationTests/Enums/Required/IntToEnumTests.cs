@@ -12,7 +12,7 @@ public class IntToEnumTests
 	{
 		//Arrange
 		var value = Helpers.EnumOneInt;
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RIntParameter(value);
 		var property = new RequiredEnumProperty<RIntParameter, TestEnum>(parameters, Helpers.ExampleMissingError, nameStack);
@@ -33,7 +33,7 @@ public class IntToEnumTests
 	{
 		//Arrange
 		var value = Helpers.EnumInvalidInt;
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RIntParameter(value);
 		var property = new RequiredEnumProperty<RIntParameter, TestEnum>(parameters, Helpers.ExampleMissingError, nameStack);
@@ -54,7 +54,7 @@ public class IntToEnumTests
 	public void Map_ShouldReturnDefaultAndSetMissingErrorAndRemoveNameFromNameStack_WhenIntNull()
 	{
 		//Arrange
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RIntParameter(null);
 		var property = new RequiredEnumProperty<RIntParameter, TestEnum>(parameters, Helpers.ExampleMissingError, nameStack);

@@ -27,7 +27,7 @@ public static class DirectMapExtensions
 	{
 		TProperty? rawValue = value.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		return rawValue;
 	}
@@ -48,7 +48,7 @@ public static class DirectMapExtensions
 	{
 		TProperty? rawValue = value.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		if (rawValue is null)
 		{
@@ -75,7 +75,7 @@ public static class DirectMapExtensions
 	{
 		TProperty? rawValue = value.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		if (rawValue is null)
 		{
@@ -105,7 +105,7 @@ public static class DirectMapExtensions
 	{
 		TProperty? rawValue = value.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		return rawValue;
 	}
@@ -126,7 +126,7 @@ public static class DirectMapExtensions
 	{
 		TProperty? rawValue = value.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		if (rawValue is null)
 		{
@@ -153,7 +153,7 @@ public static class DirectMapExtensions
 	{
 		TProperty? rawValue = value.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		if (rawValue is null)
 		{
@@ -183,7 +183,7 @@ public static class DirectMapExtensions
 	{
 		IEnumerable<TProperty>? rawValue = values.Invoke(property.Parameters);
 
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		return rawValue;
 	}
@@ -204,7 +204,7 @@ public static class DirectMapExtensions
 	{
 		IEnumerable<TProperty>? rawValue = values.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		if (rawValue is null)
 		{
@@ -231,7 +231,7 @@ public static class DirectMapExtensions
 	{
 		IEnumerable<TProperty>? rawValue = values.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		if (rawValue is null)
 		{

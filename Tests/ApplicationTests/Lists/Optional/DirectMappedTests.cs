@@ -14,7 +14,7 @@ public class DirectMappedTests
 	{
 		//Arrange
 		List<string> value = [Helpers.ExampleStringValue, Helpers.AlternateStringValue];
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OClassListParameter(value);
 		var property = new OptionalListProperty<OClassListParameter, string>(parameters, nameStack);
@@ -34,7 +34,7 @@ public class DirectMappedTests
 	public void DirectMapEachClass_ShouldReturnNullAndNotSetErrorsAndRemoveNameFromNameStack_WhenParameterListIsNull()
 	{
 		//Arrange
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OClassListParameter(null);
 		var property = new OptionalListProperty<OClassListParameter, string>(parameters, nameStack);
@@ -59,7 +59,7 @@ public class DirectMappedTests
 	{
 		//Arrange
 		List<int> value = [Helpers.ExampleIntValue, Helpers.AlternateIntValue];
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OStructListParameter(value);
 		var property = new OptionalListProperty<OStructListParameter, int>(parameters, nameStack);
@@ -79,7 +79,7 @@ public class DirectMappedTests
 	public void DirectMapEachStruct_ShouldReturnNullAndNotSetErrorsAndRemoveNameFromNameStack_WhenParameterListIsNull()
 	{
 		//Arrange
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OStructListParameter(null);
 		var property = new OptionalListProperty<OStructListParameter, int>(parameters, nameStack);

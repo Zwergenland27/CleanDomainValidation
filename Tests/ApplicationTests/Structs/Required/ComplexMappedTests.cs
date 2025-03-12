@@ -15,7 +15,7 @@ public class ComplexMappedTests
 	{
 		//Arrange
 		var value = Helpers.ExampleStringValue;
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RClassParameter(value);
 		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
@@ -40,7 +40,7 @@ public class ComplexMappedTests
 	{
 		//Arrange
 		var value = Helpers.ErrorStringValue;
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RClassParameter(value);
 		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
@@ -64,7 +64,7 @@ public class ComplexMappedTests
 	public void ComplexMapClass_ShouldReturnDefaultAndSetMissingErrorAndRemoveNameFromNameStack_WhenValueNull()
 	{
 		//Arrange
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RClassParameter(null);
 		var property = new RequiredStructProperty<RClassParameter, RClassValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
@@ -95,7 +95,7 @@ public class ComplexMappedTests
 	{
 		//Arrange
 		var value = Helpers.ExampleIntValue;
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RStructParameter(value);
 		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
@@ -119,7 +119,7 @@ public class ComplexMappedTests
 	{
 		//Arrange
 		var value = Helpers.ErrorIntValue;
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RStructParameter(value);
 		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
@@ -144,7 +144,7 @@ public class ComplexMappedTests
 	public void ComplexMapStruct_ShouldReturnDefaultAndSetMissingErrorAndRemoveNameFromNameStack_WhenValueNull()
 	{
 		//Arrange
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RStructParameter(null);
 		var property = new RequiredStructProperty<RStructParameter, RStructValueObject>(parameters, Helpers.ExampleMissingError, nameStack);

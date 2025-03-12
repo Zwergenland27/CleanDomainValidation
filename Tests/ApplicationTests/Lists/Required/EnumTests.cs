@@ -14,7 +14,7 @@ public class EnumTests
 	{
 		//Arrange
 		List<string> value = [Helpers.EnumOneString, Helpers.EnumTwoString];
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RStringListParameter(value);
 		var property = new RequiredListProperty<RStringListParameter, TestEnum>(parameters, Helpers.ExampleMissingError, nameStack);
@@ -35,7 +35,7 @@ public class EnumTests
 	{
 		//Arrange
 		List<string> value = [Helpers.EnumOneString, Helpers.EnumInvalidString];
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RStringListParameter(value);
 		var property = new RequiredListProperty<RStringListParameter, TestEnum>(parameters, Helpers.ExampleMissingError, nameStack);
@@ -56,7 +56,7 @@ public class EnumTests
 	public void MapEachEnum_ShouldReturnNullAndSetMissingErrorAndRemoveNameFromNameStack_WhenStringListIsNull()
 	{
 		//Arrange
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RStringListParameter(null);
 		var property = new RequiredListProperty<RStringListParameter, TestEnum>(parameters, Helpers.ExampleMissingError, nameStack);
@@ -82,7 +82,7 @@ public class EnumTests
 	{
 		//Arrange
 		List<int> value = [Helpers.EnumOneInt, Helpers.EnumTwoInt];
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RIntListParameter(value);
 		var property = new RequiredListProperty<RIntListParameter, TestEnum>(parameters, Helpers.ExampleMissingError, nameStack);
@@ -103,7 +103,7 @@ public class EnumTests
 	{
 		//Arrange
 		List<int> value = [Helpers.EnumOneInt, Helpers.EnumInvalidInt];
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RIntListParameter(value);
 		var property = new RequiredListProperty<RIntListParameter, TestEnum>(parameters, Helpers.ExampleMissingError, nameStack);
@@ -124,7 +124,7 @@ public class EnumTests
 	public void MapEachEnum_ShouldReturnNullAndSetMissingErrorAndRemoveNameFromNameStack_WhenIntListIsNull()
 	{
 		//Arrange
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RIntListParameter(null);
 		var property = new RequiredListProperty<RIntListParameter, TestEnum>(parameters, Helpers.ExampleMissingError, nameStack);

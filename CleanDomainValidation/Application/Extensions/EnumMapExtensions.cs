@@ -26,7 +26,7 @@ public static class EnumMapExtensions
 	{
 		string? rawEnum = value.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		if(rawEnum is null)
 		{
@@ -57,7 +57,7 @@ public static class EnumMapExtensions
 	{
 		string? rawEnum = value.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		if (rawEnum is null)
 		{
@@ -89,7 +89,7 @@ public static class EnumMapExtensions
 	{
 		string? rawEnum = value.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		if (rawEnum is null)
 		{
@@ -120,7 +120,7 @@ public static class EnumMapExtensions
 	{
 		int? rawEnum = value.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		if (rawEnum is null)
 		{
@@ -151,7 +151,7 @@ public static class EnumMapExtensions
 	{
 		int? rawEnum = value.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		if (rawEnum is null)
 		{
@@ -183,7 +183,7 @@ public static class EnumMapExtensions
 	{
 		int? rawEnum = value.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		if (rawEnum is null)
 		{
@@ -218,7 +218,7 @@ public static class EnumMapExtensions
 	{
 		IEnumerable<string>? rawEnums = values.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		if (rawEnums is null)
 		{
@@ -257,7 +257,7 @@ public static class EnumMapExtensions
 	{
 		IEnumerable<string>? rawEnums = values.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		if (rawEnums is null)
 		{
@@ -297,7 +297,7 @@ public static class EnumMapExtensions
 	{
 		IEnumerable<string>? rawEnums = values.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		if (rawEnums is null)
 		{
@@ -336,7 +336,7 @@ public static class EnumMapExtensions
 	{
 		IEnumerable<int>? rawEnums = values.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		if (rawEnums is null)
 		{
@@ -375,7 +375,7 @@ public static class EnumMapExtensions
 	{
 		IEnumerable<int>? rawEnums = values.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		if (rawEnums is null)
 		{
@@ -415,7 +415,7 @@ public static class EnumMapExtensions
 	{
 		IEnumerable<int>? rawEnums = values.Invoke(property.Parameters);
 		
-		property.NamingStack.Pop();
+		property.NameStack.Pop();
 		
 		if (rawEnums is null)
 		{

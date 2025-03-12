@@ -14,7 +14,7 @@ public class ComplexMappedTests
     {
         //Arrange
         var value = Helpers.ExampleStringValue;
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         nameStack.PushProperty(Helpers.PropertyName);
         var parameters = new OClassParameter(value);
         var property = new OptionalClassProperty<OClassParameter, OClassValueObject>(parameters, nameStack);
@@ -39,7 +39,7 @@ public class ComplexMappedTests
     {
         //Arrange
         var value = Helpers.ErrorStringValue;
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         nameStack.PushProperty(Helpers.PropertyName);
         var parameters = new OClassParameter(value);
         var property = new OptionalClassProperty<OClassParameter, OClassValueObject>(parameters, nameStack);
@@ -64,7 +64,7 @@ public class ComplexMappedTests
     {
         //Arrange
         var parameters = new OClassParameter(null);
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         nameStack.PushProperty(Helpers.PropertyName);
         var property = new OptionalClassProperty<OClassParameter, OClassValueObject>(parameters, nameStack);
 
@@ -92,7 +92,7 @@ public class ComplexMappedTests
     {
         //Arrange
         var value = Helpers.ExampleIntValue;
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         nameStack.PushProperty(Helpers.PropertyName);
         var parameters = new OStructParameter(value);
         var property = new OptionalClassProperty<OStructParameter, OStructValueObject>(parameters, nameStack);
@@ -116,7 +116,7 @@ public class ComplexMappedTests
     {
         //Arrange
         var value = Helpers.ErrorIntValue;
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         nameStack.PushProperty(Helpers.PropertyName);
         var parameters = new OStructParameter(value);
         var property = new OptionalClassProperty<OStructParameter, OStructValueObject>(parameters, nameStack);
@@ -141,7 +141,7 @@ public class ComplexMappedTests
     {
         //Arrange
         var parameters = new OStructParameter(null);
-        var nameStack = new NamingStack("");
+        var nameStack = new NameStack("");
         nameStack.PushProperty(Helpers.PropertyName);
         var property = new OptionalClassProperty<OStructParameter, OStructValueObject>(parameters, nameStack);
 

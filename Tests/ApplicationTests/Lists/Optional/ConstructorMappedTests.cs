@@ -14,7 +14,7 @@ public class ConstructorMappedTests
 	{
 		//Arrange
 		List<string> value = [Helpers.ExampleStringValue, Helpers.AlternateStringValue];
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OClassListParameter(value);
 		var property = new OptionalListProperty<OClassListParameter, OClassValueObject>(parameters, nameStack);
@@ -34,7 +34,7 @@ public class ConstructorMappedTests
 	public void ConstructorMapEachClass_ShouldReturnNullAndNotSetErrorsAndRemoveNameFromNameStack_WhenParameterListIsNull()
 	{
 		//Arrange
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OClassListParameter(null);
 		var property = new OptionalListProperty<OClassListParameter, OClassValueObject>(parameters, nameStack);
@@ -59,7 +59,7 @@ public class ConstructorMappedTests
 	{
 		//Arrange
 		List<int> value = [Helpers.ExampleIntValue, Helpers.AlternateIntValue];
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OStructListParameter(value);
 		var property = new OptionalListProperty<OStructListParameter, OStructValueObject>(parameters, nameStack);
@@ -79,7 +79,7 @@ public class ConstructorMappedTests
 	public void ConstructorMapEachStruct_ShouldReturnNullAndNotSetErrorsAndRemoveNameFromNameStack_WhenParameterListIsNull()
 	{
 		//Arrange
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new OStructListParameter(null);
 		var property = new OptionalListProperty<OStructListParameter, OStructValueObject>(parameters, nameStack);

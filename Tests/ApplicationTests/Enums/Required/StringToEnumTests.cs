@@ -12,7 +12,7 @@ public class StringToEnumTests
 	{
 		//Arrange
 		var value = Helpers.EnumOneString;
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RStringParameter(value);
 		var property = new RequiredEnumProperty<RStringParameter, TestEnum>(parameters, Helpers.ExampleMissingError, nameStack);
@@ -31,7 +31,7 @@ public class StringToEnumTests
 	{
 		//Arrange
 		var value = Helpers.EnumOneString;
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RStringParameter(value);
 		var property = new RequiredEnumProperty<RStringParameter, TestEnum>(parameters, Helpers.ExampleMissingError, nameStack);
@@ -48,7 +48,7 @@ public class StringToEnumTests
 	{
 		//Arrange
 		var value = Helpers.EnumInvalidString;
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RStringParameter(value);
 		var property = new RequiredEnumProperty<RStringParameter, TestEnum>(parameters, Helpers.ExampleMissingError, nameStack);
@@ -69,7 +69,7 @@ public class StringToEnumTests
 	public void Map_ShouldReturnDefaultAndSetMissingErrorAndRemoveNameFromNameStack_WhenStringNull()
 	{
 		//Arrange
-		var nameStack = new NamingStack("");
+		var nameStack = new NameStack("");
 		nameStack.PushProperty(Helpers.PropertyName);
 		var parameters = new RStringParameter(null);
 		var property = new RequiredEnumProperty<RStringParameter, TestEnum>(parameters, Helpers.ExampleMissingError, nameStack);
