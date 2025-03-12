@@ -15,7 +15,7 @@ public static class ConstructorMapExtensions
     /// Create the nullable class property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/> and passing the constructor to <paramref name="constructor"/>
     /// </summary>
     /// <remarks>
-    /// If more then one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// If more than one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
     /// If you want to use a factory method to create the property, use the methods provided by <see cref="FactoryMapExtensions"/> instead.
     /// </remarks>
     /// <param name="property"></param>
@@ -30,7 +30,9 @@ public static class ConstructorMapExtensions
         where TValue : class
     {
         TValue? rawValue = value.Invoke(property.Parameters);
-
+        
+        property.NameStack.Pop();
+        
         if (rawValue is null)
         {
             return null;
@@ -43,7 +45,7 @@ public static class ConstructorMapExtensions
     /// Create the nullable class property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/> and passing the constructor to <paramref name="constructor"/>
     /// </summary>
     /// <remarks>
-    /// If more then one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// If more than one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
     /// If you want to use a factory method to create the property, use the methods provided by <see cref="FactoryMapExtensions"/> instead.
     /// </remarks>
     /// <param name="property"></param>
@@ -59,6 +61,8 @@ public static class ConstructorMapExtensions
     {
         TValue? rawValue = value.Invoke(property.Parameters);
 
+        property.NameStack.Pop();
+        
         if (rawValue is null)
         {
             return null;
@@ -68,10 +72,10 @@ public static class ConstructorMapExtensions
     }
 
     /// <summary>
-    /// Create the non nullable class property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/> and passing the constructor to <paramref name="constructor"/>
+    /// Create the non-nullable class property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/> and passing the constructor to <paramref name="constructor"/>
     /// </summary>
     /// <remarks>
-    /// If more then one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// If more than one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
     /// If you want to use a factory method to create the property, use the methods provided by <see cref="FactoryMapExtensions"/> instead.
     /// </remarks>
     /// <param name="property"></param>
@@ -86,6 +90,9 @@ public static class ConstructorMapExtensions
         where TValue : class
     {
         TValue? rawValue = value.Invoke(property.Parameters);
+        
+        property.NameStack.Pop();
+        
         if (rawValue is null)
         {
             property.ValidationResult.Failed(property.MissingError);
@@ -96,10 +103,10 @@ public static class ConstructorMapExtensions
     }
 
     /// <summary>
-    /// Create the non nullable class property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/> and passing the constructor to <paramref name="constructor"/>
+    /// Create the non-nullable class property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/> and passing the constructor to <paramref name="constructor"/>
     /// </summary>
     /// <remarks>
-    /// If more then one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// If more than one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
     /// If you want to use a factory method to create the property, use the methods provided by <see cref="FactoryMapExtensions"/> instead.
     /// </remarks>
     /// <param name="property"></param>
@@ -114,10 +121,73 @@ public static class ConstructorMapExtensions
         where TValue : struct
     {
         TValue? rawValue = value.Invoke(property.Parameters);
+        
+        property.NameStack.Pop();
+        
         if (rawValue is null)
         {
             property.ValidationResult.Failed(property.MissingError);
             return null!;
+        }
+
+        return constructor.Invoke(rawValue.Value);
+    }
+    
+    /// <summary>
+    /// Create the non-nullable class property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/> and passing the constructor to <paramref name="constructor"/>
+    /// </summary>
+    /// <remarks>
+    /// If more than one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// If you want to use a factory method to create the property, use the methods provided by <see cref="FactoryMapExtensions"/> instead.
+    /// </remarks>
+    /// <param name="property"></param>
+    /// <param name="value">Parameter that is needed for the constructor of <typeparamref name="TProperty"/></param>
+    /// <param name="constructor">Lambda function that calls the constructor of <typeparamref name="TProperty"/></param>
+    public static TProperty Map<TParameters, TProperty, TValue>(
+        this RequiredClassWithDefaultProperty<TParameters, TProperty> property,
+        Func<TParameters, TValue?> value,
+        Func<TValue, TProperty> constructor)
+        where TParameters : notnull
+        where TProperty : class
+        where TValue : class
+    {
+        TValue? rawValue = value.Invoke(property.Parameters);
+        
+        property.NameStack.Pop();
+        
+        if (rawValue is null)
+        {
+            return property.DefaultValue;
+        }
+
+        return constructor.Invoke(rawValue);
+    }
+
+    /// <summary>
+    /// Create the non-nullable class property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/> and passing the constructor to <paramref name="constructor"/>
+    /// </summary>
+    /// <remarks>
+    /// If more than one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// If you want to use a factory method to create the property, use the methods provided by <see cref="FactoryMapExtensions"/> instead.
+    /// </remarks>
+    /// <param name="property"></param>
+    /// <param name="value">Parameter that is needed for the constructor of <typeparamref name="TProperty"/></param>
+    /// <param name="constructor">Lambda function that calls the constructor of <typeparamref name="TProperty"/></param>
+    public static TProperty Map<TParameters, TProperty, TValue>(
+        this RequiredClassWithDefaultProperty<TParameters, TProperty> property,
+        Func<TParameters, TValue?> value,
+        Func<TValue, TProperty> constructor)
+        where TParameters : notnull
+        where TProperty : class
+        where TValue : struct
+    {
+        TValue? rawValue = value.Invoke(property.Parameters);
+        
+        property.NameStack.Pop();
+        
+        if (rawValue is null)
+        {
+            return property.DefaultValue;
         }
 
         return constructor.Invoke(rawValue.Value);
@@ -131,7 +201,7 @@ public static class ConstructorMapExtensions
     /// Create the nullable struct property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/> and passing the constructor to <paramref name="constructor"/>
     /// </summary>
     /// <remarks>
-    /// If more then one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// If more than one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
     /// If you want to use a factory method to create the property, use the methods provided by <see cref="FactoryMapExtensions"/> instead.
     /// </remarks>
     /// <param name="property"></param>
@@ -147,6 +217,8 @@ public static class ConstructorMapExtensions
     {
         TValue? rawValue = value.Invoke(property.Parameters);
 
+        property.NameStack.Pop();
+        
         if (rawValue is null)
         {
             return null;
@@ -159,7 +231,7 @@ public static class ConstructorMapExtensions
     /// Create the nullable struct property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/> and passing the constructor to <paramref name="constructor"/>
     /// </summary>
     /// <remarks>
-    /// If more then one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// If more than one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
     /// If you want to use a factory method to create the property, use the methods provided by <see cref="FactoryMapExtensions"/> instead.
     /// </remarks>
     /// <param name="property"></param>
@@ -175,6 +247,8 @@ public static class ConstructorMapExtensions
     {
         TValue? rawValue = value.Invoke(property.Parameters);
 
+        property.NameStack.Pop();
+        
         if (rawValue is null)
         {
             return null;
@@ -184,10 +258,10 @@ public static class ConstructorMapExtensions
     }
 
     /// <summary>
-    /// Create the non nullable struct property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/> and passing the constructor to <paramref name="constructor"/>
+    /// Create the non-nullable struct property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/> and passing the constructor to <paramref name="constructor"/>
     /// </summary>
     /// <remarks>
-    /// If more then one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// If more than one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
     /// If you want to use a factory method to create the property, use the methods provided by <see cref="FactoryMapExtensions"/> instead.
     /// </remarks>
     /// <param name="property"></param>
@@ -202,6 +276,9 @@ public static class ConstructorMapExtensions
         where TValue : class
     {
         TValue? rawValue = value.Invoke(property.Parameters);
+        
+        property.NameStack.Pop();
+        
         if (rawValue is null)
         {
             property.ValidationResult.Failed(property.MissingError);
@@ -212,10 +289,10 @@ public static class ConstructorMapExtensions
     }
 
     /// <summary>
-    /// Create the non nullable struct property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/> and passing the constructor to <paramref name="constructor"/>
+    /// Create the non-nullable struct property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/> and passing the constructor to <paramref name="constructor"/>
     /// </summary>
     /// <remarks>
-    /// If more then one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// If more than one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
     /// If you want to use a factory method to create the property, use the methods provided by <see cref="FactoryMapExtensions"/> instead.
     /// </remarks>
     /// <param name="property"></param>
@@ -230,10 +307,73 @@ public static class ConstructorMapExtensions
         where TValue : struct
     {
         TValue? rawValue = value.Invoke(property.Parameters);
+        
+        property.NameStack.Pop();
+        
         if (rawValue is null)
         {
             property.ValidationResult.Failed(property.MissingError);
             return default;
+        }
+
+        return constructor.Invoke(rawValue.Value);
+    }
+    
+    /// <summary>
+    /// Create the non-nullable struct property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/> and passing the constructor to <paramref name="constructor"/>
+    /// </summary>
+    /// <remarks>
+    /// If more than one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// If you want to use a factory method to create the property, use the methods provided by <see cref="FactoryMapExtensions"/> instead.
+    /// </remarks>
+    /// <param name="property"></param>
+    /// <param name="value">Parameter that is needed for the constructor of <typeparamref name="TProperty"/></param>
+    /// <param name="constructor">Lambda function that calls the constructor of <typeparamref name="TProperty"/></param>
+    public static TProperty Map<TParameters, TProperty, TValue>(
+        this RequiredStructWithDefaultProperty<TParameters, TProperty> property,
+        Func<TParameters, TValue?> value,
+        Func<TValue, TProperty> constructor)
+        where TParameters : notnull
+        where TProperty : struct
+        where TValue : class
+    {
+        TValue? rawValue = value.Invoke(property.Parameters);
+        
+        property.NameStack.Pop();
+        
+        if (rawValue is null)
+        {
+            return property.DefaultValue;
+        }
+
+        return constructor.Invoke(rawValue);
+    }
+
+    /// <summary>
+    /// Create the non-nullable struct property <typeparamref name="TProperty"/> from the value specified in <paramref name="value"/> and passing the constructor to <paramref name="constructor"/>
+    /// </summary>
+    /// <remarks>
+    /// If more than one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// If you want to use a factory method to create the property, use the methods provided by <see cref="FactoryMapExtensions"/> instead.
+    /// </remarks>
+    /// <param name="property"></param>
+    /// <param name="value">Parameter that is needed for the constructor of <typeparamref name="TProperty"/></param>
+    /// <param name="constructor">Lambda function that calls the constructor of <typeparamref name="TProperty"/></param>
+    public static TProperty Map<TParameters, TProperty, TValue>(
+        this RequiredStructWithDefaultProperty<TParameters, TProperty> property,
+        Func<TParameters, TValue?> value,
+        Func<TValue, TProperty> constructor)
+        where TParameters : notnull
+        where TProperty : struct
+        where TValue : struct
+    {
+        TValue? rawValue = value.Invoke(property.Parameters);
+        
+        property.NameStack.Pop();
+        
+        if (rawValue is null)
+        {
+            return property.DefaultValue;
         }
 
         return constructor.Invoke(rawValue.Value);
@@ -247,7 +387,7 @@ public static class ConstructorMapExtensions
     /// Create each element of type <typeparamref name="TProperty"/> of the nullable list property from the values specified in <paramref name="values"/> and passing the constructor to <paramref name="constructor"/>
     /// </summary>
     /// <remarks>
-    /// If more then one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// If more than one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
     /// If you want to use a factory method to create the property, use the methods provided by <see cref="FactoryMapExtensions"/> instead.
     /// </remarks>
     /// <param name="property"></param>
@@ -261,6 +401,9 @@ public static class ConstructorMapExtensions
         where TProperty : notnull
     {
         IEnumerable<TValue>? rawValues = values.Invoke(property.Parameters);
+        
+        property.NameStack.Pop();
+        
         if (rawValues is null)
         {
             return null;
@@ -278,10 +421,47 @@ public static class ConstructorMapExtensions
     }
 
     /// <summary>
+    /// Create each element of type <typeparamref name="TProperty"/> of the non-nullable list property from the values specified in <paramref name="values"/> and passing the constructor to <paramref name="constructor"/>
+    /// </summary>
+    /// <remarks>
+    /// If more than one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// If you want to use a factory method to create the property, use the methods provided by <see cref="FactoryMapExtensions"/> instead.
+    /// </remarks>
+    /// <param name="property"></param>
+    /// <param name="values">List of parameter that is needed for the constructor of <typeparamref name="TProperty"/></param>
+    /// <param name="constructor">Lambda function that calls the constructor of <typeparamref name="TProperty"/></param>
+    public static IEnumerable<TProperty> MapEach<TParameters, TProperty, TValue>(
+        this RequiredListWithDefaultProperty<TParameters, TProperty> property,
+        Func<TParameters, IEnumerable<TValue>?> values,
+        Func<TValue, TProperty> constructor)
+        where TParameters : notnull
+        where TProperty : notnull
+    {
+        IEnumerable<TValue>? rawValues = values.Invoke(property.Parameters);
+        
+        property.NameStack.Pop();
+        
+        if (rawValues is null)
+        {
+            return property.DefaultList;
+        }
+
+        List<TProperty> resultProperties = [];
+        foreach (var rawProperty in rawValues)
+        {
+            TProperty result = constructor.Invoke(rawProperty);
+
+            resultProperties.Add(result);
+        }
+
+        return resultProperties;
+    }
+    
+    /// <summary>
     /// Create each element of type <typeparamref name="TProperty"/> of the non nullable list property from the values specified in <paramref name="values"/> and passing the constructor to <paramref name="constructor"/>
     /// </summary>
     /// <remarks>
-    /// If more then one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
+    /// If more than one parameter is needed to create an instance of <typeparamref name="TProperty"/>, use the methods provided by <see cref="ComplexMapExtensions"/> instead.
     /// If you want to use a factory method to create the property, use the methods provided by <see cref="FactoryMapExtensions"/> instead.
     /// </remarks>
     /// <param name="property"></param>
@@ -295,6 +475,9 @@ public static class ConstructorMapExtensions
         where TProperty : notnull
     {
         IEnumerable<TValue>? rawValues = values.Invoke(property.Parameters);
+        
+        property.NameStack.Pop();
+        
         if (rawValues is null)
         {
             property.ValidationResult.Failed(property.MissingError);

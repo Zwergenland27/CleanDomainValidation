@@ -23,7 +23,7 @@ public sealed record Error
 	public string Code { get; }
 
 	/// <summary>
-	/// More detailed deschription of the error
+	/// More detailed description of the error
 	/// </summary>
 	/// <example>The book title cannot be empty</example>
 	public string Message { get; }

@@ -11,11 +11,13 @@ public sealed class RequiredStructProperty<TParameters, TProperty> : Validatable
 {
 	internal Error MissingError { get; }
 	internal TParameters Parameters { get; }
+	internal NameStack NameStack { get; }
 	internal override CanFail ValidationResult { get; } = new();
 
-	internal RequiredStructProperty(TParameters parameters, Error missingError)
+	internal RequiredStructProperty(TParameters parameters, Error missingError, NameStack nameStack)
 	{
 		Parameters = parameters;
 		MissingError = missingError;
+		NameStack = nameStack;
 	}
 }
