@@ -18,6 +18,8 @@ public static class Helpers
     public static Error ExampleValidationError => Error.Validation("Error.Validation", "An error occured");
     
     public static Error ExampleMissingError => Error.Validation("Error.Missing", "The value is missing");
+
+    public static string ExampleMissingErrorMessage => "The value is missing";
     
     public static string PropertyName => "PropertyName";
 
@@ -56,6 +58,21 @@ public static class Helpers
         var stackFieldInfo = typeof(NameStack).GetField("_propertyNamesStack", BindingFlags.NonPublic | BindingFlags.Instance);
         var propertyNameStack = (Stack<INameStackEntry>) stackFieldInfo!.GetValue(nameStack)!;
         propertyNameStack.Peek().ShouldBe(propertyName);
+    }
+
+    public static void ShouldNotPeek(this NameStack nameStack, INameStackEntry nameStackEntry)
+    {
+        var stackFieldInfo = typeof(NameStack).GetField("_propertyNamesStack", BindingFlags.NonPublic | BindingFlags.Instance);
+        var propertyNameStack = (Stack<INameStackEntry>) stackFieldInfo!.GetValue(nameStack)!;
+
+        try
+        {
+            propertyNameStack.Peek().ShouldNotBe(nameStackEntry);
+        }
+        catch (InvalidOperationException e)
+        {
+            if (e.Message is not "Stack empty.") throw;
+        }
     }
 
     public static void NameStackShouldPeekPropertyName<T1, T2>(this PropertyBuilder<T1, T2> builder,
