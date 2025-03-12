@@ -45,6 +45,7 @@ public class NameStack
 
     private string GenerateErrorCode()
     {
+        if (_propertyNamesStack.Count == 0) throw new InvalidOperationException("No property names available.");
         var result = _prefix;
         if (result.Length > 0) result += ".";
         return result + string.Join(".", _propertyNamesStack
@@ -55,6 +56,7 @@ public class NameStack
 
     private string GenerateErrorMessage()
     {
+        if (_propertyNamesStack.Count == 0) throw new InvalidOperationException("No property names available.");
         var lastPropertyName = (PropertyNameEntry)_propertyNamesStack.Peek();
 
         return$"Property \"{lastPropertyName.Name}\" is required but missing or null in the request.";
