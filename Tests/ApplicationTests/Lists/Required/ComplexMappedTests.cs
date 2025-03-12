@@ -10,7 +10,7 @@ public class ComplexMappedTests
 	#region Class
 
 	[Fact]
-	public void ComplexMapEachClass_ShouldReturnValueObjectListAndNotSetErrorsAndRemoveNameFromNameStack_WhenParameterListIsNotNull()
+	public void ComplexMapEachClass_ShouldPassNameStackWithPropertyNameToBuilderAndReturnValueObjectListAndNotSetErrorsAndRemoveNameFromNameStack_WhenParameterListIsNotNull()
 	{
 		//Arrange
 		List<string> value = [Helpers.ExampleStringValue, Helpers.AlternateStringValue];
@@ -22,6 +22,9 @@ public class ComplexMappedTests
 		//Act
 		var result = property.MapEachComplex(p => p.Value, builder =>
 		{
+			//Assert
+			builder.NameStackShouldPeekPropertyName(new PropertyNameEntry(Helpers.PropertyName));
+			
 			var voValue = builder.ClassProperty(p => p.Value)
 				.Required()
 				.Map(r => r);
@@ -37,7 +40,7 @@ public class ComplexMappedTests
 	}
 
 	[Fact]
-	public void ComplexMapEachClass_ShouldReturnNullAndSetValidationErrorsAndRemoveNameFromNameStack_WhenAtLeastOneValueObjectCreationFailed()
+	public void ComplexMapEachClass_ShouldPassNameStackWithPropertyNameToBuilderAndReturnNullAndSetValidationErrorsAndRemoveNameFromNameStack_WhenAtLeastOneValueObjectCreationFailed()
 	{
 		//Arrange
 		List<string> value = [Helpers.ExampleStringValue, Helpers.ErrorStringValue];
@@ -49,6 +52,9 @@ public class ComplexMappedTests
 		//Act
 		var result = property.MapEachComplex(p => p.Value, builder =>
 		{
+			//Assert
+			builder.NameStackShouldPeekPropertyName(new PropertyNameEntry(Helpers.PropertyName));
+			
 			var voValue = builder.ClassProperty(p => p.Value)
 				.Required()
 				.Map(r => r);
@@ -96,7 +102,7 @@ public class ComplexMappedTests
 	#region Struct
 	
 	[Fact]
-	public void ComplexMapEachStruct_ShouldReturnValueObjectListAndNotSetErrorsAndRemoveNameFromNameStack_WhenParameterListIsNotNull()
+	public void ComplexMapEachStruct_ShouldPassNameStackWithPropertyNameToBuilderAndReturnValueObjectListAndNotSetErrorsAndRemoveNameFromNameStack_WhenParameterListIsNotNull()
 	{
 		//Arrange
 		List<int> value = [Helpers.ExampleIntValue, Helpers.AlternateIntValue];
@@ -108,6 +114,9 @@ public class ComplexMappedTests
 		//Act
 		var result = property.MapEachComplex(p => p.Value, builder =>
 		{
+			//Assert
+			builder.NameStackShouldPeekPropertyName(new PropertyNameEntry(Helpers.PropertyName));
+			
 			var voValue = builder.StructProperty(p => p.Value)
 				.Required()
 				.Map(r => r);
@@ -123,7 +132,7 @@ public class ComplexMappedTests
 	}
 	
 	[Fact]
-	public void ComplexMapEachStruct_ShouldReturnNullAndSetValidationErrorsAndRemoveNameFromNameStac_WhenAtLeastOneValueObjectCreationFailed()
+	public void ComplexMapEachStruct_ShouldPassNameStackWithPropertyNameToBuilderAndReturnNullAndSetValidationErrorsAndRemoveNameFromNameStac_WhenAtLeastOneValueObjectCreationFailed()
 	{
 		//Arrange
 		List<int> value = [Helpers.ExampleIntValue, Helpers.ErrorIntValue];
@@ -135,6 +144,9 @@ public class ComplexMappedTests
 		//Act
 		var result = property.MapEachComplex(p => p.Value, builder =>
 		{
+			//Assert
+			builder.NameStackShouldPeekPropertyName(new PropertyNameEntry(Helpers.PropertyName));
+			
 			var voValue = builder.StructProperty(p => p.Value)
 				.Required()
 				.Map(r => r);

@@ -2,16 +2,15 @@ using CleanDomainValidation.Application;
 using CleanDomainValidation.Application.Extensions;
 using CleanDomainValidation.Application.Structs;
 using Shouldly;
-using Tests.ApplicationTests.Structs.Optional;
 
 namespace Tests.ApplicationTests.Structs.Required;
 
 public class ComplexMappedTests
 {
-    #region Complex Mapped
+    #region Class
 
 	[Fact]
-	public void ComplexMapClass_ShouldReturnValueObjectAndNotSetErrorsAndRemoveNameFromNameStack_WhenValueNotNull()
+	public void ComplexMapClass_ShouldPassNameStackWithPropertyNameToBuilderAndReturnValueObjectAndNotSetErrorsAndRemoveNameFromNameStack_WhenValueNotNull()
 	{
 		//Arrange
 		var value = Helpers.ExampleStringValue;
@@ -23,6 +22,8 @@ public class ComplexMappedTests
 		//Act
 		var validatedProperty = property.MapComplex(p => p.Value, builder =>
 		{
+			//Assert
+			builder.NameStackShouldPeekPropertyName(new PropertyNameEntry(Helpers.PropertyName));
 			return new ValidatedRequiredProperty<RClassValueObject>(new RClassValueObject(value));
 		});
 
@@ -36,7 +37,7 @@ public class ComplexMappedTests
 	}
 
 	[Fact]
-	public void ComplexMapClass_ShouldReturnDefaultAndSetValidationErrorsAndRemoveNameFromNameStack_WhenValueNotNullAndCreationFailed()
+	public void ComplexMapClass_ShouldPassNameStackWithPropertyNameToBuilderAndReturnDefaultAndSetValidationErrorsAndRemoveNameFromNameStack_WhenValueNotNullAndCreationFailed()
 	{
 		//Arrange
 		var value = Helpers.ErrorStringValue;
@@ -48,6 +49,8 @@ public class ComplexMappedTests
 		//Act
 		var validatedProperty = property.MapComplex(p => p.Value, builder =>
 		{
+			//Assert
+			builder.NameStackShouldPeekPropertyName(new PropertyNameEntry(Helpers.PropertyName));
 			return new ValidatedRequiredProperty<RClassValueObject>(Helpers.ExampleValidationError);
 		});
 
@@ -91,7 +94,7 @@ public class ComplexMappedTests
 	#region Struct
 	
 	[Fact]
-	public void ComplexMapStruct_ShouldReturnValueObjectAndNotSetErrorsAndRemoveNameFromNameStack_WhenValueNotNull()
+	public void ComplexMapStruct_ShouldPassNameStackWithPropertyNameToBuilderAndReturnValueObjectAndNotSetErrorsAndRemoveNameFromNameStack_WhenValueNotNull()
 	{
 		//Arrange
 		var value = Helpers.ExampleIntValue;
@@ -103,6 +106,8 @@ public class ComplexMappedTests
 		//Act
 		var validatedProperty = property.MapComplex(p => p.Value, builder =>
 		{
+			//Assert
+			builder.NameStackShouldPeekPropertyName(new PropertyNameEntry(Helpers.PropertyName));
 			return new ValidatedRequiredProperty<RStructValueObject>(new RStructValueObject(value));
 		});
 
@@ -115,7 +120,7 @@ public class ComplexMappedTests
 	}
 	
 	[Fact]
-	public void ComplexMapStruct_ShouldReturnDefaultAndSetValidationErrorsAndRemoveNameFromNameStack_WhenValueNotNullAndCreationFailed()
+	public void ComplexMapStruct_ShouldPassNameStackWithPropertyNameToBuilderAndReturnDefaultAndSetValidationErrorsAndRemoveNameFromNameStack_WhenValueNotNullAndCreationFailed()
 	{
 		//Arrange
 		var value = Helpers.ErrorIntValue;
@@ -127,6 +132,8 @@ public class ComplexMappedTests
 		//Act
 		var validatedProperty = property.MapComplex(p => p.Value, builder =>
 		{
+			//Assert
+			builder.NameStackShouldPeekPropertyName(new PropertyNameEntry(Helpers.PropertyName));
 			return new ValidatedRequiredProperty<RStructValueObject>(Helpers.ExampleValidationError);
 		});
 

@@ -50,4 +50,21 @@ public static class Helpers
         var propertyNameStack = (Stack<INameStackEntry>) stackFieldInfo!.GetValue(nameStack)!;
         propertyNameStack.ShouldNotContain(propertyName);
     }
+
+    public static void ShouldPeekPropertyName(this NameStack nameStack, PropertyNameEntry propertyName)
+    {
+        var stackFieldInfo = typeof(NameStack).GetField("_propertyNamesStack", BindingFlags.NonPublic | BindingFlags.Instance);
+        var propertyNameStack = (Stack<INameStackEntry>) stackFieldInfo!.GetValue(nameStack)!;
+        propertyNameStack.Peek().ShouldBe(propertyName);
+    }
+
+    public static void NameStackShouldPeekPropertyName<T1, T2>(this PropertyBuilder<T1, T2> builder,
+        PropertyNameEntry propertyName)
+    where T1 : notnull
+    where T2 : notnull
+    {
+        var nameStackFieldInfo = typeof(PropertyBuilder<T1, T2>).GetField("_nameStack", BindingFlags.NonPublic | BindingFlags.Instance);
+        var propertyNameStack = (NameStack) nameStackFieldInfo!.GetValue(builder)!;
+        propertyNameStack.ShouldPeekPropertyName(propertyName);
+    }
 }
