@@ -46,7 +46,7 @@ public static class Helpers
     public static int EnumTwoInt => 1;
     public static int EnumInvalidInt => 9;
 
-    public static string SelfReferencingErrorMessage => "Please provide a custom name when using a self referencing class property.";
+    public static string SelfReferencingErrorMessage => "Please provide a custom name when using a self referencing property.";
     
     public static void ShouldNotContainPropertyName(this NameStack nameStack, PropertyNameEntry propertyName)
     {

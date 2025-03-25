@@ -172,6 +172,23 @@ public abstract class PropertyBuilder<TParameters, TResult>
 
 	private static string GetPropertyName<T1, T2>(Expression<Func<T1, T2>> expression)
 	{
-		return ((MemberExpression)expression.Body).Member.Name;
+		Expression body = expression.Body;
+		
+		while(body is UnaryExpression unaryExpression)
+		{
+			body =  unaryExpression.Operand;
+		}
+		
+		if (body is ParameterExpression)
+		{
+			throw new InvalidOperationException("Please provide a custom name when using a self referencing property.");
+		}
+
+		if (body is MemberExpression member)
+		{
+			return member.Member.Name;
+		}
+		
+		throw new InvalidOperationException("Expression is not referencing a property");
 	}
 }
