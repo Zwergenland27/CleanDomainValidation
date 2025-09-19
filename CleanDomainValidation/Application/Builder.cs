@@ -32,7 +32,6 @@ public class Builder<TRequest>
 	/// </summary>
 	/// <returns>Instance for a builder that maps parameters <typeparamref name="TParameters"/> to the request <typeparamref name="TRequest"/></returns>
 	public Builder<TParameters, TRequest> BindParameters<TParameters>(TParameters parameters)
-		where TParameters : IParameters
 	{
 		return new Builder<TParameters, TRequest>(parameters, _prefix);
 	}
@@ -42,7 +41,6 @@ public class Builder<TRequest>
 /// Builder that maps parameters <typeparamref name="TParameters"/> to the request <typeparamref name="TRequest"/>
 /// </summary>
 public sealed class Builder<TParameters, TRequest>
-	where TParameters : IParameters
 	where TRequest : IRequest
 {
 	private readonly TParameters _parameters;

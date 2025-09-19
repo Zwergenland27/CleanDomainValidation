@@ -3,7 +3,7 @@ using CleanDomainValidation.Domain;
 
 namespace Tests.ApplicationTests.Lists.Required;
 
-public record RClassListParameter(List<string>? Value) : IParameters;
+public record RClassListParameter(List<string>? Value);
 
 public record RClassValueObject(string Value)
 {
@@ -14,7 +14,7 @@ public record RClassValueObject(string Value)
 	}
 }
 
-public record RStructListParameter(List<int>? Value) : IParameters;
+public record RStructListParameter(List<int>? Value);
 
 public record RStructValueObject(int Value)
 {
@@ -24,6 +24,6 @@ public record RStructValueObject(int Value)
 		return new RStructValueObject(value);
 	}
 }
-public record RStringListParameter(List<string>? Value) : IParameters;
+public record RStringListParameter(List<string>? Value);
 
-public record RIntListParameter(List<int>? Value) : IParameters;
+public record RIntListParameter(List<int>? Value);

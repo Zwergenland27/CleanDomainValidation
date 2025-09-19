@@ -4,7 +4,6 @@
 /// Builder for validating <typeparamref name="TParameters"/> and mapping it to a request of type <typeparamref name="TRequest"/>
 /// </summary>
 public interface IRequestBuilder<TParameters, TRequest>
-	where TParameters : IParameters
 	where TRequest : IRequest
 
 {
