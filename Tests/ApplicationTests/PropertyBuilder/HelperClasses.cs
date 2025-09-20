@@ -2,7 +2,7 @@ using CleanDomainValidation.Application;
 
 namespace Tests.ApplicationTests.PropertyBuilder;
 
-public record Parameters() : IParameters;
+public record Parameters();
 public record Result(
     string RequiredClassProperty,
     int RequiredStructProperty,

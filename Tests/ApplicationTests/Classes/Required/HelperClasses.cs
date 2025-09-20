@@ -6,7 +6,7 @@ using Shouldly;
 
 namespace Tests.ApplicationTests.Classes.Required;
 
-public record RClassParameter(string? Value) : IParameters;
+public record RClassParameter(string? Value);
 
 public record RClassValueObject(string Value)
 {
@@ -17,7 +17,7 @@ public record RClassValueObject(string Value)
 	}
 }
 
-public record RStructParameter(int? Value) : IParameters;
+public record RStructParameter(int? Value);
 public record RStructValueObject(int Value)
 {
 	public static CanFail<RStructValueObject> Create(int value)

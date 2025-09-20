@@ -6,7 +6,7 @@ using Shouldly;
 
 namespace Tests.ApplicationTests.Classes.Optional;
 
-public record OClassParameter(string? Value) : IParameters;
+public record OClassParameter(string? Value);
 
 public record OClassValueObject(string Value)
 {
@@ -17,7 +17,7 @@ public record OClassValueObject(string Value)
     }
 }
 
-public record OStructParameter(int? Value) : IParameters;
+public record OStructParameter(int? Value);
 
 public record OStructValueObject(int Value)
 {

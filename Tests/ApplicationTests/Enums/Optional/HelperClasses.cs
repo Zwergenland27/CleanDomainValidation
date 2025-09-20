@@ -2,6 +2,6 @@
 
 namespace Tests.ApplicationTests.Enums.Optional;
 
-public record OStringParameter(string? Value) : IParameters;
+public record OStringParameter(string? Value);
 
-public record OIntParameter(int? Value) : IParameters;
+public record OIntParameter(int? Value);

@@ -3,7 +3,7 @@ using CleanDomainValidation.Domain;
 
 namespace Tests.ApplicationTests.Lists.Optional;
 
-public record OClassListParameter(List<string>? Value) : IParameters;
+public record OClassListParameter(List<string>? Value);
 
 public record OClassValueObject(string Value)
 {
@@ -14,7 +14,7 @@ public record OClassValueObject(string Value)
 	}
 }
 
-public record OStructListParameter(List<int>? Value) : IParameters;
+public record OStructListParameter(List<int>? Value);
 
 public record OStructValueObject(int Value)
 {
@@ -25,6 +25,6 @@ public record OStructValueObject(int Value)
 	}
 }
 
-public record OStringListParameter(List<string>? Value) : IParameters;
+public record OStringListParameter(List<string>? Value);
 
-public record OIntListParameter(List<int>? Value) : IParameters;
+public record OIntListParameter(List<int>? Value);

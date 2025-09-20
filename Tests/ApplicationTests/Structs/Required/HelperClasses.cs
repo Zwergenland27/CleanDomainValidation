@@ -3,7 +3,7 @@ using CleanDomainValidation.Domain;
 
 namespace Tests.ApplicationTests.Structs.Required;
 
-public record RClassParameter(string? Value) : IParameters;
+public record RClassParameter(string? Value);
 
 public record struct RClassValueObject(string Value)
 {
@@ -14,7 +14,7 @@ public record struct RClassValueObject(string Value)
 	}
 }
 
-public record RStructParameter(int? Value) : IParameters;
+public record RStructParameter(int? Value);
 public record struct RStructValueObject(int Value)
 {
 	public static CanFail<RStructValueObject> Create(int value)

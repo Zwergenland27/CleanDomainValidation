@@ -5,7 +5,7 @@ using Shouldly;
 
 namespace Tests.ApplicationTests;
 
-public record OSPParameter(string? Value) : IParameters;
+public record OSPParameter(string? Value);
 
 public record struct OSPResult(string? Value)
 {

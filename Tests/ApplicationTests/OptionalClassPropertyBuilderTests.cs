@@ -5,7 +5,7 @@ using Shouldly;
 
 namespace Tests.ApplicationTests;
 
-public record OCPParameter(string? Value) : IParameters;
+public record OCPParameter(string? Value);
 
 public record OCPResult(string? Value)
 {

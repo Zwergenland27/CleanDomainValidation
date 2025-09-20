@@ -5,7 +5,7 @@ using Shouldly;
 
 namespace Tests.ApplicationTests;
 
-public record RPParameter(string? Value) : IParameters;
+public record RPParameter(string? Value);
 
 public record RPResult(string? Value)
 {
