@@ -18,7 +18,7 @@ public class DirectMappedTests
 		var property = new RequiredClassProperty<RClassParameter, string>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
-		var validatedProperty = property.Map(p => p.Value);
+		var validatedProperty = property.Map(p => p.ValueObject);
 
 		//Assert
 		validatedProperty.ShouldBe(value);
@@ -38,7 +38,7 @@ public class DirectMappedTests
 		var property = new RequiredClassProperty<RClassParameter, string>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
-		var validatedProperty = property.Map(p => p.Value);
+		var validatedProperty = property.Map(p => p.ValueObject);
 
 		//Assert
 		validatedProperty.ShouldBeNull();

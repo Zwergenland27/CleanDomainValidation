@@ -1,12 +1,8 @@
-﻿using CleanDomainValidation.Application;
-using CleanDomainValidation.Application.Classes;
-using CleanDomainValidation.Application.Extensions;
-using CleanDomainValidation.Domain;
-using Shouldly;
+﻿using CleanDomainValidation.Domain;
 
 namespace Tests.ApplicationTests.Classes.Required;
 
-public record RClassParameter(string? Value);
+public record RClassParameter(string? ValueObject);
 
 public record RClassValueObject(string Value)
 {
@@ -17,7 +13,7 @@ public record RClassValueObject(string Value)
 	}
 }
 
-public record RStructParameter(int? Value);
+public record RStructParameter(int? ValueObject);
 public record RStructValueObject(int Value)
 {
 	public static CanFail<RStructValueObject> Create(int value)

@@ -20,7 +20,7 @@ public class ConstructorMappedTests
 		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
-		var validatedValue = property.Map(p => p.Value, v => new RClassValueObject(v));
+		var validatedValue = property.Map(p => p.ValueObject, v => new RClassValueObject(v));
 
 		//Assert
 		validatedValue.ShouldBe(new RClassValueObject(value));
@@ -40,7 +40,7 @@ public class ConstructorMappedTests
 		var property = new RequiredClassProperty<RClassParameter, RClassValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
-		var validatedProperty = property.Map(p => p.Value, v => new RClassValueObject(v));
+		var validatedProperty = property.Map(p => p.ValueObject, v => new RClassValueObject(v));
 
 		//Assert
 		validatedProperty.ShouldBeNull();
@@ -66,7 +66,7 @@ public class ConstructorMappedTests
 		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
-		var validatedValue = property.Map(p => p.Value, v => new RStructValueObject(v));
+		var validatedValue = property.Map(p => p.ValueObject, v => new RStructValueObject(v));
 
 		//Assert
 		validatedValue.ShouldBe(new RStructValueObject(value));
@@ -86,7 +86,7 @@ public class ConstructorMappedTests
 		var property = new RequiredClassProperty<RStructParameter, RStructValueObject>(parameters, Helpers.ExampleMissingError, nameStack);
 
 		//Act
-		var validatedProperty = property.Map(p => p.Value, v => new RStructValueObject(v));
+		var validatedProperty = property.Map(p => p.ValueObject, v => new RStructValueObject(v));
 
 		//Assert
 		validatedProperty.ShouldBeNull();
