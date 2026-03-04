@@ -21,7 +21,7 @@ public class ConstructorMappedTests
 		var property = new RequiredClassWithDefaultProperty<RClassParameter, RClassValueObject>(parameters, defaultValue, nameStack);
 
 		//Act
-		var validatedValue = property.Map(p => p.Value, v => new RClassValueObject(v));
+		var validatedValue = property.Map(p => p.ValueObject, v => new RClassValueObject(v));
 
 		//Assert
 		validatedValue.ShouldBe(new RClassValueObject(value));
@@ -42,7 +42,7 @@ public class ConstructorMappedTests
 		var property = new RequiredClassWithDefaultProperty<RClassParameter, RClassValueObject>(parameters, defaultValue, nameStack);
 
 		//Act
-		var validatedProperty = property.Map(p => p.Value, v => new RClassValueObject(v));
+		var validatedProperty = property.Map(p => p.ValueObject, v => new RClassValueObject(v));
 
 		//Assert
 		validatedProperty.ShouldBe(defaultValue);
@@ -68,7 +68,7 @@ public class ConstructorMappedTests
 		var property = new RequiredClassWithDefaultProperty<RStructParameter, RStructValueObject>(parameters, defaultValue, nameStack);
 
 		//Act
-		var validatedValue = property.Map(p => p.Value, v => new RStructValueObject(v));
+		var validatedValue = property.Map(p => p.ValueObject, v => new RStructValueObject(v));
 
 		//Assert
 		validatedValue.ShouldBe(new RStructValueObject(value));
@@ -89,7 +89,7 @@ public class ConstructorMappedTests
         var property = new RequiredClassWithDefaultProperty<RStructParameter, RStructValueObject>(parameters, defaultValue, nameStack);
 
         //Act
-        var validatedProperty = property.Map(p => p.Value, v => new RStructValueObject(v));
+        var validatedProperty = property.Map(p => p.ValueObject, v => new RStructValueObject(v));
 
         //Assert
         validatedProperty.ShouldBe(defaultValue);

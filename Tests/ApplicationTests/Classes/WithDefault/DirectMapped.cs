@@ -20,7 +20,7 @@ public class DirectMapped
         var property = new RequiredClassWithDefaultProperty<RClassParameter, string>(parameters, defaultValue, nameStack);
 
         //Act
-        var validatedProperty = property.Map(p => p.Value);
+        var validatedProperty = property.Map(p => p.ValueObject);
 
         //Assert
         validatedProperty.ShouldBe(value);
@@ -41,7 +41,7 @@ public class DirectMapped
         var property = new RequiredClassWithDefaultProperty<RClassParameter, string>(parameters, defaultValue, nameStack);
 
         //Act
-        var validatedProperty = property.Map(p => p.Value);
+        var validatedProperty = property.Map(p => p.ValueObject);
 
         //Assert
         validatedProperty.ShouldBe(defaultValue);

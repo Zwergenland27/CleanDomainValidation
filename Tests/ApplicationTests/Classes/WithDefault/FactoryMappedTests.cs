@@ -22,7 +22,7 @@ public class FactoryMappedTests
         var property = new RequiredClassWithDefaultProperty<RClassParameter, RClassValueObject>(parameters, defaultValue, nameStack);
 
         //Act
-        var validatedValue = property.Map(p => p.Value, RClassValueObject.Create);
+        var validatedValue = property.Map(p => p.ValueObject, RClassValueObject.Create);
 
         //Assert
         validatedValue.ShouldBe(new RClassValueObject(value));
@@ -44,7 +44,7 @@ public class FactoryMappedTests
         var property = new RequiredClassWithDefaultProperty<RClassParameter, RClassValueObject>(parameters, defaultValue, nameStack);
 
         //Act
-        var validatedProperty = property.Map(p => p.Value, RClassValueObject.Create);
+        var validatedProperty = property.Map(p => p.ValueObject, RClassValueObject.Create);
 
         //Assert
         validatedProperty.ShouldBeNull();
@@ -66,7 +66,7 @@ public class FactoryMappedTests
         var property = new RequiredClassWithDefaultProperty<RClassParameter, RClassValueObject>(parameters, defaultValue, nameStack);
 
         //Act
-        var validatedProperty = property.Map(p => p.Value, RClassValueObject.Create);
+        var validatedProperty = property.Map(p => p.ValueObject, RClassValueObject.Create);
 
 
         //Assert
@@ -93,7 +93,7 @@ public class FactoryMappedTests
         var property = new RequiredClassWithDefaultProperty<RStructParameter, RStructValueObject>(parameters, defaultValue, nameStack);
 
         //Act
-        var validatedValue = property.Map(p => p.Value, RStructValueObject.Create);
+        var validatedValue = property.Map(p => p.ValueObject, RStructValueObject.Create);
 
         //Assert
         validatedValue.ShouldBe(new RStructValueObject(value));
@@ -115,7 +115,7 @@ public class FactoryMappedTests
         var property = new RequiredClassWithDefaultProperty<RStructParameter, RStructValueObject>(parameters, defaultValue, nameStack);
 
         //Act
-        var validatedProperty = property.Map(p => p.Value, RStructValueObject.Create);
+        var validatedProperty = property.Map(p => p.ValueObject, RStructValueObject.Create);
 
         //Assert
         validatedProperty.ShouldBeNull();
@@ -137,7 +137,7 @@ public class FactoryMappedTests
         var property = new RequiredClassWithDefaultProperty<RStructParameter, RStructValueObject>(parameters, defaultValue, nameStack);
 
         //Act
-        var validatedProperty = property.Map(p => p.Value, RStructValueObject.Create);
+        var validatedProperty = property.Map(p => p.ValueObject, RStructValueObject.Create);
 
 
         //Assert

@@ -22,7 +22,7 @@ public class ComplexMappedTests
         var property = new RequiredClassWithDefaultProperty<RClassParameter, RClassValueObject>(parameters, defaultValue, nameStack);
 
         //Act
-        var validatedProperty = property.MapComplex(p => p.Value, builder =>
+        var validatedProperty = property.MapComplex(p => p.ValueObject, builder =>
             {
                 //Assert
                 builder.NameStackShouldPeekPropertyName(new PropertyNameEntry(Helpers.PropertyName));
@@ -50,7 +50,7 @@ public class ComplexMappedTests
         var property = new RequiredClassWithDefaultProperty<RClassParameter, RClassValueObject>(parameters, defaultValue, nameStack);
 
         //Act
-        var validatedProperty = property.MapComplex(p => p.Value, builder =>
+        var validatedProperty = property.MapComplex(p => p.ValueObject, builder =>
         {
             //Assert
             builder.NameStackShouldPeekPropertyName(new PropertyNameEntry(Helpers.PropertyName));
@@ -77,7 +77,7 @@ public class ComplexMappedTests
         var property = new RequiredClassWithDefaultProperty<RClassParameter, RClassValueObject>(parameters, defaultValue, nameStack);
 
         //Act
-        var validatedProperty = property.MapComplex(p => p.Value, builder =>
+        var validatedProperty = property.MapComplex(p => p.ValueObject, builder =>
             {
                 //It's okay to pass null as parameter here, as this code does not get called due to parameter being null
                 return new ValidatedRequiredProperty<RClassValueObject>((RClassValueObject?)null);
@@ -107,7 +107,7 @@ public class ComplexMappedTests
         var property = new RequiredClassWithDefaultProperty<RStructParameter, RStructValueObject>(parameters, defaultValue, nameStack);
 
         //Act
-        var validatedProperty = property.MapComplex(p => p.Value, builder =>
+        var validatedProperty = property.MapComplex(p => p.ValueObject, builder =>
             {
                 //Assert
                 builder.NameStackShouldPeekPropertyName(new PropertyNameEntry(Helpers.PropertyName));
@@ -134,7 +134,7 @@ public class ComplexMappedTests
         var property = new RequiredClassWithDefaultProperty<RStructParameter, RStructValueObject>(parameters, defaultValue, nameStack);
 
         //Act
-        var validatedProperty = property.MapComplex(p => p.Value, builder =>
+        var validatedProperty = property.MapComplex(p => p.ValueObject, builder =>
             {
                 //Assert
                 builder.NameStackShouldPeekPropertyName(new PropertyNameEntry(Helpers.PropertyName));
@@ -161,7 +161,7 @@ public class ComplexMappedTests
         var property = new RequiredClassWithDefaultProperty<RStructParameter, RStructValueObject>(parameters, defaultValue, nameStack);
 
         //Act
-        var validatedProperty = property.MapComplex(p => p.Value, builder =>
+        var validatedProperty = property.MapComplex(p => p.ValueObject, builder =>
             {
                 //It's okay to pass null as parameter here, as this code does not get called due to parameter being null
                 return new ValidatedRequiredProperty<RStructValueObject>((RStructValueObject?)null);
